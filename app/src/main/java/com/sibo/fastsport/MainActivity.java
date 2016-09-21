@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private ImageView setting;
     private ImageView head;
-    private ImageView myHome;
     private RelativeLayout zhuye;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
