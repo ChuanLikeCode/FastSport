@@ -10,7 +10,7 @@
         android:id="@+id/btn_makeNewPlan"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_selectPlanMould"
+        android:layout_above="@+id/btn_selectPlanMould"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:background="@drawable/plan_btn_background"
