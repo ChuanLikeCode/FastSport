@@ -8,18 +8,31 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login" android:launchMode="singleTask">
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity" android:launchMode="singleTask"/>
-        <activity android:name=".EditHomePage" android:launchMode="singleTask"/>
-        <activity android:name=".PersonalHome" android:launchMode="singleTask"/>
-        <activity android:name=".PersonalInfoActivity" android:launchMode="singleTask"/>
-        <activity android:name=".Register" android:launchMode="singleTask"/>
+        <activity
+            android:name=".SettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".EditHomePage"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".PersonalHome"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".PersonalInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".RegisterActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".MakeplanActivity"></activity>
     </application>
 
 </manifest>
