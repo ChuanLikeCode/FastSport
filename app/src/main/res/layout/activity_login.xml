@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/activity_login_rlTitle"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="#262626">
 
         <TextView
@@ -19,8 +19,8 @@
             android:layout_centerInParent="true"/>
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@mipmap/close"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -30,39 +30,39 @@
     <RelativeLayout
         android:id="@+id/activity_login_rlAccountAndPassword"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="120dp"
         android:layout_marginTop="15dp"
         android:background="#fff"
         android:layout_below="@id/activity_login_rlTitle">
 
         <ImageView
             android:id="@+id/iv_account"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
+            android:layout_width="15dp"
+            android:layout_height="22dp"
             android:src="@mipmap/icon_mobilephone"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/view1_vertical"
             android:layout_width="0.5dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:background="#dcdcdc"
             android:layout_toRightOf="@id/iv_account"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"/>
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="28dp"
             android:id="@+id/et_account"
             android:hint="请输入账号"
             android:singleLine="true"
             android:textColorHint="#969696"
             android:background="@null"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/view1_vertical" />
 
         <View
@@ -71,32 +71,32 @@
             android:layout_height="1dp"
             android:background="#eeeeee"
             android:layout_alignStart="@id/view1_vertical"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/et_account"/>
 
         <ImageView
             android:id="@+id/iv_password"
-            android:layout_width="25dp"
-            android:layout_height="23dp"
+            android:layout_width="20dp"
+            android:layout_height="18dp"
             android:src="@mipmap/icon_password"
             android:layout_below="@id/view_horizontal"
             android:layout_alignStart="@id/iv_account"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/view2_vertical"
             android:layout_width="0.5dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:background="#dcdcdc"
             android:layout_toRightOf="@id/iv_password"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/view_horizontal"
             android:layout_alignStart="@id/view_horizontal"/>
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="28dp"
             android:layout_toEndOf="@id/view2_vertical"
             android:layout_below="@id/view_horizontal"
             android:hint="请输入密码"
@@ -104,19 +104,19 @@
             android:inputType="textPassword"
             android:textColorHint="#969696"
             android:background="@null"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"
+            android:textSize="15sp"
+            android:layout_marginTop="18dp"
             android:layout_alignStart="@id/et_account"/>
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_below="@id/activity_login_rlAccountAndPassword"
         android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
         android:text="确定"
         android:background="@drawable/login_btn_background"
         android:textSize="20sp"
@@ -147,13 +147,14 @@
         android:layout_alignEnd="@id/btn_login"/>
 
     <View
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#dcdcdc"
         android:layout_toLeftOf="@+id/tv_third"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="158dp"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="25dp"
         android:id="@+id/view" />
     <TextView
         android:id="@+id/tv_third"
@@ -167,13 +168,14 @@
         android:layout_marginBottom="150dp"/>
 
     <View
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#dcdcdc"
         android:layout_toRightOf="@id/tv_third"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="159dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="25dp"/>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -189,8 +191,8 @@
         android:layout_weight="1">
     <ImageView
         android:id="@+id/iv_wechatLogin"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@mipmap/icon_wechat"
         android:layout_gravity="center_horizontal"/>
 
@@ -199,7 +201,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="微信"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"/>
     </LinearLayout>
@@ -211,8 +213,8 @@
         android:layout_weight="1">
     <ImageView
         android:id="@+id/iv_qqLogin"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@mipmap/icon_qq"
         android:layout_gravity="center_horizontal"/>
 
@@ -221,7 +223,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="QQ"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"/>
     </LinearLayout>
@@ -233,8 +235,8 @@
         android:layout_weight="1">
     <ImageView
         android:id="@+id/iv_weiboLogin"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@mipmap/icon_weibo"
         android:layout_gravity="center_horizontal"/>
 
@@ -243,7 +245,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="新浪微博"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"/>
     </LinearLayout>

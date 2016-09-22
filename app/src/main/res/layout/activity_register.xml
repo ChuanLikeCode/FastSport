@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/activity_register_rlTitle"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="#262626">
 
         <TextView
@@ -19,6 +19,7 @@
             android:layout_centerInParent="true"/>
 
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@mipmap/fanhui_title"
@@ -29,46 +30,46 @@
     <RelativeLayout
         android:id="@+id/activity_register_rlAccountAndPassword"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="190dp"
         android:layout_marginTop="15dp"
         android:background="#fff"
         android:layout_below="@id/activity_register_rlTitle">
 
         <ImageView
             android:id="@+id/iv_account"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
+            android:layout_width="15dp"
+            android:layout_height="22dp"
             android:src="@mipmap/icon_mobilephone"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/view1_vertical"
             android:layout_width="0.5dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:background="#dcdcdc"
             android:layout_toRightOf="@id/iv_account"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"/>
+
 
         <EditText
             android:layout_width="250dp"
-            android:layout_height="35dp"
+            android:layout_height="28dp"
             android:id="@+id/et_account"
             android:hint="请输入手机号"
             android:singleLine="true"
             android:textColorHint="#969696"
             android:background="@null"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/view1_vertical" />
 
         <ImageView
             android:id="@+id/cancel_number"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@mipmap/icon_close"
             android:layout_alignTop="@id/et_account"
             android:layout_alignParentEnd="true"
@@ -80,32 +81,33 @@
             android:layout_height="1dp"
             android:background="#eeeeee"
             android:layout_alignStart="@id/view1_vertical"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/et_account"/>
+
 
         <ImageView
             android:id="@+id/iv_password"
-            android:layout_width="25dp"
-            android:layout_height="23dp"
+            android:layout_width="20dp"
+            android:layout_height="18dp"
             android:src="@mipmap/icon_password"
             android:layout_below="@id/view1_horizontal"
             android:layout_alignStart="@id/iv_account"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/view2_vertical"
             android:layout_width="0.5dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:background="#dcdcdc"
             android:layout_toRightOf="@id/iv_password"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/view1_horizontal"
             android:layout_alignStart="@id/view1_horizontal"/>
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="28dp"
             android:layout_toEndOf="@id/view2_vertical"
             android:layout_below="@id/view1_horizontal"
             android:hint="请输入密码"
@@ -113,8 +115,8 @@
             android:inputType="textPassword"
             android:textColorHint="#969696"
             android:background="@null"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:textSize="15sp"
+            android:layout_marginTop="18dp"
             android:layout_alignStart="@id/et_account"/>
 
         <View
@@ -123,25 +125,25 @@
             android:layout_height="1dp"
             android:background="#eeeeee"
             android:layout_alignStart="@id/view2_vertical"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/et_password"/>
 
         <ImageView
             android:id="@+id/iv_identify"
-            android:layout_width="21dp"
-            android:layout_height="30dp"
+            android:layout_width="15dp"
+            android:layout_height="21dp"
             android:src="@mipmap/icon_code"
             android:layout_below="@id/view2_horizontal"
             android:layout_alignStart="@id/iv_password"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="20dp"/>
 
         <View
             android:id="@+id/view3_vertical"
             android:layout_width="0.5dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:background="#dcdcdc"
             android:layout_toRightOf="@id/iv_identify"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/view2_horizontal"
             android:layout_alignStart="@id/view2_horizontal"/>
 
@@ -149,25 +151,26 @@
         <EditText
             android:id="@+id/et_identify"
             android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:layout_height="28dp"
             android:layout_toEndOf="@id/view2_vertical"
             android:layout_below="@id/view2_horizontal"
             android:hint="请输入验证码"
             android:singleLine="true"
             android:textColorHint="#969696"
             android:background="@null"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:textSize="15sp"
+            android:layout_marginTop="18dp"
             android:layout_alignStart="@id/et_account"/>
         
         <Button
+            android:id="@+id/takeIndentify"
             android:layout_width="85dp"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:background="@drawable/login_btn_background"
             android:text="获取验证码"
             android:textColor="#fff"
             android:layout_below="@id/view2_horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"/>
 
@@ -221,11 +224,11 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_below="@id/tv_receiverSecond"
         android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
         android:text="注册"
         android:background="@drawable/login_btn_background"
         android:textSize="20sp"
@@ -238,7 +241,7 @@
         android:layout_below="@+id/btn_register"
         android:layout_alignStart="@id/btn_register"
         android:layout_marginTop="10dp"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:layout_marginLeft="5dp"
         android:textColor="#949494"/>
 </RelativeLayout>
