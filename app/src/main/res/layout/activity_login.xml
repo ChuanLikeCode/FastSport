@@ -5,7 +5,9 @@
     android:background="#f3f3f3"
     android:orientation="vertical">
 
-    <include layout="@layout/activity_title_bar" />
+    <include
+        android:id="@+id/title"
+        layout="@layout/activity_title_bar" />
 
     <RelativeLayout
         android:id="@+id/activity_login_rlAccountAndPassword"
