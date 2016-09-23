@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">FastSport</string>
+    <string name="selectBody">选择体型</string>
+    <string name="BodyLabel1">隐形肥胖</string>
+    <string name="BodyLabel2">脂肪过多</string>
+    <string name="BodyLabel3">肥胖型</string>
+    <string name="BodyLabel4">肌肉不足</string>
+    <string name="BodyLabel5">健康匀称</string>
+    <string name="BodyLabel6">超重肌肉</string>
+    <string name="BodyLabel7">消瘦型</string>
+    <string name="BodyLabel8">低脂肪</string>
+    <string name="BodyLabelByYourself">自定</string>
+    <string name="BodyEditHint">请输入</string>
+
 </resources>
