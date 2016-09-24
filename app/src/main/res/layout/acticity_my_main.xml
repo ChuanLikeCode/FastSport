@@ -2,143 +2,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="#FFF">
+    android:weightSum="1">
 
     <RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="#42c2b3">
+        android:background="@color/turquoise">
 
         <ImageView
+            android:id="@+id/activity_my_main_iv_setting"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/activity_my_main_iv_setting"
-            android:src="@mipmap/set"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"/>
+            android:src="@mipmap/set" />
 
         <ImageView
             android:id="@+id/activity_my_main_iv_touxiang"
-            android:src="@mipmap/touxiang"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_below="@+id/activity_my_main_iv_setting"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_below="@+id/activity_my_main_iv_setting" />
+            android:src="@mipmap/touxiang" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-
             android:layout_below="@+id/activity_my_main_iv_touxiang"
+
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_my_main_tv_quanxing1"
-                android:src="@mipmap/quanxing"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/activity_my_main_iv_touxiang"
+                android:layout_marginBottom="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/activity_my_main_iv_touxiang" />
+                android:src="@mipmap/quanxing" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_my_main_iv_quanxing2"
-                android:layout_marginBottom="25dp"
-                android:layout_marginStart="5dp"
-                android:src="@mipmap/quanxing"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/activity_my_main_tv_quanxing1" />
-
-            <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/activity_my_main_tv_quanxing1"
+                android:src="@mipmap/quanxing" />
+
+            <ImageView
                 android:id="@+id/activity_my_main_iv_banxing3"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"
                 android:layout_marginStart="5dp"
-                android:src="@mipmap/banxing"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/activity_my_main_iv_quanxing2" />
+                android:layout_toEndOf="@+id/activity_my_main_iv_quanxing2"
+                android:src="@mipmap/banxing" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_my_main_iv_banxing4"
-                android:src="@mipmap/banxing"
-                android:layout_marginStart="5dp"
-                android:layout_alignTop="@+id/activity_my_main_iv_banxing3"
-                android:layout_toEndOf="@+id/activity_my_main_iv_banxing3" />
-
-            <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:id="@+id/activity_my_main_iv_banxing5"
+                android:layout_alignTop="@+id/activity_my_main_iv_banxing3"
                 android:layout_marginStart="5dp"
-                android:src="@mipmap/banxing"
+                android:layout_toEndOf="@+id/activity_my_main_iv_banxing3"
+                android:src="@mipmap/banxing" />
+
+            <ImageView
+                android:id="@+id/activity_my_main_iv_banxing5"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignTop="@+id/activity_my_main_iv_banxing4"
-                android:layout_toEndOf="@+id/activity_my_main_iv_banxing4" />
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/activity_my_main_iv_banxing4"
+                android:src="@mipmap/banxing" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/activity_my_main_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang"
             android:text="小明"
-            android:textSize="15sp"
-            android:textColor="#FFF"
-            android:id="@+id/activity_my_main_tv_name"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang" />
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
             android:id="@+id/activity_my_main_iv_man"
-            android:layout_marginStart="6dp"
-            android:src="@mipmap/man"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/activity_my_main_tv_name" />
-
-        <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/activity_my_main_tv_name"
+            android:src="@mipmap/man" />
+
+        <ImageView
             android:id="@+id/activity_my_main_iv_phone"
-            android:src="@mipmap/phone"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignBottom="@+id/activity_my_main_iv_touxiang"
-            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang" />
+            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang"
+            android:src="@mipmap/phone" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13990081234"
-            android:textSize="15sp"
-            android:id="@+id/textView2"
-            android:textColor="#FFF"
             android:layout_alignTop="@+id/activity_my_main_iv_phone"
-            android:layout_toEndOf="@+id/activity_my_main_iv_phone" />
+            android:layout_toEndOf="@+id/activity_my_main_iv_phone"
+            android:text="13990081234"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <View
         android:id="@+id/divider0"
-        android:layout_below="@id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        android:layout_below="@id/rl_head"
         android:background="#ededed"/>
 
     <RelativeLayout
         android:id="@+id/rl_zhuye"
-        android:layout_below="@+id/divider0"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/divider0"
         android:gravity="center_vertical"
         >
 
@@ -154,33 +154,33 @@
             android:id="@+id/tv_zhuye"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_zhuye"
             android:layout_marginLeft="10dp"
-            android:text="我的主页"
+            android:layout_toRightOf="@id/iv_zhuye"
+            android:text="@string/my_index"
             android:textSize="15sp"/>
 
         <ImageView
+            android:id="@+id/activity_my_main_iv_enterhome"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/you"
-            android:id="@+id/activity_my_main_iv_enterhome"/>
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/you" />
 
     </RelativeLayout>
 
     <View
         android:id="@+id/divider1"
-        android:layout_below="@+id/rl_zhuye"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#ededed"/>
+        android:layout_below="@+id/rl_zhuye"
+        android:background="@color/lime_white" />
 
     <RelativeLayout
         android:id="@+id/rl_tongji"
-        android:layout_below="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/divider1"
         android:gravity="center_vertical"
         >
 
@@ -196,33 +196,33 @@
             android:id="@+id/tv_tongji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_tongji"
             android:layout_marginLeft="10dp"
-            android:text="我的统计"
+            android:layout_toRightOf="@id/iv_tongji"
+            android:text="@string/my_statistics"
             android:textSize="15sp"/>
 
         <ImageView
+            android:id="@+id/activity_my_main_iv_entertotal"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/you"
-            android:id="@+id/activity_my_main_iv_entertotal"/>
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/you" />
 
     </RelativeLayout>
 
     <View
         android:id="@+id/divider2"
-        android:layout_below="@+id/rl_tongji"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#ededed"/>
+        android:layout_below="@+id/rl_tongji"
+        android:background="@color/lime_white" />
 
     <RelativeLayout
         android:id="@+id/rl_guanli"
-        android:layout_below="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/divider2"
         android:gravity="center_vertical"
         >
 
@@ -238,37 +238,37 @@
             android:id="@+id/tv_guanli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_guanli"
             android:layout_marginLeft="10dp"
-            android:text="我的管理"
+            android:layout_toRightOf="@id/iv_guanli"
+            android:text="@string/my_manage"
             android:textSize="15sp"/>
 
         <ImageView
+            android:id="@+id/activity_my_main_iv_entermanager"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/you"
-            android:id="@+id/activity_my_main_iv_entermanager"/>
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/you" />
 
     </RelativeLayout>
     <View
     android:id="@+id/divider5"
-    android:layout_below="@+id/rl_guanli"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ededed"
-    android:layout_above="@+id/lr_below"/>
+        android:layout_above="@+id/lr_below"
+        android:layout_below="@+id/rl_guanli"
+        android:background="@color/lime_white" />
 
 
 
 
     <LinearLayout
+        android:id="@+id/lr_below"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:id="@+id/lr_below">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -288,7 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_my_main_iv_plan"
                 android:layout_gravity="center"
-                android:text="计划"
+                android:text="@string/plan"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -309,7 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="学员"
+                android:text="@string/student"
                 android:textSize="12dp" />
         </LinearLayout>
 
@@ -322,8 +322,8 @@
             <ImageView
                 android:id="@+id/activity_my_main_iv_woefocus"
                 android:layout_width="30dp"
-                android:layout_gravity="center"
                 android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:src="@mipmap/wode_focus" />
 
             <TextView
@@ -331,7 +331,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_my_main_iv_woefocus"
                 android:layout_gravity="center"
-                android:text="我的"
+                android:text="@string/mine"
 
                 android:textSize="12dp" />
         </LinearLayout>

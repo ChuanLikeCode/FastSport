@@ -11,9 +11,9 @@ import android.widget.TextView;
 /**
  * Created by Administrator on 2016/9/21 0021.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView register;
+    TextView tvRegister;
     android.support.v7.widget.Toolbar loginTitle;
     private ImageView ivClose;
 
@@ -25,19 +25,18 @@ public class LoginActivity extends AppCompatActivity {
         initView();
 
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
+
     }
 
     private void initView() {
 
         loginTitle = (Toolbar) findViewById(R.id.title);
-        register = (TextView) findViewById(R.id.tv_register);
+        tvRegister = (TextView) findViewById(R.id.tv_register);
+
+
         ivClose = (ImageView) loginTitle.findViewById(R.id.iv_close_titlebar);
+        tvRegister.setOnClickListener(this);
+        // ivClose.setOnClickListener(this);
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,5 +44,24 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /*tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });*/
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_register:
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                break;
+
+        }
     }
 }

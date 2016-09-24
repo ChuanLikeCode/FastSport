@@ -1,9 +1,8 @@
 package com.sibo.fastsport;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +15,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_my_main);
-        head = (ImageView)findViewById(R.id.activity_my_main_iv_touxiang);
-        setting = (ImageView)findViewById(R.id.activity_my_main_iv_setting);
-        zhuye = (RelativeLayout)findViewById(R.id.rl_zhuye);
+
+        initView();
+
+    }
+
+    private void initView() {
+
+        head = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
+        setting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
+        zhuye = (RelativeLayout) findViewById(R.id.rl_zhuye);
         zhuye.setOnClickListener(this);
         head.setOnClickListener(this);
         setting.setOnClickListener(this);

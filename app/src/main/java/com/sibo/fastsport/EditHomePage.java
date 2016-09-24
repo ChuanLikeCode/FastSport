@@ -17,10 +17,18 @@ public class EditHomePage extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editzhuye);
+
+        initView();
+
+    }
+
+    private void initView() {
+
         back = (ImageView)findViewById(R.id.activity_editzhuye_iv_back);
         recyclerView = (RecyclerView)findViewById(R.id.activity_editzhuye_recycler_view);
         back.setOnClickListener(this);
         recyclerView.setVisibility(View.GONE);
+
     }
 
     @Override
