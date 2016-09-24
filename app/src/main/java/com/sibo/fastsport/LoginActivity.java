@@ -14,10 +14,12 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
 
     //固定的ToolBar
     android.support.v7.widget.Toolbar rootToolBar;
-    TextView tvRegister;
     private ImageView ivClose;
+    private ImageView ivBack;
     private Toolbar toolBar;
     private TextView tvText;
+
+    private TextView tvToRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
     }
 
     private void initView() {
-        tvRegister = (TextView) findViewById(R.id.tv_register);
-        tvRegister.setOnClickListener(this);
+        tvToRegister = (TextView) findViewById(R.id.tv_register);
+        tvToRegister.setOnClickListener(this);
     }
 
 

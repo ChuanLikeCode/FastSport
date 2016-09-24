@@ -103,6 +103,32 @@ public class BaseTranslucentActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NewApi")
+    public void setOrChangeTranslucentColor(View bottomNavigationBar, int translucentPrimaryColor) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            //加颜色，防止华为手机出现虚拟键
+            /*if(bottomNavigationBar!=null){
+
+				if(hasNavigationBarShow(getWindowManager())){
+					LayoutParams p = bottomNavigationBar.getLayoutParams();
+					p.height += getNavigationBarHeight(this);
+					bottomNavigationBar.setLayoutParams(p);
+
+					bottomNavigationBar.setBackgroundColor(translucentPrimaryColor);
+				}
+			}*/
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //getWindow().setNavigationBarColor(translucentPrimaryColor);设置为透明
+            getWindow().setStatusBarColor(translucentPrimaryColor);
+        } else {
+
+        }
+    }
+
+
     private int getNavigationBarHeight(Context context) {
         return getSystemComponentDimen(this, "navigation_bar_height");
     }
