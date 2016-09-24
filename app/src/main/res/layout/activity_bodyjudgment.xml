@@ -6,10 +6,14 @@
     android:background="@color/gray"
     tools:context="com.sibo.fastsport.BodyjudgmentActivity">
 
+    <include
+        android:id="@+id/bodyTitle"
+        layout="@layout/activity_title_bar"
     <RelativeLayout
         android:id="@+id/rl_selectBody"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_below="@+id/bodyTitle"
         android:layout_marginTop="10dp"
         android:background="@color/white">
 
