@@ -13,16 +13,24 @@ import android.widget.ImageView;
  * Created by Administrator on 2016/7/26 0026.
  */
 public class PersonalHome extends Activity implements View.OnClickListener{
-    private ImageView back;
-    private ImageView editHome;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
+    private ImageView back;
+    private ImageView editHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personalhome);
-        recyclerView = (RecyclerView)findViewById(R.id.activity_personalhome_recycler_view);
+
+        initView();
+
+    }
+
+    private void initView() {
+
+        recyclerView = (RecyclerView) findViewById(R.id.activity_personalhome_recycler_view);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
@@ -30,8 +38,8 @@ public class PersonalHome extends Activity implements View.OnClickListener{
 
         adapter = new DetailsRecyclerView(this);
         recyclerView.setAdapter(adapter);
-        back = (ImageView)findViewById(R.id.activity_personalhome_iv_back);
-        editHome = (ImageView)findViewById(R.id.activity_personalhome_iv_touxiang);
+        back = (ImageView) findViewById(R.id.activity_personalhome_iv_back);
+        editHome = (ImageView) findViewById(R.id.activity_personalhome_iv_touxiang);
         editHome.setOnClickListener(this);
         back.setOnClickListener(this);
     }

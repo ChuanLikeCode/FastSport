@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3"
+    android:background="@color/light"
     android:orientation="vertical">
 
     <include
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="60dp"
-        android:background="#fff">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_account"
@@ -31,7 +31,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/iv_account"
-            android:background="#dcdcdc" />
+            android:background="@color/light_gray" />
 
         <EditText
             android:id="@+id/et_account"
@@ -44,7 +44,7 @@
             android:background="@null"
             android:hint="请输入账号"
             android:singleLine="true"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/gray_hint_dark"
             android:textSize="15sp" />
 
         <View
@@ -54,7 +54,7 @@
             android:layout_alignStart="@id/view1_vertical"
             android:layout_below="@id/et_account"
             android:layout_marginTop="15dp"
-            android:background="#eeeeee" />
+            android:background="@color/light_white" />
 
         <ImageView
             android:id="@+id/iv_password"
@@ -73,7 +73,7 @@
             android:layout_below="@id/view_horizontal"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/iv_password"
-            android:background="#dcdcdc" />
+            android:background="@color/light_white" />
 
         <EditText
             android:id="@+id/et_password"
@@ -88,7 +88,7 @@
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/gray_hint_dark"
             android:textSize="15sp" />
     </RelativeLayout>
 
@@ -102,7 +102,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/login_btn_background"
         android:text="确定"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <TextView
@@ -114,7 +114,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="18dp"
         android:text="免费注册"
-        android:textColor="#7a7a7a"
+        android:textColor="@color/prompt_gray"
         android:textSize="15sp" />
 
     <TextView
@@ -126,7 +126,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="18dp"
         android:text="忘记密码?"
-        android:textColor="#7a7a7a"
+        android:textColor="@color/prompt_gray"
         android:textSize="15sp" />
 
     <View
@@ -138,7 +138,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/tv_third"
-        android:background="#dcdcdc" />
+        android:background="@color/light_gray" />
     <TextView
         android:id="@+id/tv_third"
         android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="150dp"
         android:text="第三方登录"
-        android:textColor="#999999"
+        android:textColor="@color/gray_dark"
         android:textSize="15sp" />
 
     <View
@@ -158,7 +158,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="25dp"
         android:layout_toRightOf="@id/tv_third"
-        android:background="#dcdcdc" />
+        android:background="@color/light_gray" />
 
 <LinearLayout
     android:layout_width="match_parent"

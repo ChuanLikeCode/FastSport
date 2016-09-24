@@ -8,258 +8,258 @@
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="#42c2b3">
+        android:background="@color/turquoise">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@mipmap/fanhui"
             android:id="@+id/activity_personalhome_iv_back"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"/>
-        <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/activity_personalhome_iv_share"
-            android:src="@mipmap/fenxiang"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"/>
+            android:src="@mipmap/fanhui" />
+        <ImageView
+            android:id="@+id/activity_personalhome_iv_share"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/fenxiang" />
 
         <ImageView
             android:id="@+id/activity_personalhome_iv_touxiang"
-            android:src="@mipmap/touxiang"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="60dp" />
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/touxiang" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
 
             android:layout_below="@+id/activity_personalhome_iv_touxiang"
-            android:orientation="horizontal"
-            android:id="@+id/linearLayout">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_personalhome_tv_quanxing1"
-                android:src="@mipmap/quanxing"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/activity_personalhome_iv_touxiang"
+                android:layout_marginBottom="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/activity_personalhome_iv_touxiang" />
+                android:src="@mipmap/quanxing" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_personalhome_iv_quanxing2"
-                android:layout_marginBottom="25dp"
-                android:layout_marginStart="5dp"
-                android:src="@mipmap/quanxing"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/activity_personalhome_tv_quanxing1" />
-
-            <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/activity_personalhome_tv_quanxing1"
+                android:src="@mipmap/quanxing" />
+
+            <ImageView
                 android:id="@+id/activity_personalhome_iv_banxing3"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"
                 android:layout_marginStart="5dp"
-                android:src="@mipmap/banxing"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/activity_personalhome_iv_quanxing2" />
+                android:layout_toEndOf="@+id/activity_personalhome_iv_quanxing2"
+                android:src="@mipmap/banxing" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
                 android:id="@+id/activity_personalhome_iv_banxing4"
-                android:src="@mipmap/banxing"
-                android:layout_marginStart="5dp"
-                android:layout_alignTop="@+id/activity_personalhome_iv_banxing3"
-                android:layout_toEndOf="@+id/activity_personalhome_iv_banxing3" />
-
-            <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:id="@+id/activity_personalhome_iv_banxing5"
+                android:layout_alignTop="@+id/activity_personalhome_iv_banxing3"
                 android:layout_marginStart="5dp"
-                android:src="@mipmap/banxing"
+                android:layout_toEndOf="@+id/activity_personalhome_iv_banxing3"
+                android:src="@mipmap/banxing" />
+
+            <ImageView
+                android:id="@+id/activity_personalhome_iv_banxing5"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignTop="@+id/activity_personalhome_iv_banxing4"
-                android:layout_toEndOf="@+id/activity_personalhome_iv_banxing4" />
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/activity_personalhome_iv_banxing4"
+                android:src="@mipmap/banxing" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/activity_personalhome_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小明"
-            android:textSize="15sp"
-            android:textColor="#FFF"
-            android:id="@+id/activity_personalhome_tv_name"
             android:layout_marginTop="70dp"
+            android:layout_toEndOf="@+id/activity_personalhome_iv_touxiang"
+            android:text="小明"
+            android:textColor="@color/white"
 
-            android:layout_toEndOf="@+id/activity_personalhome_iv_touxiang" />
+            android:textSize="15sp" />
 
         <ImageView
+            android:id="@+id/activity_personalhome_iv_man"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:id="@+id/activity_personalhome_iv_man"
-            android:src="@mipmap/man"
             android:layout_marginStart="5dp"
             android:layout_marginTop="70dp"
-            android:layout_toEndOf="@+id/activity_personalhome_tv_name" />
+            android:layout_toEndOf="@+id/activity_personalhome_tv_name"
+            android:src="@mipmap/man" />
 
         <ImageView
+            android:id="@+id/activity_personalhome_iv_phone"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:id="@+id/activity_personalhome_iv_phone"
-            android:src="@mipmap/phone"
             android:layout_alignBottom="@+id/activity_personalhome_iv_touxiang"
-            android:layout_alignStart="@+id/activity_personalhome_tv_name" />
+            android:layout_alignStart="@+id/activity_personalhome_tv_name"
+            android:src="@mipmap/phone" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13990081234"
-            android:textSize="13sp"
-            android:id="@+id/textView2"
-            android:textColor="#FFF"
             android:layout_above="@+id/linearLayout"
-            android:layout_toEndOf="@+id/activity_personalhome_iv_phone" />
+            android:layout_toEndOf="@+id/activity_personalhome_iv_phone"
+            android:text="13990081234"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:background="#54c8bb">
+        android:background="@color/mint_green"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="年龄"
-                android:textSize="15dp"
-                android:textColor="#FFF"
-                android:layout_gravity="center"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="30岁"
-                android:textSize="18dp"
                 android:id="@+id/activity_personalhome_tv_age"
-                android:textColor="#FFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:layout_gravity="center"/>
+                android:text="30岁"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="0.5dp"
             android:layout_height="15dp"
-            android:background="#FFF"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="身高"
-                android:textSize="15dp"
-                android:textColor="#FFF"
-                android:layout_gravity="center"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="180cm"
-                android:textSize="18dp"
                 android:id="@+id/activity_personalhome_tv_tall"
-                android:textColor="#FFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:layout_gravity="center"/>
+                android:text="180cm"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="0.5dp"
             android:layout_height="15dp"
-            android:background="#FFF"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="体重"
-                android:textSize="15dp"
-                android:textColor="#FFF"
-                android:layout_gravity="center"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
             <TextView
+                android:id="@+id/activity_personalhome_tv_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="75kg"
-                android:textSize="18dp"
-                android:id="@+id/activity_personalhome_tv_weight"
-                android:textColor="#FFF"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:layout_gravity="center"/>
+                android:text="75kg"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="0.5dp"
             android:layout_height="15dp"
-            android:background="#FFF"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="教龄"
-                android:textSize="15dp"
-                android:textColor="#FFF"
-                android:layout_gravity="center_horizontal"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
             <TextView
+                android:id="@+id/activity_personalhome_tv_teachyear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8年"
-                android:textSize="18dp"
-                android:id="@+id/activity_personalhome_tv_teachyear"
-                android:textColor="#FFF"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:layout_gravity="center_horizontal"/>
+                android:text="8年"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
         </LinearLayout>
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:background="#ededed">
+        android:background="@color/lime_white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -268,78 +268,78 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="#FFF"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/white">
             <TextView
+                android:id="@+id/domain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="擅长领域"
-                android:textSize="15dp"
-                android:textColor="#959595"
-                android:id="@+id/domain"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:text="擅长领域"
+                android:textColor="@color/gray_hint"
+                android:textSize="15dp" />
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/domain"
-                android:layout_marginTop="18dp"
-                android:id="@+id/linearLayout2">
+                android:layout_marginTop="18dp">
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:background="@mipmap/biaoqian"
-                    android:text="健身"
-                    android:textSize="18dp"
-                    android:layout_weight="1"
-                    android:textColor="#303030"
                     android:id="@+id/activity_personalhome_iv_jianshen"
-                    android:layout_marginLeft="25dp"/>
-                <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:gravity="center"
-                    android:background="@mipmap/biaoqian"
-                    android:text="机械"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:textColor="#303030"
+                    android:background="@mipmap/biaoqian"
+                    android:gravity="center"
+                    android:text="健身"
+                    android:textColor="@color/gray_light"
+                    android:textSize="18dp" />
+                <TextView
                     android:id="@+id/activity_personalhome_iv_jixie"
-                    android:layout_marginLeft="25dp"/>
-                <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:gravity="center"
-                    android:background="@mipmap/biaoqian"
-                    android:text="瑜伽"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:textColor="#303030"
+                    android:background="@mipmap/biaoqian"
+                    android:gravity="center"
+                    android:text="机械"
+                    android:textColor="@color/gray_light"
+                    android:textSize="18dp" />
+                <TextView
                     android:id="@+id/activity_personalhome_iv_yujia"
-                    android:layout_marginLeft="25dp"/>
-                <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:gravity="center"
-                    android:background="@mipmap/biaoqian"
-                    android:text="健美操"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:textColor="#303030"
-                    android:layout_marginRight="40dp"
+                    android:background="@mipmap/biaoqian"
+                    android:gravity="center"
+                    android:text="瑜伽"
+                    android:textColor="@color/gray_light"
+                    android:textSize="18dp" />
+                <TextView
                     android:id="@+id/activity_personalhome_iv_jianmeicao"
-                    android:layout_marginLeft="25dp"/>
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:background="@mipmap/biaoqian"
+                    android:gravity="center"
+                    android:text="健美操"
+                    android:textColor="@color/gray_light"
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/activity_personalhome_iv_enterdomain"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/activity_personalhome_iv_enterdomain"
-                android:src="@mipmap/you"
-                android:layout_marginEnd="10dp"
                 android:layout_above="@+id/linearLayout2"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:src="@mipmap/you" />
 
             </RelativeLayout>
 
@@ -347,60 +347,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="138dp"
                 android:layout_marginTop="5dp"
-                android:background="#FFF">
+                android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/activity_personalhome_tv_jiaoyujingli"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="教育经历"
-                    android:textColor="#959595"
-                    android:textSize="15dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/activity_personalhome_tv_jiaoyujingli" />
+                    android:text="教育经历"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="15dp" />
 
                 <TextView
+                    android:id="@+id/activity_personalhome_tv_jiaoyu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="  执教8年\n  年龄30/身高178cm/体重75kg\n  健身机械Crossfit、普拉提......"
-                    android:id="@+id/activity_personalhome_tv_jiaoyu"
-                    android:singleLine="false"
-                    android:background="#ededed"
-                    android:textSize="18dp"
-                    android:lineSpacingExtra="10dp"
-                    android:textColor="#303030"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/activity_personalhome_tv_jiaoyujingli"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/activity_personalhome_tv_jiaoyujingli"
-                    android:layout_alignParentStart="true" />
+                    android:background="@color/lime_white"
+                    android:lineSpacingExtra="10dp"
+                    android:singleLine="false"
+                    android:text="  执教8年\n  年龄30/身高178cm/体重75kg\n  健身机械Crossfit、普拉提......"
+                    android:textColor="@color/gray_light"
+                    android:textSize="18dp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:background="#FFF"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/activity_personalhome_tv_xiangqing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="详情"
-                    android:textColor="#959595"
-                    android:textSize="15dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
-                    android:id="@+id/activity_personalhome_tv_xiangqing" />
+                    android:text="详情"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="15dp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/activity_personalhome_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#f3f3f3"
-                    android:scrollbars="vertical"
                     android:layout_below="@+id/activity_personalhome_tv_xiangqing"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:background="@color/white_bg"
+                    android:scrollbars="vertical" />
 
             </RelativeLayout>
 
@@ -408,39 +408,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="#FFF">
+                android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/activity_personalhome_tv_adress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="地址"
-                    android:textColor="#959595"
-                    android:textSize="15dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
-                    android:id="@+id/activity_personalhome_tv_adress" />
+                    android:text="地址"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="15dp" />
 
                 <TextView
+                    android:id="@+id/activity_personalhome_tv_adressdetail"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="深圳东海国际"
-                    android:background="#ededed"
-                    android:gravity="center"
-                    android:textColor="#303030"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="15dp"
                     android:layout_below="@+id/activity_personalhome_tv_adress"
-                    android:id="@+id/activity_personalhome_tv_adressdetail"/>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/lime_white"
+                    android:gravity="center"
+                    android:text="深圳东海国际"
+                    android:textColor="@color/gray_light" />
 
                 <ImageView
+                    android:id="@+id/activity_personalhome_iv_ditu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/ditu"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_below="@+id/activity_personalhome_tv_adressdetail"
-                    android:id="@+id/activity_personalhome_iv_ditu"/>
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/ditu" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
