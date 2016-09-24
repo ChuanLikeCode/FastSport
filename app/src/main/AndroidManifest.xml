@@ -33,7 +33,8 @@
             android:name=".RegisterActivity"
             android:launchMode="singleTask" />
         <activity android:name=".MakeplanActivity" />
-        <activity android:name=".BodyjudgmentActivity"></activity>
+        <activity android:name=".BodyjudgmentActivity" />
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

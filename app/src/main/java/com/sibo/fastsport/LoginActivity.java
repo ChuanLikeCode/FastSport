@@ -2,7 +2,6 @@ package com.sibo.fastsport;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,11 +10,14 @@ import android.widget.TextView;
 /**
  * Created by Administrator on 2016/9/21 0021.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseTranslucentActivity implements View.OnClickListener {
 
+    //固定的ToolBar
+    android.support.v7.widget.Toolbar rootToolBar;
     TextView tvRegister;
-    android.support.v7.widget.Toolbar loginTitle;
     private ImageView ivClose;
+    private Toolbar toolBar;
+    private TextView tvText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,20 +25,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         initView();
-
-
+        initTitle();
 
     }
 
-    private void initView() {
+    private void initTitle() {
+        rootToolBar = (Toolbar) findViewById(R.id.title);
+        toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
+        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
+        tvText = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
 
-        loginTitle = (Toolbar) findViewById(R.id.title);
-        tvRegister = (TextView) findViewById(R.id.tv_register);
+        setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
 
-
-        ivClose = (ImageView) loginTitle.findViewById(R.id.iv_close_titlebar);
-        tvRegister.setOnClickListener(this);
-        // ivClose.setOnClickListener(this);
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,12 +45,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        /*tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });*/
+    }
+
+    private void initView() {
+        tvRegister = (TextView) findViewById(R.id.tv_register);
+        tvRegister.setOnClickListener(this);
     }
 
 
