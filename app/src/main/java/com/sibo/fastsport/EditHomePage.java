@@ -7,9 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-/**
- * Created by Administrator on 2016/7/27 0027.
- */
+
 public class EditHomePage extends Activity implements View.OnClickListener{
     private ImageView back;
     private RecyclerView recyclerView;
