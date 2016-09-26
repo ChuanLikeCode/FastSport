@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_white"
-    tools:context="com.sibo.fastsport.BodyjudgmentActivity">
+    tools:context=".activity.BodyjudgmentActivity">
 
     <include
         android:id="@+id/bodyTitle"
-        layout="@layout/activity_title_bar"
+        layout="@layout/activity_title_bar" />
+
     <RelativeLayout
         android:id="@+id/rl_selectBody"
         android:layout_width="match_parent"

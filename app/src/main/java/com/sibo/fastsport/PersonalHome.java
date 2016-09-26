@@ -1,6 +1,5 @@
 package com.sibo.fastsport;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.sibo.fastsport.activity.MainActivity;
+import com.sibo.fastsport.view.BaseTranslucentActivity;
+
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class PersonalHome extends Activity implements View.OnClickListener{
+public class PersonalHome extends BaseTranslucentActivity implements View.OnClickListener {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
@@ -42,6 +44,8 @@ public class PersonalHome extends Activity implements View.OnClickListener{
         editHome = (ImageView) findViewById(R.id.activity_personalhome_iv_touxiang);
         editHome.setOnClickListener(this);
         back.setOnClickListener(this);
+
+        setOrChangeTranslucentColor(null, getResources().getColor(R.color.turquoise));
     }
 
     @Override

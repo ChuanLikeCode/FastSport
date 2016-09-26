@@ -6,11 +6,13 @@
     android:orientation="vertical"
     android:weightSum="1">
 
+
     <RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@color/turquoise">
+        android:layout_height="200dp"
+        android:layout_below="@+id/title"
+        android:background="@mipmap/mine_bg">
 
         <ImageView
             android:id="@+id/activity_my_main_iv_setting"
@@ -26,17 +28,21 @@
             android:id="@+id/activity_my_main_iv_touxiang"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/activity_my_main_iv_setting"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginStart="23dp"
             android:src="@mipmap/touxiang" />
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_my_main_iv_touxiang"
 
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activity_my_main_iv_touxiang"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -93,38 +99,40 @@
             android:id="@+id/activity_my_main_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang"
+            android:layout_alignStart="@+id/activity_my_main_iv_touxiang"
+            android:layout_alignTop="@+id/activity_my_main_iv_touxiang"
+            android:layout_marginStart="60dp"
             android:text="小明"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/activity_my_main_iv_man"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="6dp"
-            android:layout_toEndOf="@+id/activity_my_main_tv_name"
+            android:layout_alignBottom="@+id/activity_my_main_tv_name"
+            android:layout_toEndOf="@+id/linearLayout3"
             android:src="@mipmap/man" />
 
         <ImageView
             android:id="@+id/activity_my_main_iv_phone"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_alignBottom="@+id/activity_my_main_iv_touxiang"
-            android:layout_toEndOf="@+id/activity_my_main_iv_touxiang"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignStart="@+id/activity_my_main_tv_name"
             android:src="@mipmap/phone" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/activity_my_main_iv_phone"
+            android:layout_above="@+id/linearLayout3"
             android:layout_toEndOf="@+id/activity_my_main_iv_phone"
             android:text="13990081234"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <View
