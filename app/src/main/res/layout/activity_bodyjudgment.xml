@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_white"
-    tools:context="com.sibo.fastsport.BodyjudgmentActivity">
+    tools:context=".activity.BodyjudgmentActivity">
 
     <include
         android:id="@+id/bodyTitle"

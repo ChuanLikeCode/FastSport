@@ -1,4 +1,4 @@
-package com.sibo.fastsport;
+package com.sibo.fastsport.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+
+import com.sibo.fastsport.R;
 
 public class BaseActivity extends AppCompatActivity {
     private LinearLayout rootLayout;

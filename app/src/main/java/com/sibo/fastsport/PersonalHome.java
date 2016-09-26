@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.sibo.fastsport.activity.MainActivity;
+import com.sibo.fastsport.view.BaseTranslucentActivity;
+
 /**
  * Created by Administrator on 2016/7/26 0026.
  */

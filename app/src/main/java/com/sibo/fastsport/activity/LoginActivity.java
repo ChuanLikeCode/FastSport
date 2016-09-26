@@ -1,4 +1,4 @@
-package com.sibo.fastsport;
+package com.sibo.fastsport.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sibo.fastsport.R;
+import com.sibo.fastsport.view.BaseTranslucentActivity;
 
 /**
  * Created by Administrator on 2016/9/21 0021.

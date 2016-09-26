@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sibo.fastsport">
+    package="com.sibo.fastsport"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="23" />
+    <!--允许联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--获取wifi网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--获取sd卡写的权限，用于文件上传和下载-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许读取手机状态 用于创建BmobInstallation-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -9,8 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
-            android:launchMode="singleTask">
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,24 +37,36 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name=".SettingActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.SettingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".EditHomePage"
             android:launchMode="singleTask" />
         <activity
             android:name=".PersonalHome"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".PersonalInfoActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.PersonalInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".MakeplanActivity" />
-        <activity android:name=".BodyjudgmentActivity" />
-        <activity android:name=".BaseActivity"></activity>
-        <activity android:name=".MainActivity">
+            android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MakeplanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BodyjudgmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BaseActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
