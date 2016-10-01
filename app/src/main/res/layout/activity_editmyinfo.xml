@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/edit_myinfo_title"
+        layout="@layout/activity_title_bar" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_myinfo_title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/name"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_name"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_name"
+        android:background="@null"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_name"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/sex"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_sex"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_sex"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_sex"
+        android:background="@null"
+        android:textAlignment="center" />
+
+
+    <View
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_sex"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_telephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/telephone"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_telephone"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_telephone"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_telephone"
+        android:background="@null"
+        android:inputType="phone"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_telephone"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear3"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/age"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_age"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_age"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_age"
+        android:background="@null"
+        android:inputType="number"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_age"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear4"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/height"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_height"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_height"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_height"
+        android:background="@null"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_height"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear5"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/weight"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_weight"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_weight"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_weight"
+        android:background="@null"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_weight"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <RelativeLayout
+        android:id="@+id/edit_myinfo_rl_jiaoling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear6">
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_jiaoling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+
+            android:layout_marginTop="15dp"
+            android:text="@string/jiaoling"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_myinfo_et_jiaoling"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/edit_myinfo_tv_jiaoling"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/edit_myinfo_tv_jiaoling"
+            android:background="@null"
+            android:textAlignment="center" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/linear7"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_below="@id/edit_myinfo_rl_jiaoling"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear7"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/adress"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_address"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_address"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_address"
+        android:background="@null"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/edit_myinfo_tv_address"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/edit_myinfo_tv_club"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear8"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/club"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edit_myinfo_et_club"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/edit_myinfo_tv_club"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/edit_myinfo_tv_club"
+        android:background="@null"
+        android:textAlignment="center" />
+
+    <View
+        android:id="@+id/linear9"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/edit_myinfo_tv_club"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray" />
+</RelativeLayout>

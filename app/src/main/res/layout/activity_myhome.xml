@@ -6,8 +6,8 @@
     <RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/imagefirst">
+        android:layout_height="223dp"
+        android:background="@drawable/imagefirst">
 
         <ImageView
             android:id="@+id/activity_myhome_iv_share"
@@ -404,8 +404,8 @@
                     android:textColor="@color/gray_hint"
                     android:textSize="15dp" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_personalhome_recycler_view"
+                <com.dalong.library.view.LoopRotarySwitchView
+                    android:id="@+id/activity_myhome_loopView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/activity_personalhome_tv_xiangqing"
@@ -413,7 +413,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white_bg"
-                    android:scrollbars="vertical" />
+                    android:gravity="center" />
 
             </RelativeLayout>
 
@@ -464,6 +464,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout

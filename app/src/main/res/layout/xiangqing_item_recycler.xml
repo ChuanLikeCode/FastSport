@@ -9,5 +9,5 @@
         android:id="@+id/item_recycler_iv_xiangqing"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@mipmap/imagefirst" />
+        android:src="@drawable/imagefirst" />
 </RelativeLayout>

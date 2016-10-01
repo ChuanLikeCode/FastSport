@@ -2,7 +2,6 @@ package com.sibo.fastsport;
 
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,10 @@ import java.util.List;
 
 public class DetailsRecyclerView extends RecyclerView.Adapter<DetailsRecyclerView.ViewHolder>{
 
-    public int[] pic = {R.mipmap.imagefirst,R.mipmap.imagesecond,
-                        R.mipmap.imagethree,R.mipmap.imagefour,
-                        R.mipmap.imagefive,R.mipmap.imagesix,
-                        R.mipmap.imageseven,R.mipmap.imageeight};
+    public int[] pic = {R.drawable.imagefirst, R.drawable.imagesecond,
+            R.drawable.imagethree, R.drawable.imagefour,
+            R.drawable.imagefive, R.drawable.imagesix,
+            R.drawable.imageseven, R.drawable.imageeight};
     public List<Integer> pics = new ArrayList<Integer>();
     private LayoutInflater mInflater;
     public DetailsRecyclerView(Context context){

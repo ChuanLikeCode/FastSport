@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sibo.fastsport.R;
+import com.sibo.fastsport.activity.MyHomeActivity;
 
 /**
  * Created by Administrator on 2016/7/27 0027.
@@ -36,7 +36,7 @@ public class EditHomePageActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.activity_editzhuye_iv_back){
-            Intent intent = new Intent(EditHomePage.this,PersonalHome.class);
+            Intent intent = new Intent(EditHomePageActivity.this, MyHomeActivity.class);
             startActivity(intent);
             finish();
         }
