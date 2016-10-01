@@ -264,7 +264,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_above="@id/lr_below"
+        android:layout_above="@+id/myhome_menu"
         android:layout_below="@id/rl_head"
         android:background="@color/lime_white">
 
@@ -458,8 +458,18 @@
         </LinearLayout>
     </ScrollView>
 
-
     <LinearLayout
+        android:id="@+id/myhome_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include
+            android:id="@+id/menu"
+            layout="@layout/menu_layout" />
+    </LinearLayout>
+
+    <!--<LinearLayout
         android:id="@+id/lr_below"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -533,7 +543,7 @@
                 android:textSize="12dp" />
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 </RelativeLayout>
