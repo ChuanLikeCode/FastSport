@@ -37,7 +37,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
     }
 
     private void initView() {
-
+        loginTitle = (Toolbar) findViewById(R.id.title);
         ivBack = (ImageView) loginTitle.findViewById(R.id.iv_back_titlebar);
         ivBack.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
@@ -49,7 +49,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
         adapter = new PersonalInfoRecyclerView(this);
         recyclerView.setAdapter(adapter);
 
-        loginTitle = (Toolbar) findViewById(R.id.title);
+
         tvInfo = (TextView) loginTitle.findViewById(R.id.tv_title_bar);
         ivClose = (ImageView) loginTitle.findViewById(R.id.iv_close_titlebar);
         ivClose.setOnClickListener(new View.OnClickListener() {

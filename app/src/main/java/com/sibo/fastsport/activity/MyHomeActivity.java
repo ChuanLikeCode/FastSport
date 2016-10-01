@@ -1,4 +1,4 @@
-package com.sibo.fastsport;
+package com.sibo.fastsport.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sibo.fastsport.activity.MainActivity;
+import com.sibo.fastsport.DetailsRecyclerView;
+import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
 
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class PersonalHome extends BaseTranslucentActivity implements View.OnClickListener {
+public class MyHomeActivity extends BaseTranslucentActivity implements View.OnClickListener {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
@@ -24,7 +25,7 @@ public class PersonalHome extends BaseTranslucentActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personalhome);
+        setContentView(R.layout.activity_myhome);
 
         initView();
 
@@ -40,10 +41,10 @@ public class PersonalHome extends BaseTranslucentActivity implements View.OnClic
 
         adapter = new DetailsRecyclerView(this);
         recyclerView.setAdapter(adapter);
-        back = (ImageView) findViewById(R.id.activity_personalhome_iv_back);
-        editHome = (ImageView) findViewById(R.id.activity_personalhome_iv_touxiang);
+
+        editHome = (ImageView) findViewById(R.id.activity_mylhome_iv_touxiang);
         editHome.setOnClickListener(this);
-        back.setOnClickListener(this);
+
 
         setOrChangeTranslucentColor(null, getResources().getColor(R.color.turquoise));
     }
@@ -51,13 +52,10 @@ public class PersonalHome extends BaseTranslucentActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.activity_personalhome_iv_back:
-                Intent mainIntent = new Intent(PersonalHome.this,MainActivity.class);
-                startActivity(mainIntent);
-                finish();
-                break;
-            case R.id.activity_personalhome_iv_touxiang:
-                Intent editHomeIntent = new Intent(PersonalHome.this,EditHomePage.class);
+
+
+            case R.id.activity_mylhome_iv_touxiang:
+                Intent editHomeIntent = new Intent(MyHomeActivity.this, EditHomePageActivity.class);
                 startActivity(editHomeIntent);
                 finish();
         }

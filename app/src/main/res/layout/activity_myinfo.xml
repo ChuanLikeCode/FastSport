@@ -5,30 +5,7 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <!-- <RelativeLayout
-         android:orientation="horizontal"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="#000">
 
-         <ImageView
-             android:layout_width="wrap_content"
-             android:layout_height="25dp"
-             android:id="@+id/activity_myinfo_back"
-             android:src="@mipmap/fanhui_title"
-             android:layout_margin="20dp"
-             />
-
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="个人信息"
-             android:textSize="20dp"
-             android:textColor="@color/white"
-             android:id="@+id/activity_myinfo_title"
-             android:layout_centerVertical="true"
-             android:layout_centerHorizontal="true" />
-     </RelativeLayout>-->
 
     <include
         android:id="@+id/title"

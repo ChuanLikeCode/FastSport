@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sibo.fastsport.PersonalHome;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
 
@@ -151,7 +150,7 @@ public class MainActivity extends BaseTranslucentActivity implements View.OnClic
                 finish();
                 break;
             case R.id.rl_zhuye:
-                Intent myHomeIntent = new Intent(MainActivity.this,PersonalHome.class);
+                Intent myHomeIntent = new Intent(MainActivity.this, MyHomeActivity.class);
                 startActivity(myHomeIntent);
                 finish();
         }
