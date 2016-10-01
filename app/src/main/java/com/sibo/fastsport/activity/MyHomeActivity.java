@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.sibo.fastsport.DetailsRecyclerView;
+import com.sibo.fastsport.EditHomePageActivity;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
 
