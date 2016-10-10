@@ -32,4 +32,11 @@
     <string name="adress">所在地</string>
     <string name="club">健身房名称</string>
     <string name="complete">完成</string>
+    <string name="plan_title">填写资料</string>
+    <string name="next_step">下一步</string>
+    <string name="muscle_mass">肌肉量</string>
+    <string name="body_fat">体脂率</string>
+    <string name="normal_exercise">平时运动量</string>
+    <string name="often_exercise">经常运动</string>
+    <string name="contrast_photo">对比照片</string>
 </resources>

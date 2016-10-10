@@ -19,4 +19,5 @@
     <color name="prompt_gray">#7a7a7a</color>
     <color name="gray_hint">#959595</color>
     <color name="gray_dark">#999999</color>
+    <color name="transparent_bg">#22ffffff</color>
 </resources>

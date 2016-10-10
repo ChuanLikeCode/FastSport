@@ -682,8 +682,8 @@ public class MetaballMenu extends LinearLayout {
 
             // Get the height and width of the child. Tha padding on the child acts as bounds for the
             // selector to be drawn
-            int nHeight = mSelectedView.getHeight();
-            int nWidth = mSelectedView.getWidth();
+            int nHeight = (mSelectedView.getHeight()) / 3;
+            int nWidth = (mSelectedView.getWidth()) / 3;
 
             // Calculate the selector radius
             int nLargerSide = Math.max(nWidth, nHeight);

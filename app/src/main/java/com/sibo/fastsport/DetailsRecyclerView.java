@@ -16,7 +16,7 @@ public class DetailsRecyclerView extends RecyclerView.Adapter<DetailsRecyclerVie
     public int[] pic = {R.drawable.imagefirst, R.drawable.imagesecond,
             R.drawable.imagethree, R.drawable.imagefour,
             R.drawable.imagefive, R.drawable.imagesix,
-            R.drawable.imageseven, R.drawable.imageeight};
+            R.drawable.imageseven};
     public List<Integer> pics = new ArrayList<Integer>();
     private LayoutInflater mInflater;
     public DetailsRecyclerView(Context context){

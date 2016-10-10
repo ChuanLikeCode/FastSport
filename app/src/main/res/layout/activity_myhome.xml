@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dragscaleimageview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <RelativeLayout
+    >
+
+    <com.sibo.fastsport.view.DragScaleImageView
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="223dp"
-        android:background="@drawable/imagefirst">
+        android:layout_height="wrap_content"
+
+        dragscaleimageview:scale_image="@drawable/imagefirst">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/activity_myhome_iv_share"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/edit" />
 
         <ImageView
             android:id="@+id/activity_myhome_iv_share"
@@ -19,7 +30,7 @@
             android:layout_marginTop="20dp"
             android:src="@mipmap/set" />
 
-        <ImageView
+        <com.sibo.fastsport.view.CircleImageView
             android:id="@+id/activity_mylhome_iv_touxiang"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -132,7 +143,7 @@
             android:layout_height="60dp"
             android:layout_below="@id/xingxing_linearLayout"
             android:layout_gravity="center_horizontal"
-            android:background="#44ffffff"
+            android:background="@color/transparent_bg"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -148,7 +159,7 @@
                     android:layout_gravity="center"
                     android:text="年龄"
                     android:textColor="@color/white"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/activity_personalhome_tv_age"
@@ -257,7 +268,7 @@
                     android:textSize="18dp" />
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </com.sibo.fastsport.view.DragScaleImageView>
 
 
     <ScrollView
@@ -462,88 +473,14 @@
         android:id="@+id/myhome_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/menu"
             layout="@layout/menu_layout" />
+
     </LinearLayout>
-
-    <!--<LinearLayout
-        android:id="@+id/lr_below"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/activity_my_main_iv_plan"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/plan" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/activity_my_main_iv_plan"
-                android:layout_gravity="center"
-                android:text="@string/plan"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/activity_my_main_iv_student"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/student" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/student"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/activity_my_main_iv_woefocus"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/wode_focus" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/activity_my_main_iv_woefocus"
-                android:layout_gravity="center"
-                android:text="@string/mine"
-
-                android:textSize="12dp" />
-        </LinearLayout>
-
-    </LinearLayout>-->
 
 
 </RelativeLayout>

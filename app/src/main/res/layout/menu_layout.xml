@@ -8,7 +8,7 @@
 
     android:gravity="center"
     android:orientation="horizontal"
-    app:backgroundColor="@android:color/black"
+    app:backgroundColor="@color/title"
     app:metaballColor="@android:color/white"
     app:needsElevation="true">
     <!--app:backgroundShapeRadius="30dp"-->
@@ -20,6 +20,7 @@
         android:padding="10dp"
         app:defaultImage="@mipmap/plan"
         app:selectedImage="@mipmap/plan_focus" />
+
 
     <com.sibo.fastsport.widgets.MetaballMenuImageView
         android:id="@+id/menuitem2"
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="10dp"
+
         app:defaultImage="@mipmap/wode"
         app:selectedImage="@mipmap/wode_focus" />
 </com.sibo.fastsport.widgets.MetaballMenu>

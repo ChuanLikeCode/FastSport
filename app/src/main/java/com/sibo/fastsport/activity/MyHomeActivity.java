@@ -17,6 +17,7 @@ import com.dalong.library.view.LoopRotarySwitchView;
 import com.sibo.fastsport.EditHomePageActivity;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
+import com.sibo.fastsport.view.DragScaleImageView;
 
 
 /**
@@ -26,10 +27,17 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
 
     int[] imageNum = {R.drawable.imagefirst, R.drawable.imagesecond, R.drawable.imagethree,
             R.drawable.imagefour, R.drawable.imagefive, R.drawable.imagesix,
-            R.drawable.imageseven, R.drawable.imageeight};
+            R.drawable.imageseven};
+    DragScaleImageView mDragScaleImageView;
+    int preHeight;
     private ImageView editHome;
     private LoopRotarySwitchView mLoopRotarySwitchView;
     private int width;
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +100,17 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
 
     private void initView() {
         mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.activity_myhome_loopView);
+        mDragScaleImageView = (DragScaleImageView) findViewById(R.id.rl_head);
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;     // 屏幕宽度（像素）
+        int height = metric.heightPixels;   // 屏幕高度（像素）
+        preHeight = dip2px(this, 223);
+        mDragScaleImageView.setImageWidthAndHeight(width, preHeight);
+
 
         editHome = (ImageView) findViewById(R.id.activity_mylhome_iv_touxiang);
         editHome.setOnClickListener(this);
-
-
         setOrChangeTranslucentColor(null, getResources().getColor(R.color.turquoise));
     }
 
