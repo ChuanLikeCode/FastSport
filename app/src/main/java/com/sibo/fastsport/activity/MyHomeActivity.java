@@ -14,22 +14,23 @@ import com.dalong.library.listener.OnItemClickListener;
 import com.dalong.library.listener.OnItemSelectedListener;
 import com.dalong.library.listener.OnLoopViewTouchListener;
 import com.dalong.library.view.LoopRotarySwitchView;
-import com.sibo.fastsport.EditHomePageActivity;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
 import com.sibo.fastsport.view.DragScaleImageView;
+import com.sibo.fastsport.widgets.MetaballMenu;
 
 
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class MyHomeActivity extends BaseTranslucentActivity implements View.OnClickListener {
+public class MyHomeActivity extends BaseTranslucentActivity implements View.OnClickListener, MetaballMenu.MetaballMenuClickListener {
 
     int[] imageNum = {R.drawable.imagefirst, R.drawable.imagesecond, R.drawable.imagethree,
             R.drawable.imagefour, R.drawable.imagefive, R.drawable.imagesix,
             R.drawable.imageseven};
     DragScaleImageView mDragScaleImageView;
     int preHeight;
+    MetaballMenu menu;
     private ImageView editHome;
     private LoopRotarySwitchView mLoopRotarySwitchView;
     private int width;
@@ -50,6 +51,9 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
 
     }
 
+    /**
+     * 图片旋转的
+     */
     private void initLinstener() {
         /**
          * 选中回调
@@ -99,6 +103,9 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
     }
 
     private void initView() {
+        menu = (MetaballMenu) findViewById(R.id.myhome_menu);
+        menu.setMenuClickListener(this);
+
         mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.activity_myhome_loopView);
         mDragScaleImageView = (DragScaleImageView) findViewById(R.id.rl_head);
         DisplayMetrics metric = new DisplayMetrics();
@@ -111,16 +118,23 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
 
         editHome = (ImageView) findViewById(R.id.activity_mylhome_iv_touxiang);
         editHome.setOnClickListener(this);
-        setOrChangeTranslucentColor(null, getResources().getColor(R.color.turquoise));
+        setOrChangeTranslucentColor(null, getResources().getColor(R.color.black));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.activity_mylhome_iv_touxiang:
-                Intent editHomeIntent = new Intent(MyHomeActivity.this, EditHomePageActivity.class);
-                startActivity(editHomeIntent);
-                finish();
+//            case R.id.activity_mylhome_iv_touxiang:
+//                startActivity(new Intent(MyHomeActivity.this,));
+//                break;
+            case R.id.menuPlan:
+
+                startActivity(new Intent(MyHomeActivity.this, MakePlanActivity.class));
+                break;
+            case R.id.menuStudent:
+
+                startActivity(new Intent(MyHomeActivity.this, StudentActivity.class));
+                break;
         }
 
     }

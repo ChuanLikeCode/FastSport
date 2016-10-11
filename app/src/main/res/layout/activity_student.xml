@@ -13,7 +13,19 @@
         android:id="@+id/student_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/student_rl_meun"
         android:layout_below="@id/student_title_bar"
         android:background="@color/white_bg"
         android:scrollbars="vertical" />
+
+    <RelativeLayout
+        android:id="@+id/student_rl_meun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include
+            android:id="@+id/student_meun"
+            layout="@layout/menu_layout" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_white"
-    tools:context=".activity.MakeplanActivity">
+    tools:context=".activity.MakePlanActivity">
 
     <RelativeLayout
         android:id="@+id/plan_rl1"
@@ -263,14 +263,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/plan_menu"
+        android:id="@+id/plan_menu_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <include
-            android:id="@+id/menu"
+            android:id="@+id/plan_menu"
             layout="@layout/menu_layout" />
 
     </LinearLayout>

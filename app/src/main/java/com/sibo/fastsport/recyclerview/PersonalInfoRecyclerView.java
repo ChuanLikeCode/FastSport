@@ -1,4 +1,4 @@
-package com.sibo.fastsport;
+package com.sibo.fastsport.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sibo.fastsport.R;
+import com.sibo.fastsport.domain.PersonalInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +18,17 @@ import java.util.List;
  * Created by Administrator on 2016/7/25 0025.
  */
 public class PersonalInfoRecyclerView extends RecyclerView.Adapter<PersonalInfoRecyclerView.ViewHolder>{
-    private LayoutInflater mInflater;
-    public List<Info> info_list = new ArrayList<Info>();
+    public List<PersonalInfo> info_list = new ArrayList<PersonalInfo>();
     public String[] info = {" ","斯帛","男","13590001234","30岁","180cm","75kg","8年"};
     public String[] infoTitle = {"头像","名字","性别","电话","年龄","身高","体重","教龄"};
+    private LayoutInflater mInflater;
     public PersonalInfoRecyclerView(Context context) {
         this.mInflater = LayoutInflater.from(context);
         add();
     }
     public void add(){
         for (int i = 0;i < info.length; i++){
-            Info info1 = new Info(infoTitle[i],info[i]);
+            PersonalInfo info1 = new PersonalInfo(infoTitle[i], info[i]);
             info_list.add(info1);
         }
     }
@@ -66,13 +69,5 @@ public class PersonalInfoRecyclerView extends RecyclerView.Adapter<PersonalInfoR
             tv_info = (TextView)view.findViewById(R.id.personalinfo_item_info);
             iv_info = (ImageView)view.findViewById(R.id.personalinfo_item_touxiang );
         }
-    }
-}
-class Info{
-    public String infoTitle;
-    public String info;
-    public Info(String it,String i){
-        this.info = i;
-        this.infoTitle = it;
     }
 }

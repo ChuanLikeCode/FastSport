@@ -39,4 +39,6 @@
     <string name="normal_exercise">平时运动量</string>
     <string name="often_exercise">经常运动</string>
     <string name="contrast_photo">对比照片</string>
+    <string name="last_class">剩余课程</string>
+    <string name="complete_class">完成锻炼</string>
 </resources>

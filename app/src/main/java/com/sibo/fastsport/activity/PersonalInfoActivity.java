@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sibo.fastsport.PersonalInfoRecyclerView;
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.recyclerview.PersonalInfoRecyclerView;
 
 /**
  * Created by Administrator on 2016/7/25 0025.
@@ -41,6 +41,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
         ivBack = (ImageView) loginTitle.findViewById(R.id.iv_back_titlebar);
         ivBack.setVisibility(View.VISIBLE);
         ivBack.setOnClickListener(this);
+
         recyclerView = (RecyclerView) findViewById(R.id.activity_personalinfo_recycler_view);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager  = new LinearLayoutManager(this);

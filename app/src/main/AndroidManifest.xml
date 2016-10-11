@@ -30,7 +30,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
             android:launchMode="singleTask"
@@ -45,7 +45,7 @@
         <activity
             android:name=".activity.MyHomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PersonalInfoActivity"
             android:launchMode="singleTask"
@@ -55,7 +55,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MakeplanActivity"
+            android:name=".activity.MakePlanActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,17 +66,22 @@
         </activity>
         <activity
             android:name=".activity.BodyjudgmentActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BaseActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.EditMyInfoActivity"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".activity.StudentActivity"></activity>
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.StudentActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
