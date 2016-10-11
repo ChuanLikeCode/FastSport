@@ -240,7 +240,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/plan_menu"
+
         android:layout_below="@id/plan_rl_exercise"
         android:layout_marginTop="10dp"
         android:background="@color/white">
@@ -262,7 +262,7 @@
             android:src="@mipmap/icon_camera" />
     </RelativeLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/plan_menu_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -273,5 +273,5 @@
             android:id="@+id/plan_menu"
             layout="@layout/menu_layout" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 </RelativeLayout>

@@ -1,46 +1,46 @@
 package com.sibo.fastsport.activity;
 
-import android.content.Intent;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
+import com.sibo.fastsport.widgets.MetaballMenu;
 
-import cn.bmob.v3.Bmob;
-
-public class MainActivity extends BaseTranslucentActivity implements View.OnClickListener {
+public class MainActivity extends BaseTranslucentActivity implements MetaballMenu.MetaballMenuClickListener {
     //固定的ToolBar
-    android.support.v7.widget.Toolbar rootToolBar;
-    private ImageView ivClose;
-    private ImageView ivBack;
-    private Toolbar toolBar;
-    private TextView tvText;
+//    android.support.v7.widget.Toolbar rootToolBar;
+//
+//    private Toolbar toolBar;
 
-
-    private ImageView ivSetting;
-    private ImageView ivHead;
-    private RelativeLayout rlZhuYe;
+    MetaballMenu menu;
+    private MakePlanActivity makePlan;
+    private StudentActivity student;
+    private MyHomeActivity myHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acticity_my_main);
+        setContentView(R.layout.activity_main);
 
-        initBmob();
+        //       initBmob();
         initView();
 //        initTitle();
-        initData();
-
+//        initData();
+        setDefaultFragment();
 
     }
 
-    private void initData() {
-      /*  final User obj = new User();
+    private void setDefaultFragment() {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
+        transaction.commit();
+    }
+
+    /* private void initData() {
+       final User obj = new User();
         obj.setName("豆豆");
         obj.setSex("女");
         obj.setAge("18");
@@ -91,10 +91,10 @@ public class MainActivity extends BaseTranslucentActivity implements View.OnClic
                     Toast.makeText(MainActivity.this,"删除失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
-    }
+        });
+    }*/
 
-    private void initBmob() {
+  /*  private void initBmob() {
         //第一：默认初始化
         Bmob.initialize(this, "f79d34f38040f7e7512a4228ea4d0c7a");
         //第二：自v3.4.7版本开始,设置BmobConfig,允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)，
@@ -109,9 +109,9 @@ public class MainActivity extends BaseTranslucentActivity implements View.OnClic
         //.setFileExpiration(2500)
         //.build();
         //Bmob.initialize(config);
-    }
+    }*/
 
-    private void initTitle() {
+   /* private void initTitle() {
         rootToolBar = (Toolbar) findViewById(R.id.title);
         toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
         ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
@@ -122,37 +122,41 @@ public class MainActivity extends BaseTranslucentActivity implements View.OnClic
         ivBack.setVisibility(View.VISIBLE);
         setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
 
-    }
+    }*/
 
     private void initView() {
 
-        ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
+        menu = (MetaballMenu) findViewById(R.id.menu);
+        menu.setMenuClickListener(this);
+        makePlan = new MakePlanActivity();
+        student = new StudentActivity();
+        myHome = new MyHomeActivity();
+
+        /*ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
         ivSetting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
         rlZhuYe = (RelativeLayout) findViewById(R.id.rl_zhuye);
         rlZhuYe.setOnClickListener(this);
         ivHead.setOnClickListener(this);
         ivSetting.setOnClickListener(this);
         //让图片全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
     }
 
     @Override
     public void onClick(View v) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
         switch (v.getId()){
-            case R.id.activity_my_main_iv_touxiang:
-                Intent PersonalInfoIntent = new Intent(MainActivity.this,PersonalInfoActivity.class);
-                startActivity(PersonalInfoIntent);
-                finish();
+            case R.id.menuPlan:
+                transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
                 break;
-            case R.id.activity_my_main_iv_setting:
-                Intent settingIntent = new Intent(MainActivity.this,SettingActivity.class);
-                startActivity(settingIntent);
-                finish();
+            case R.id.menuStudent:
+                transaction.replace(R.id.MainActivity_FrameLayout, student);
                 break;
-            case R.id.rl_zhuye:
-                Intent myHomeIntent = new Intent(MainActivity.this, MyHomeActivity.class);
-                startActivity(myHomeIntent);
-                finish();
+            case R.id.menuMyhome:
+                transaction.replace(R.id.MainActivity_FrameLayout, myHome);
+                break;
         }
+        transaction.commit();
     }
 }

@@ -1,12 +1,14 @@
 package com.sibo.fastsport.activity;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -15,7 +17,6 @@ import com.dalong.library.listener.OnItemSelectedListener;
 import com.dalong.library.listener.OnLoopViewTouchListener;
 import com.dalong.library.view.LoopRotarySwitchView;
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.view.BaseTranslucentActivity;
 import com.sibo.fastsport.view.DragScaleImageView;
 import com.sibo.fastsport.widgets.MetaballMenu;
 
@@ -23,7 +24,7 @@ import com.sibo.fastsport.widgets.MetaballMenu;
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class MyHomeActivity extends BaseTranslucentActivity implements View.OnClickListener, MetaballMenu.MetaballMenuClickListener {
+public class MyHomeActivity extends Fragment {
 
     int[] imageNum = {R.drawable.imagefirst, R.drawable.imagesecond, R.drawable.imagethree,
             R.drawable.imagefour, R.drawable.imagefive, R.drawable.imagesix,
@@ -31,6 +32,7 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
     DragScaleImageView mDragScaleImageView;
     int preHeight;
     MetaballMenu menu;
+    View MyHomeFragment;
     private ImageView editHome;
     private LoopRotarySwitchView mLoopRotarySwitchView;
     private int width;
@@ -40,16 +42,18 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
         return (int) (dpValue * scale + 0.5f);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myhome);
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //将布局文件转为View
+        MyHomeFragment = inflater.inflate(R.layout.activity_myhome, container, false);
         initView();
         initData();
         initLinstener();
-
+        return MyHomeFragment;
     }
+
 
     /**
      * 图片旋转的
@@ -87,13 +91,13 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
 
     private void initData() {
         for (int i = 0; i < imageNum.length; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.myhome_pictureshow, null);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.myhome_pictureshow, null);
             ImageView image = (ImageView) view.findViewById(R.id.image);
             image.setImageResource(imageNum[i]);
             mLoopRotarySwitchView.addView(view);
         }
         DisplayMetrics dm = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(dm);
         width = dm.widthPixels;
         mLoopRotarySwitchView
@@ -103,39 +107,17 @@ public class MyHomeActivity extends BaseTranslucentActivity implements View.OnCl
     }
 
     private void initView() {
-        menu = (MetaballMenu) findViewById(R.id.myhome_menu);
-        menu.setMenuClickListener(this);
+        //从View中寻找控件
 
-        mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.activity_myhome_loopView);
-        mDragScaleImageView = (DragScaleImageView) findViewById(R.id.rl_head);
+        mLoopRotarySwitchView = (LoopRotarySwitchView) MyHomeFragment.findViewById(R.id.activity_myhome_loopView);
+        mDragScaleImageView = (DragScaleImageView) MyHomeFragment.findViewById(R.id.rl_head);
         DisplayMetrics metric = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         int width = metric.widthPixels;     // 屏幕宽度（像素）
         int height = metric.heightPixels;   // 屏幕高度（像素）
-        preHeight = dip2px(this, 223);
+        preHeight = dip2px(getActivity(), 223);
         mDragScaleImageView.setImageWidthAndHeight(width, preHeight);
-
-
-        editHome = (ImageView) findViewById(R.id.activity_mylhome_iv_touxiang);
-        editHome.setOnClickListener(this);
-        setOrChangeTranslucentColor(null, getResources().getColor(R.color.black));
+        //setOrChangeTranslucentColor(null, getResources().getColor(R.color.black));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-//            case R.id.activity_mylhome_iv_touxiang:
-//                startActivity(new Intent(MyHomeActivity.this,));
-//                break;
-            case R.id.menuPlan:
-
-                startActivity(new Intent(MyHomeActivity.this, MakePlanActivity.class));
-                break;
-            case R.id.menuStudent:
-
-                startActivity(new Intent(MyHomeActivity.this, StudentActivity.class));
-                break;
-        }
-
-    }
 }

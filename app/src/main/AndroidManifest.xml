@@ -42,10 +42,7 @@
         <activity
             android:name=".EditHomePageActivity"
             android:launchMode="singleTask" />
-        <activity
-            android:name=".activity.MyHomeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.PersonalInfoActivity"
             android:launchMode="singleTask"
@@ -54,16 +51,7 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MakePlanActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".activity.BodyjudgmentActivity"
             android:launchMode="singleTask"
@@ -75,12 +63,15 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.EditMyInfoActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activity.StudentActivity"
             android:launchMode="singleTask" />
     </application>
 
