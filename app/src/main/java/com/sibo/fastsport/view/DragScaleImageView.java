@@ -224,7 +224,7 @@ public class DragScaleImageView extends RelativeLayout {
 //				float dx = event.getX() - startPoint.x; // 得到x轴的移动距离
                     float dy = event.getY() - startPoint.y; // 得到y轴的移动距离
                     // 在没有移动之前的位置上进行移动
-                    if (dy < 80) {
+                    if (dy > 0) {
                         matrix.set(currentMatrix);
                         Log.w(TAG, "onTouchEvent dy:" + dy);
                         scale = ((dy / (displayHeight - startRawY) * (displayHeight - imgHeight)) + imgHeight)
@@ -232,19 +232,6 @@ public class DragScaleImageView extends RelativeLayout {
                         Log.w(TAG, "onTouchEvent scale:" + scale);
 
                         scaleY = dy;
-                        LayoutParams relativeLayout = new LayoutParams(
-                                (int) (scale * imgWidth), (int) (scale * imgHeight));
-                        imageView.setLayoutParams(relativeLayout);
-                        matrix.postScale(scale, scale, imgWidth / 2, 0);
-                        imageView.setImageMatrix(matrix);
-                    } else {
-                        matrix.set(currentMatrix);
-                        Log.w(TAG, "onTouchEvent dy:" + 80);
-                        scale = ((80 / (displayHeight - startRawY) * (displayHeight - imgHeight)) + imgHeight)
-                                / imgHeight; // 得到缩放倍数，当手指移动到屏幕底部时，图片也达到屏幕底部
-                        Log.w(TAG, "onTouchEvent scale:" + scale);
-
-                        scaleY = 80;
                         LayoutParams relativeLayout = new LayoutParams(
                                 (int) (scale * imgWidth), (int) (scale * imgHeight));
                         imageView.setLayoutParams(relativeLayout);

@@ -19,6 +19,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
     private MakePlanActivity makePlan;
     private StudentActivity student;
     private MyHomeActivity myHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +36,12 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
     private void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
+        makePlan = new MakePlanActivity();
         transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
         transaction.commit();
     }
+
+
 
     /* private void initData() {
        final User obj = new User();
@@ -125,12 +129,8 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
     }*/
 
     private void initView() {
-
         menu = (MetaballMenu) findViewById(R.id.menu);
         menu.setMenuClickListener(this);
-        makePlan = new MakePlanActivity();
-        student = new StudentActivity();
-        myHome = new MyHomeActivity();
 
         /*ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
         ivSetting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
@@ -142,21 +142,53 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
     }
 
+    //隐藏Fragment
+    private void hideFragment(FragmentTransaction transaction) {
+        if (makePlan != null) {
+            transaction.hide(makePlan);
+        }
+        if (student != null) {
+            transaction.hide(student);
+        }
+        if (myHome != null) {
+            transaction.hide(myHome);
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        switch (v.getId()){
+        hideFragment(transaction);
+        switch (v.getId()) {
             case R.id.menuPlan:
-                transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
+                if (makePlan == null) {
+                    makePlan = new MakePlanActivity();
+                    transaction.add(R.id.MainActivity_FrameLayout, makePlan);
+                } else {
+                    transaction.show(makePlan);
+                }
                 break;
             case R.id.menuStudent:
-                transaction.replace(R.id.MainActivity_FrameLayout, student);
+                if (student == null) {
+                    student = new StudentActivity();
+                    transaction.add(R.id.MainActivity_FrameLayout, student);
+                } else {
+                    transaction.show(student);
+                }
                 break;
             case R.id.menuMyhome:
-                transaction.replace(R.id.MainActivity_FrameLayout, myHome);
+                if (myHome == null) {
+                    myHome = new MyHomeActivity();
+                    transaction.add(R.id.MainActivity_FrameLayout, myHome);
+                } else {
+                    transaction.show(myHome);
+                }
                 break;
         }
         transaction.commit();
     }
+
+
 }
