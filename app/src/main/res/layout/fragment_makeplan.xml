@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_white"
-    tools:context=".activity.MakePlanActivity">
+    tools:context=".fragment.MakePlanFragment">
 
     <RelativeLayout
         android:id="@+id/plan_rl1"
@@ -24,6 +24,7 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/plan_tv_nextStep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -33,7 +34,7 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        <ImageView
+        <com.sibo.fastsport.view.CircleImageView
             android:id="@+id/plan_iv_camera"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -51,23 +52,23 @@
 
             <EditText
                 android:id="@+id/plan_et_name"
-                android:layout_width="80dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/plan_btn_background"
                 android:gravity="center"
-                android:hint="@string/name"
+                android:hint="@string/plan_name"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/plan_et_sex"
-                android:layout_width="80dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/plan_btn_background"
                 android:gravity="center"
-                android:hint="@string/sex"
+                android:hint="@string/plan_sex"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="18sp" />
@@ -82,6 +83,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/plan_ll_userHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -113,6 +115,7 @@
                 android:background="@color/white" />
 
             <LinearLayout
+                android:id="@+id/plan_ll_userWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -143,6 +146,7 @@
                 android:background="@color/white" />
 
             <LinearLayout
+                android:id="@+id/plan_ll_userMuscleMass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -158,6 +162,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/plan_tv_muscleMass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -173,6 +178,7 @@
                 android:background="@color/white" />
 
             <LinearLayout
+                android:id="@+id/plan_ll_userBodyFat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -188,6 +194,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/plan_tv_bodyFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -203,6 +210,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/plan_rl1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white">
 
@@ -241,6 +250,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/plan_rl_exercise"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white">
 
@@ -254,23 +265,10 @@
 
         <ImageView
             android:id="@+id/plan_iv_contrastPhoto"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
             android:src="@mipmap/icon_camera" />
     </RelativeLayout>
-
-    <!--<LinearLayout
-        android:id="@+id/plan_menu_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/plan_menu"
-            layout="@layout/menu_layout" />
-
-    </LinearLayout>-->
 </RelativeLayout>

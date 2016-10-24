@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.recyclerview.PersonalInfoRecyclerView;
+import com.sibo.fastsport.adapter.PersonalInfoRecyclerView;
 
 /**
  * Created by Administrator on 2016/7/25 0025.

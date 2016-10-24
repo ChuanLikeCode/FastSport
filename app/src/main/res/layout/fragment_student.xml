@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sibo.fastsport.activity.StudentActivity">
+    tools:context=".fragment.StudentFragment">
 
     <include
         android:id="@+id/student_title_bar"

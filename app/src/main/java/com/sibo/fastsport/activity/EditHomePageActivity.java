@@ -1,4 +1,4 @@
-package com.sibo.fastsport;
+package com.sibo.fastsport.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sibo.fastsport.activity.MyHomeActivity;
+import com.sibo.fastsport.R;
+import com.sibo.fastsport.fragment.MyHomeFragment;
 
 /**
  * Created by Administrator on 2016/7/27 0027.
@@ -36,7 +37,7 @@ public class EditHomePageActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.activity_editzhuye_iv_back){
-            Intent intent = new Intent(EditHomePageActivity.this, MyHomeActivity.class);
+            Intent intent = new Intent(EditHomePageActivity.this, MyHomeFragment.class);
             startActivity(intent);
             finish();
         }

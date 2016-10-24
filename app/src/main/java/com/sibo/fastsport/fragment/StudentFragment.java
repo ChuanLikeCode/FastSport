@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.recyclerview.StudentRecyclerView;
+import com.sibo.fastsport.adapter.StudentRecyclerView;
 import com.sibo.fastsport.widgets.MetaballMenu;
 
 
-public class StudentActivity extends Fragment {
+public class StudentFragment extends Fragment {
 
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
@@ -29,8 +29,15 @@ public class StudentActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        studentFragment = inflater.inflate(R.layout.activity_student, container, false);
+        if (studentFragment == null) {
+            studentFragment = inflater.inflate(R.layout.fragment_student, container, false);
+        } else {
+            initView();
+            return studentFragment;
+        }
+
         initView();
+
         return studentFragment;
     }
 

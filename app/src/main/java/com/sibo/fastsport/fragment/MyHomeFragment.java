@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -24,7 +24,7 @@ import com.sibo.fastsport.widgets.MetaballMenu;
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class MyHomeActivity extends Fragment {
+public class MyHomeFragment extends Fragment {
 
     int[] imageNum = {R.drawable.imagefirst, R.drawable.imagesecond, R.drawable.imagethree,
             R.drawable.imagefour, R.drawable.imagefive, R.drawable.imagesix,
@@ -46,8 +46,15 @@ public class MyHomeActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //将布局文件转为View
-        MyHomeFragment = inflater.inflate(R.layout.activity_myhome, container, false);
+        if (MyHomeFragment == null) {
+            //将布局文件转为View
+            MyHomeFragment = inflater.inflate(R.layout.fragment_myhome, container, false);
+        } else {
+            initView();
+            initData();
+            initLinstener();
+            return MyHomeFragment;
+        }
         initView();
         initData();
         initLinstener();

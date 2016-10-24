@@ -40,9 +40,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EditHomePageActivity"
+            android:name=".activity.EditHomePageActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".activity.PersonalInfoActivity"
             android:launchMode="singleTask"
@@ -51,7 +50,6 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.BodyjudgmentActivity"
             android:launchMode="singleTask"
@@ -73,6 +71,7 @@
         <activity
             android:name=".activity.EditMyInfoActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".activity.MakePlanActivity"></activity>
     </application>
 
 </manifest>

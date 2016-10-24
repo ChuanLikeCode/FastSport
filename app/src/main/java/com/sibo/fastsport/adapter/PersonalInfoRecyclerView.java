@@ -1,4 +1,4 @@
-package com.sibo.fastsport.recyclerview;
+package com.sibo.fastsport.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

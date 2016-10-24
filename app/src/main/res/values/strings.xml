@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FastSport</string>
     <string name="selectBody">选择体型</string>
+    <string name="judgeBody">体型判断</string>
     <string name="BodyLabel1">隐形肥胖</string>
     <string name="BodyLabel2">脂肪过多</string>
     <string name="BodyLabel3">肥胖型</string>
@@ -23,7 +24,9 @@
     <string name="recive_message_time">接受短信大概需要</string>
     <string name="registe_hint">注册即表示你已同意《私教帮服务协议》</string>
     <string name="name">姓名</string>
+    <string name="plan_name">"    "姓名"    "</string>
     <string name="sex">性别</string>
+    <string name="plan_sex">"    "性别"    "</string>
     <string name="telephone">电话</string>
     <string name="age">年龄</string>
     <string name="height">身高</string>
@@ -41,4 +44,9 @@
     <string name="contrast_photo">对比照片</string>
     <string name="last_class">剩余课程</string>
     <string name="complete_class">完成锻炼</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="zhiding">制定</string>
+    <string name="makePlan">制定计划</string>
+    <string name="addDongZuo">添加动作</string>
 </resources>

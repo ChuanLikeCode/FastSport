@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.fragment.MakePlanFragment;
+import com.sibo.fastsport.fragment.MyHomeFragment;
+import com.sibo.fastsport.fragment.StudentFragment;
 import com.sibo.fastsport.view.BaseTranslucentActivity;
 import com.sibo.fastsport.widgets.MetaballMenu;
 
@@ -16,9 +19,9 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
 //    private Toolbar toolBar;
 
     MetaballMenu menu;
-    private MakePlanActivity makePlan;
-    private StudentActivity student;
-    private MyHomeActivity myHome;
+    private MakePlanFragment makePlan;
+    private StudentFragment student;
+    private MyHomeFragment myHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
     private void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        makePlan = new MakePlanActivity();
+        makePlan = new MakePlanFragment();
         transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
         transaction.commit();
     }
@@ -164,7 +167,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
         switch (v.getId()) {
             case R.id.menuPlan:
                 if (makePlan == null) {
-                    makePlan = new MakePlanActivity();
+                    makePlan = new MakePlanFragment();
                     transaction.add(R.id.MainActivity_FrameLayout, makePlan);
                 } else {
                     transaction.show(makePlan);
@@ -172,7 +175,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
                 break;
             case R.id.menuStudent:
                 if (student == null) {
-                    student = new StudentActivity();
+                    student = new StudentFragment();
                     transaction.add(R.id.MainActivity_FrameLayout, student);
                 } else {
                     transaction.show(student);
@@ -180,7 +183,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
                 break;
             case R.id.menuMyhome:
                 if (myHome == null) {
-                    myHome = new MyHomeActivity();
+                    myHome = new MyHomeFragment();
                     transaction.add(R.id.MainActivity_FrameLayout, myHome);
                 } else {
                     transaction.show(myHome);
