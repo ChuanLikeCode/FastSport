@@ -1,4 +1,4 @@
-package com.sibo.fastsport.view;
+package com.sibo.fastsport.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

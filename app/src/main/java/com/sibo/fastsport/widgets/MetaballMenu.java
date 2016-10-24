@@ -258,19 +258,7 @@ public class MetaballMenu extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     // Stop the previous animation
-                    if (mbShowAnimation)
-                        stopAnimation();
-
-                    mbShowAnimation = true;
-                    mOriginPoint = getCenter(mSelectedView);
-                    ((MetaballMenuImageView) mSelectedView).setSelected(false);      // unselect the previoud selection if any
-                    mSelectedView = v;
-                    ((MetaballMenuImageView) mSelectedView).setSelected(true);       // select the new selection
-                    mDestinationPoint = getCenter(mSelectedView);
-                    mfTransitionDistance = mDestinationPoint.getX() - mOriginPoint.getX();
-                    mfSelectorRadius = 0.0f; //Reset the selector radius, so that it can be calculated
-                    // based on the currently selected view size
-                    startAnimation();
+                    selectedView(v);
                 }
             });
         }
@@ -281,6 +269,27 @@ public class MetaballMenu extends LinearLayout {
         invalidate();
 
         super.onFinishInflate();
+    }
+
+    /**
+     * 用来外部使用ViewPager选择
+     * @param v
+     */
+    public void selectedView(View v) {
+        if (mbShowAnimation)
+            stopAnimation();
+
+        mbShowAnimation = true;
+        mOriginPoint = getCenter(mSelectedView);
+        ((MetaballMenuImageView) mSelectedView).setSelected(false);      // unselect the previoud selection if any
+        mSelectedView = v;
+        ((MetaballMenuImageView) mSelectedView).setSelected(true);       // select the new selection
+        mDestinationPoint = getCenter(mSelectedView);
+        mfTransitionDistance = mDestinationPoint.getX() - mOriginPoint.getX();
+        mfSelectorRadius = 0.0f; //Reset the selector radius, so that it can be calculated
+        // based on the currently selected view size
+        startAnimation();
+
     }
 
     /**
@@ -611,7 +620,7 @@ public class MetaballMenu extends LinearLayout {
         // Initialize the animation object
         if (mTransitionAnimation == null) {
             mTransitionAnimation = new TransitionAnimation();
-            mTransitionAnimation.setDuration(500);
+            mTransitionAnimation.setDuration(300);
             mTransitionAnimation.setInterpolator(new BounceInterpolator());
         }
 

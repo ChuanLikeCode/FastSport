@@ -1,50 +1,122 @@
 package com.sibo.fastsport.activity;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.adapter.MyFragmentAdapter;
 import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.fragment.MyHomeFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
-import com.sibo.fastsport.view.BaseTranslucentActivity;
 import com.sibo.fastsport.widgets.MetaballMenu;
+import com.sibo.fastsport.widgets.MetaballMenuImageView;
 
-public class MainActivity extends BaseTranslucentActivity implements MetaballMenu.MetaballMenuClickListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends FragmentActivity implements MetaballMenu.MetaballMenuClickListener {
     //固定的ToolBar
 //    android.support.v7.widget.Toolbar rootToolBar;
 //
 //    private Toolbar toolBar;
-
-    MetaballMenu menu;
+    private List<Fragment> list = new ArrayList<Fragment>();
+    private MyFragmentAdapter myFragmentAdapter;
+    private MetaballMenu menu;
+    private MetaballMenuImageView menuMakePlan, menuStudent, menuMyHome;
     private MakePlanFragment makePlan;
     private StudentFragment student;
     private MyHomeFragment myHome;
+    private ViewPager viewPager;
+    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            switch (position) {
+                case 0:
+                    menu.selectedView(menuMakePlan);
+                    break;
+                case 1:
+                    menu.selectedView(menuStudent);
+                    break;
+                case 2:
+                    menu.selectedView(menuMyHome);
+                    break;
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //       initBmob();
+        // initBmob();
         initView();
 //        initTitle();
-//        initData();
-        setDefaultFragment();
-
+        initData();
+        initListener();
     }
 
-    private void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
+    private void initData() {
         makePlan = new MakePlanFragment();
-        transaction.replace(R.id.MainActivity_FrameLayout, makePlan);
-        transaction.commit();
+        student = new StudentFragment();
+        myHome = new MyHomeFragment();
+        list.add(makePlan);
+        list.add(student);
+        list.add(myHome);
+        myFragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), list);
+        viewPager.setAdapter(myFragmentAdapter);
+        viewPager.setCurrentItem(0);
+
+    }
+
+    private void initListener() {
+        menu.setMenuClickListener(this);
+        viewPager.setOnPageChangeListener(listener);
+    }
+
+    private void initView() {
+        menu = (MetaballMenu) findViewById(R.id.menu);
+        viewPager = (ViewPager) findViewById(R.id.MainActivity_ViewPager);
+        menuMakePlan = (MetaballMenuImageView) menu.findViewById(R.id.menuPlan);
+        menuStudent = (MetaballMenuImageView) menu.findViewById(R.id.menuStudent);
+        menuMyHome = (MetaballMenuImageView) menu.findViewById(R.id.menuMyhome);
+        /*ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
+        ivSetting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
+        rlZhuYe = (RelativeLayout) findViewById(R.id.rl_zhuye);
+        rlZhuYe.setOnClickListener(this);
+        ivHead.setOnClickListener(this);
+        ivSetting.setOnClickListener(this);
+        //让图片全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.menuPlan:
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.menuStudent:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.menuMyhome:
+                viewPager.setCurrentItem(2);
+                break;
+        }
+    }
 
     /* private void initData() {
        final User obj = new User();
@@ -131,67 +203,7 @@ public class MainActivity extends BaseTranslucentActivity implements MetaballMen
 
     }*/
 
-    private void initView() {
-        menu = (MetaballMenu) findViewById(R.id.menu);
-        menu.setMenuClickListener(this);
 
-        /*ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
-        ivSetting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
-        rlZhuYe = (RelativeLayout) findViewById(R.id.rl_zhuye);
-        rlZhuYe.setOnClickListener(this);
-        ivHead.setOnClickListener(this);
-        ivSetting.setOnClickListener(this);
-        //让图片全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
-    }
-
-    //隐藏Fragment
-    private void hideFragment(FragmentTransaction transaction) {
-        if (makePlan != null) {
-            transaction.hide(makePlan);
-        }
-        if (student != null) {
-            transaction.hide(student);
-        }
-        if (myHome != null) {
-            transaction.hide(myHome);
-        }
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        hideFragment(transaction);
-        switch (v.getId()) {
-            case R.id.menuPlan:
-                if (makePlan == null) {
-                    makePlan = new MakePlanFragment();
-                    transaction.add(R.id.MainActivity_FrameLayout, makePlan);
-                } else {
-                    transaction.show(makePlan);
-                }
-                break;
-            case R.id.menuStudent:
-                if (student == null) {
-                    student = new StudentFragment();
-                    transaction.add(R.id.MainActivity_FrameLayout, student);
-                } else {
-                    transaction.show(student);
-                }
-                break;
-            case R.id.menuMyhome:
-                if (myHome == null) {
-                    myHome = new MyHomeFragment();
-                    transaction.add(R.id.MainActivity_FrameLayout, myHome);
-                } else {
-                    transaction.show(myHome);
-                }
-                break;
-        }
-        transaction.commit();
-    }
 
 
 }

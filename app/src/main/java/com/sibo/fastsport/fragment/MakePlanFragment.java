@@ -2,22 +2,18 @@ package com.sibo.fastsport.fragment;
 
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -36,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MakePlanFragment extends Fragment implements View.OnClickListener, TextWatcher, PickerScrollView.onSelectListener {
+public class MakePlanFragment extends BaseFragment implements View.OnClickListener, TextWatcher, PickerScrollView.onSelectListener {
     private static final int IMAGE = 1;
     public static List<Pickers> exercise, pickerHeight, pickerWeight, pickerMuscleMass, pickerBodyFat;
     private static int image = 1;
@@ -52,21 +48,17 @@ public class MakePlanFragment extends Fragment implements View.OnClickListener, 
     private View scrollViewLayout;
     private Dialog dialog;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (makePlanFragment == null) {
-            makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, container, false);
-        } else {
-            return makePlanFragment;
-        }
+    protected View initView(LayoutInflater inflater) {
+        makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, null);
         initView();
         initData();
         initListener();
         return makePlanFragment;
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         exercise = new ArrayList<>();
         pickerWeight = new ArrayList<>();
         pickerHeight = new ArrayList<>();
@@ -108,6 +100,7 @@ public class MakePlanFragment extends Fragment implements View.OnClickListener, 
             exercise.add(pickers);
         }
     }
+
 
     private void initListener() {
         nextStep.setOnClickListener(this);

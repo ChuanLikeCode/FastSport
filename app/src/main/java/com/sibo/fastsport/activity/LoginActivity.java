@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.view.BaseTranslucentActivity;
 
 /**
  * Created by Administrator on 2016/9/21 0021.

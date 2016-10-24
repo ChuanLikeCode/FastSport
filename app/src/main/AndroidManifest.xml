@@ -36,7 +36,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.BaseTranslucentActivity"
+            android:name=".activity.BaseTranslucentActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
