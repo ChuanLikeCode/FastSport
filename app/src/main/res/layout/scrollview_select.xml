@@ -9,37 +9,12 @@
     <com.sibo.fastsport.view.PickerScrollView
         android:id="@+id/pickers"
         android:layout_width="match_parent"
-        android:layout_height="160dp" />
+        android:layout_height="200dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@id/pickers"
-        android:layout_marginTop="-95dp"
+        android:layout_marginTop="-115dp"
         android:background="@mipmap/picker_tv_bg" />
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pickers">
-        <TextView
-            android:id="@+id/ok"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/scrollview_btn_bg"
-            android:text="@string/cancel"/>
-        <TextView
-            android:id="@+id/no"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="@string/ok"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:background="@drawable/scrollview_btn_bg"
-            android:gravity="center"/>
-    </LinearLayout>-->
-
 </RelativeLayout>

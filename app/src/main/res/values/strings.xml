@@ -49,4 +49,10 @@
     <string name="zhiding">制定</string>
     <string name="makePlan">制定计划</string>
     <string name="addDongZuo">添加动作</string>
+    <string name="makePlanTip">点击上方圆圈"\n"开始生成计划"\n"未选中默认为休息天</string>
+    <string name="warm_up">热身</string>
+    <string name="stretching">拉伸</string>
+    <string name="main_action">具体动作</string>
+    <string name="relax_action">放松动作</string>
+    <string name="level">难度</string>
 </resources>

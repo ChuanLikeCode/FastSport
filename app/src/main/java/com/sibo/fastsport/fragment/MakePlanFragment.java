@@ -23,8 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.activity.BodyjudgmentActivity;
 import com.sibo.fastsport.domain.Pickers;
+import com.sibo.fastsport.ui.BodyjudgmentActivity;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.PickerScrollView;
 
@@ -211,6 +211,7 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
             window.setGravity(Gravity.BOTTOM);
             window.setWindowAnimations(R.style.main_menu_animstyle);
             window.requestFeature(Window.FEATURE_NO_TITLE);
+            window.setBackgroundDrawableResource(android.R.color.transparent);
             window.getDecorView().setPadding(0, 0, 0, 0);
             Display d = getActivity().getWindow().getWindowManager().getDefaultDisplay();
             //Display d = window.getWindowManager().getDefaultDisplay();

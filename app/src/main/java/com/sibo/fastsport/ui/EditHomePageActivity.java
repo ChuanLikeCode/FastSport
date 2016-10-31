@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.sibo.fastsport.fragment.MyHomeFragment;
 public class EditHomePageActivity extends Activity implements View.OnClickListener {
     private ImageView back;
     private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +28,8 @@ public class EditHomePageActivity extends Activity implements View.OnClickListen
 
     private void initView() {
 
-        back = (ImageView)findViewById(R.id.activity_editzhuye_iv_back);
-        recyclerView = (RecyclerView)findViewById(R.id.activity_editzhuye_recycler_view);
+        back = (ImageView) findViewById(R.id.activity_editzhuye_iv_back);
+        recyclerView = (RecyclerView) findViewById(R.id.activity_editzhuye_recycler_view);
         back.setOnClickListener(this);
         recyclerView.setVisibility(View.GONE);
 
@@ -36,7 +37,7 @@ public class EditHomePageActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.activity_editzhuye_iv_back){
+        if (v.getId() == R.id.activity_editzhuye_iv_back) {
             Intent intent = new Intent(EditHomePageActivity.this, MyHomeFragment.class);
             startActivity(intent);
             finish();

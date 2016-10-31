@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,20 +22,26 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
 //    android.support.v7.widget.Toolbar rootToolBar;
 //
 //    private Toolbar toolBar;
-    private List<Fragment> list = new ArrayList<Fragment>();
-    private MyFragmentAdapter myFragmentAdapter;
-    private MetaballMenu menu;
+    private List<Fragment> list = new ArrayList<Fragment>();//三个主界面的Fragment的list
+    private MyFragmentAdapter myFragmentAdapter;//Fragment的适配器
+    private MetaballMenu menu;//底部菜单栏
+    //底部菜单栏的三个控件 计划、学员、我的
     private MetaballMenuImageView menuMakePlan, menuStudent, menuMyHome;
-    private MakePlanFragment makePlan;
-    private StudentFragment student;
-    private MyHomeFragment myHome;
+    private MakePlanFragment makePlan;//主界面---计划
+    private StudentFragment student;//主界面---学员
+    private MyHomeFragment myHome;//主界面--我的
     private ViewPager viewPager;
+    //viewPager切换时需要做的事情，viewPager监听事件
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         }
 
+        /**
+         * ViewPager选择后需要做的事
+         * @param position
+         */
         @Override
         public void onPageSelected(int position) {
             switch (position) {
@@ -68,6 +74,9 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         initListener();
     }
 
+    /**
+     * 初始化数据源
+     */
     private void initData() {
         makePlan = new MakePlanFragment();
         student = new StudentFragment();
@@ -75,17 +84,25 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         list.add(makePlan);
         list.add(student);
         list.add(myHome);
+        //设置Fragment适配器
         myFragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(myFragmentAdapter);
+        //使ViewPager默认显示第一个界面
         viewPager.setCurrentItem(0);
 
     }
 
+    /**
+     * 设置监听事件
+     */
     private void initListener() {
         menu.setMenuClickListener(this);
         viewPager.setOnPageChangeListener(listener);
     }
 
+    /**
+     * 设置布局中的控件，寻找Id
+     */
     private void initView() {
         menu = (MetaballMenu) findViewById(R.id.menu);
         viewPager = (ViewPager) findViewById(R.id.MainActivity_ViewPager);
@@ -102,7 +119,11 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
     }
 
-
+    /**
+     * 底部菜单栏的点击效果，跟随着切换viewPager显示界面
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -202,8 +223,6 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
 
     }*/
-
-
 
 
 }

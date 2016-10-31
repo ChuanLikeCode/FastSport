@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import com.sibo.fastsport.adapter.PersonalInfoRecyclerView;
 /**
  * Created by Administrator on 2016/7/25 0025.
  */
-public class PersonalInfoActivity extends Activity implements View.OnClickListener{
+public class PersonalInfoActivity extends Activity implements View.OnClickListener {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
@@ -44,7 +44,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
 
         recyclerView = (RecyclerView) findViewById(R.id.activity_personalinfo_recycler_view);
         recyclerView.setHasFixedSize(true);
-        linearLayoutManager  = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new PersonalInfoRecyclerView(this);
@@ -66,7 +66,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back_titlebar) {
-            Intent mainIntent = new Intent(PersonalInfoActivity.this,MainActivity.class);
+            Intent mainIntent = new Intent(PersonalInfoActivity.this, MainActivity.class);
             startActivity(mainIntent);
             finish();
         }

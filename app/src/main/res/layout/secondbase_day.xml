@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
+
+    <TextView
+        android:id="@+id/makePlan_tip"
+        android:layout_width="260dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/xuxian_bianguang"
+        android:gravity="center"
+        android:text="@string/makePlanTip"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <include
+        android:id="@+id/day_warmUp"
+        layout="@layout/first_base_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <include
+        android:id="@+id/day_stretching"
+        layout="@layout/first_base_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_warmUp"
+        android:layout_marginTop="5dp" />
+
+    <include
+        android:id="@+id/day_mainAction"
+        layout="@layout/first_base_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_stretching"
+        android:layout_marginTop="5dp" />
+
+    <include
+        android:id="@+id/day_relaxAction"
+        layout="@layout/first_base_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_mainAction"
+        android:layout_marginTop="5dp" />
+</RelativeLayout>

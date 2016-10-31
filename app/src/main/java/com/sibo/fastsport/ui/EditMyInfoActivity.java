@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lime_white"
-    tools:context=".activity.BodyjudgmentActivity">
+    tools:context=".ui.BodyjudgmentActivity">
 
     <include
         android:id="@+id/bodyTitle"
@@ -54,9 +54,10 @@
             android:layout_height="25dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel1"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -65,10 +66,10 @@
             android:layout_height="25dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
-
             android:text="@string/BodyLabel2"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -78,9 +79,10 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel3"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -90,9 +92,10 @@
             android:layout_below="@id/tv_bodyLabel1"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel4"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -102,9 +105,10 @@
             android:layout_below="@id/tv_bodyLabel2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel5"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -115,9 +119,10 @@
             android:layout_below="@id/tv_bodyLabel3"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel6"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -127,9 +132,10 @@
             android:layout_below="@id/tv_bodyLabel4"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel7"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
 
         <TextView
@@ -140,9 +146,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bodylabel_background"
+            android:background="@drawable/bodylabel_select"
             android:gravity="center"
             android:text="@string/BodyLabel8"
+            android:textColor="@drawable/bodylabel_text_select"
             android:textSize="14sp" />
     </RelativeLayout>
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lime_white"
+    tools:context="com.sibo.fastsport.ui.ChooseActionActivity">
+
+    <include
+        android:id="@+id/choose_title"
+        layout="@layout/activity_title_bar" />
+
+    <ListView
+        android:id="@+id/choose_action_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/choose_title"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"></ListView>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.sibo.fastsport.activity;
+package com.sibo.fastsport.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ public class RegisterActivity extends BaseTranslucentActivity {
     //固定的ToolBar
     android.support.v7.widget.Toolbar rootToolBar;
     Button takeIndentify;
-    TextView sendIndentify,receiverSecond,remainSecond,resetIndentify;
+    TextView sendIndentify, receiverSecond, remainSecond, resetIndentify;
     private ImageView ivClose;
     private ImageView ivBack;
     private Toolbar toolBar;
