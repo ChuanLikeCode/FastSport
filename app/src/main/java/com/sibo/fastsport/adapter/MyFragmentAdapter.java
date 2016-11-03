@@ -13,12 +13,14 @@ import java.util.List;
 
 public class MyFragmentAdapter extends FragmentPagerAdapter {
 
+
     List<Fragment> list = new ArrayList<Fragment>();
 
     public MyFragmentAdapter(FragmentManager fm) {
         super(fm);
         // TODO Auto-generated constructor stub
     }
+
 
     public MyFragmentAdapter(FragmentManager fm, List<Fragment> list) {
         super(fm);

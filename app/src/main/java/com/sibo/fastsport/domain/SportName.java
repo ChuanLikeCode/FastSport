@@ -10,7 +10,7 @@ public class SportName extends BmobObject {
     private int id;
     private String type;
     private String name;
-    private String level;
+    private int level;
     private BmobFile icon;
 
     public String getType() {
@@ -45,11 +45,11 @@ public class SportName extends BmobObject {
         this.icon = icon;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 }

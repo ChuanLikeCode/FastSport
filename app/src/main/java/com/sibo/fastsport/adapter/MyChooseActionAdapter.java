@@ -65,7 +65,11 @@ public class MyChooseActionAdapter extends BaseAdapter {
         Glide.with(context).load(list.get(position).getIcon().getFileUrl())
                 .asGif().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.loading)
+                .centerCrop()
                 .error(R.drawable.failed).into(holder.img);
+        for (int i = 0; i < list.get(position).getLevel(); i++) {
+            holder.level[i].setVisibility(View.VISIBLE);
+        }
         //Log.e("url",list.get(position).getIcon().getFileUrl());
         return convertView;
     }

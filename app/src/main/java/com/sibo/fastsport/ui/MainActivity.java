@@ -9,7 +9,7 @@ import android.view.View;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyFragmentAdapter;
 import com.sibo.fastsport.fragment.MakePlanFragment;
-import com.sibo.fastsport.fragment.MyHomeFragment;
+import com.sibo.fastsport.fragment.MyHomeMenuFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
 import com.sibo.fastsport.widgets.MetaballMenu;
 import com.sibo.fastsport.widgets.MetaballMenuImageView;
@@ -29,7 +29,7 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
     private MetaballMenuImageView menuMakePlan, menuStudent, menuMyHome;
     private MakePlanFragment makePlan;//主界面---计划
     private StudentFragment student;//主界面---学员
-    private MyHomeFragment myHome;//主界面--我的
+    private MyHomeMenuFragment myHomeMenu;//主界面--我的
     private ViewPager viewPager;
     //viewPager切换时需要做的事情，viewPager监听事件
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
@@ -80,10 +80,10 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
     private void initData() {
         makePlan = new MakePlanFragment();
         student = new StudentFragment();
-        myHome = new MyHomeFragment();
+        myHomeMenu = new MyHomeMenuFragment();
         list.add(makePlan);
         list.add(student);
-        list.add(myHome);
+        list.add(myHomeMenu);
         //设置Fragment适配器
         myFragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(myFragmentAdapter);

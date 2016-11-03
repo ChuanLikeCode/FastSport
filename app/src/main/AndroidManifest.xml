@@ -73,7 +73,9 @@
             android:name=".ui.EditMyInfoActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.MakePlanActivity" />
-        <activity android:name=".ui.ChooseActionActivity"></activity>
+        <activity android:name=".ui.ChooseActionActivity" />
+        <activity android:name=".ui.MyHomeActivity" />
+        <activity android:name=".ui.NewsActivity"></activity>
     </application>
 
 </manifest>
