@@ -8,8 +8,8 @@ import cn.bmob.v3.BmobObject;
 public class SportDetail extends BmobObject {
     private int id;
     private String name;
-    private String part;
-    private String equipment;
+    private String exercise_part;
+    private String need_equipment;
     private String detail;
 
     public int getId() {
@@ -28,20 +28,20 @@ public class SportDetail extends BmobObject {
         this.name = name;
     }
 
-    public String getPart() {
-        return part;
+    public String getExercise_part() {
+        return exercise_part;
     }
 
-    public void setPart(String part) {
-        this.part = part;
+    public void setExercise_part(String exercise_part) {
+        this.exercise_part = exercise_part;
     }
 
-    public String getEquipment() {
-        return equipment;
+    public String getNeed_equipment() {
+        return need_equipment;
     }
 
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
+    public void setNeed_equipment(String need_equipment) {
+        this.need_equipment = need_equipment;
     }
 
     public String getDetail() {

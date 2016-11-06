@@ -23,12 +23,94 @@
         app:WhorlView_StrokeWidth="8"
         app:WhorlView_SweepAngle="180" />
 
+    <LinearLayout
+        android:id="@+id/choose_rll_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_title"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/choose_part"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/choose_part"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/choose_part_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/icon_choose" />
+
+        <TextView
+            android:id="@+id/choose_equipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/choose_equipment"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/choose_equipment_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/icon_choose" />
+
+        <TextView
+            android:id="@+id/choose_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/choose_type"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/choose_type_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/icon_choose" />
+
+        <TextView
+            android:id="@+id/choose_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/choose_level"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/choose_level_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/icon_choose" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/choose_action_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/choose_title"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/choose_rll_type"
+        android:layout_marginTop="7dp"
         android:background="@color/white"
         android:visibility="gone" />
 </RelativeLayout>

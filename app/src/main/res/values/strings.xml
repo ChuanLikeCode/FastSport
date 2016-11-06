@@ -56,4 +56,17 @@
     <string name="relax_action">放松动作</string>
     <string name="level">难度</string>
     <string name="newsTitle">新闻资讯</string>
+    <string name="choose_part">不限部位</string>
+    <string name="choose_equipment">不限机械</string>
+    <string name="choose_type">动作类型</string>
+    <string name="action_reshen">热身动作</string>
+    <string name="action_lashen">拉伸</string>
+    <string name="action_juti">具体动作</string>
+    <string name="action_fangsong">放松动作</string>
+    <string name="choose_level">全部难度</string>
+    <string name="level_type1">零基础</string>
+    <string name="level_type2">初学</string>
+    <string name="level_type3">进阶</string>
+    <string name="level_type4">强化</string>
+    <string name="level_type5">挑战</string>
 </resources>
