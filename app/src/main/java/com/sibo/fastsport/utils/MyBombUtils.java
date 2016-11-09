@@ -38,24 +38,34 @@ public class MyBombUtils {
     public static List<SportName> list_type_juti = new ArrayList<SportName>();
     public static List<SportName> list_type_fangsong = new ArrayList<>();
     //动作部位归类  胸部0、肩部1、背部2、肱二头肌3、肱三头肌4、腿部5、前臂6、腹部7
-    public static List<SportDetail> list_part_chest = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_jianbu = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_beibu = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_gongerji = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_gongsanji = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_tuibu = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_qianbi = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_part_fubu = new ArrayList<SportDetail>();
+    public static List<SportName> list_part_chest = new ArrayList<SportName>();
+    public static List<SportName> list_part_jianbu = new ArrayList<SportName>();
+    public static List<SportName> list_part_beibu = new ArrayList<SportName>();
+    public static List<SportName> list_part_gongerji = new ArrayList<SportName>();
+    public static List<SportName> list_part_gongsanji = new ArrayList<SportName>();
+    public static List<SportName> list_part_tuibu = new ArrayList<SportName>();
+    public static List<SportName> list_part_qianbi = new ArrayList<SportName>();
+    public static List<SportName> list_part_fubu = new ArrayList<SportName>();
     //所属器材归类 哑铃、健身房器械、无器械、杠铃
-    public static List<SportDetail> list_equipment_yaling = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_equipment_jianshenfang = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_equipment_wuqixie = new ArrayList<SportDetail>();
-    public static List<SportDetail> list_equipment_gangling = new ArrayList<SportDetail>();
+    public static List<SportName> list_equipment_yaling = new ArrayList<SportName>();
+    public static List<SportName> list_equipment_jianshenfang = new ArrayList<SportName>();
+    public static List<SportName> list_equipment_wuqixie = new ArrayList<SportName>();
+    public static List<SportName> list_equipment_gangling = new ArrayList<SportName>();
+    public static boolean isFirst = true;
     private Context context;
-
     public MyBombUtils(Context context) {
         this.context = context;
         Bmob.initialize(context, "f79d34f38040f7e7512a4228ea4d0c7a");
+    }
+
+    private SportName matcher(String name) {
+        for (SportName s :
+                list_sportName) {
+            if (s.getName().equals(name)) {
+                return s;
+            }
+        }
+        return null;
     }
 
     private void initEquipment() {
@@ -63,16 +73,16 @@ public class MyBombUtils {
                 list_sportDetail) {
             switch (s.getNeed_equipment()) {
                 case "哑铃":
-                    list_equipment_yaling.add(s);
+                    list_equipment_yaling.add(matcher(s.getName()));
                     break;
                 case "健身房器械":
-                    list_equipment_jianshenfang.add(s);
+                    list_equipment_jianshenfang.add(matcher(s.getName()));
                     break;
                 case "无器械":
-                    list_equipment_wuqixie.add(s);
+                    list_equipment_wuqixie.add(matcher(s.getName()));
                     break;
                 case "杠铃":
-                    list_equipment_gangling.add(s);
+                    list_equipment_gangling.add(matcher(s.getName()));
                     break;
             }
         }
@@ -83,28 +93,28 @@ public class MyBombUtils {
                 list_sportDetail) {
             switch (s.getExercise_part()) {
                 case "胸部":
-                    list_part_chest.add(s);
+                    list_part_chest.add(matcher(s.getName()));
                     break;
                 case "肩部":
-                    list_part_jianbu.add(s);
+                    list_part_jianbu.add(matcher(s.getName()));
                     break;
                 case "背部":
-                    list_part_beibu.add(s);
+                    list_part_beibu.add(matcher(s.getName()));
                     break;
                 case "肱二头肌":
-                    list_part_gongerji.add(s);
+                    list_part_gongerji.add(matcher(s.getName()));
                     break;
                 case "肱三头肌":
-                    list_part_gongsanji.add(s);
+                    list_part_gongsanji.add(matcher(s.getName()));
                     break;
                 case "腿部":
-                    list_part_tuibu.add(s);
+                    list_part_tuibu.add(matcher(s.getName()));
                     break;
                 case "前臂":
-                    list_part_qianbi.add(s);
+                    list_part_qianbi.add(matcher(s.getName()));
                     break;
                 case "腹部":
-                    list_part_fubu.add(s);
+                    list_part_fubu.add(matcher(s.getName()));
                     break;
             }
         }
@@ -187,7 +197,6 @@ public class MyBombUtils {
                 list_sportName.addAll(list);
                 initLevel();
                 initType();
-
                 Message message = new Message();
                 message.arg1 = SPORT_NAME_FINISH;
                 ((ChooseActionActivity) context).handler.sendMessage(message);

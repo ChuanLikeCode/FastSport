@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -92,18 +93,20 @@ public class BodyjudgmentActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1.0f);
-            alphaAnimation.setDuration(500);
-            alphaAnimation.setFillAfter(true);
-            bodyLable.startAnimation(alphaAnimation);
-            bodyLabelByYourself.startAnimation(alphaAnimation);
+
+            bodyLable.startAnimation(StartAnimation(0, 1.0f));
+            bodyLabelByYourself.startAnimation(StartAnimation(0, 1.0f));
 
         } else {
-            AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0);
-            alphaAnimation.setDuration(500);
-            alphaAnimation.setFillAfter(true);
-            bodyLable.startAnimation(alphaAnimation);
-            bodyLabelByYourself.startAnimation(alphaAnimation);
+            bodyLable.startAnimation(StartAnimation(1.0f, 0));
+            bodyLabelByYourself.startAnimation(StartAnimation(1.0f, 0));
         }
+    }
+
+    private Animation StartAnimation(float x, float y) {
+        AlphaAnimation animation = new AlphaAnimation(x, y);
+        animation.setFillAfter(true);
+        animation.setDuration(500);
+        return animation;
     }
 }

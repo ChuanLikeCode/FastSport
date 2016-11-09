@@ -1,7 +1,6 @@
 package com.sibo.fastsport.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,11 +67,12 @@ public class MyChooseActionAdapter extends BaseAdapter {
                 .placeholder(R.mipmap.loading)
                 .centerCrop()
                 .error(R.drawable.failed).into(holder.img);
-        Log.e(list.get(position).getName() + "level---", list.get(position).getLevel() + "");
+        for (int j = 0; j < holder.level.length; j++) {
+            holder.level[j].setVisibility(View.GONE);
+        }
         for (int i = 0; i < list.get(position).getLevel(); i++) {
             holder.level[i].setVisibility(View.VISIBLE);
         }
-        //Log.e("url",list.get(position).getIcon().getFileUrl());
         return convertView;
     }
 
