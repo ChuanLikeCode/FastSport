@@ -49,6 +49,7 @@
     <string name="zhiding">制定</string>
     <string name="makePlan">制定计划</string>
     <string name="addDongZuo">添加动作</string>
+    <string name="select">选择完成</string>
     <string name="makePlanTip">点击上方圆圈"\n"开始生成计划"\n"未选中默认为休息天</string>
 
     <string name="warm_up">热身</string>
@@ -74,7 +75,7 @@
     <string name="jianshenfang">健身房器械</string>
     <string name="gangling">杠铃</string>
 
-    <string name="choose_type">动作类型</string>
+    <string name="choose_type">不限类型</string>
     <string name="action_reshen">热身动作</string>
     <string name="action_lashen">拉伸</string>
     <string name="action_juti">具体动作</string>
@@ -86,4 +87,8 @@
     <string name="level_type3">进阶</string>
     <string name="level_type4">强化</string>
     <string name="level_type5">挑战</string>
+
+    <string name="choose_action_tips">找不到相关动作(⊙o⊙)\n请重新搜索</string>
+    <string name="actionDetails">动作详情</string>
+    <string name="longClickToShowDetail">长按可查看动作详情</string>
 </resources>

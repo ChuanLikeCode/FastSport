@@ -23,6 +23,14 @@
         app:WhorlView_StrokeWidth="6"
         app:WhorlView_SweepAngle="180" />
 
+    <TextView
+        android:id="@+id/choose_action_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/choose_action_tips"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/choose_rll_type"
         android:layout_width="match_parent"
@@ -105,12 +113,21 @@
             android:src="@mipmap/icon_choose" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/choose_action_longClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_rll_type"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="@string/longClickToShowDetail" />
+
     <ListView
         android:id="@+id/choose_action_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/choose_rll_type"
-        android:layout_marginTop="7dp"
+        android:layout_below="@id/choose_action_longClick"
+        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:visibility="gone" />
 </RelativeLayout>

@@ -1,11 +1,14 @@
 package com.sibo.fastsport.domain;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
+ * 实现Serializable接口使类对象可以使用Intent传递
  * Created by Administrator on 2016/10/28.
  */
-public class SportDetail extends BmobObject {
+public class SportDetail extends BmobObject implements Serializable {
     private int id;
     private String name;
     private String exercise_part;

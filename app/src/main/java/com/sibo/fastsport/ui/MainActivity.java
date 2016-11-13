@@ -11,6 +11,7 @@ import com.sibo.fastsport.adapter.MyFragmentAdapter;
 import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.fragment.MyHomeMenuFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
+import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.widgets.MetaballMenu;
 import com.sibo.fastsport.widgets.MetaballMenuImageView;
 
@@ -72,6 +73,7 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
 //        initTitle();
         initData();
         initListener();
+        MakePlanUtils.isFirst = true;
     }
 
     /**

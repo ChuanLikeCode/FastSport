@@ -1,22 +1,31 @@
 package com.sibo.fastsport.fragment;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.domain.SportName;
+import com.sibo.fastsport.utils.MakePlanUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/28.
  */
 public class BaseDay extends BaseFragment {
-    public View dayView;
-    public View warmUpView, stretchingView, mainActionView, relaxActionView;
+    public RelativeLayout warmUpView, stretchingView, mainActionView, relaxActionView;
     public TextView tv_warmUp, tv_stretching, tv_mainAction, tv_relaxAction, tips;
     public ImageView warmUpAdd, stretchingAdd, mainActionAdd, relaxActionAdd;
-    public RecyclerView warmUpRecyclerView, stretchingRecyclerView, mainActionRecyclerView, relaxActionRecyclerView;
+    public ListView warmUpListView, stretchingListView, mainActionListView, relaxActionListView;
+    public List<SportName> warmUpList = new ArrayList<>();
+    public List<SportName> stretchingList = new ArrayList<>();
+    public List<SportName> mainActionList = new ArrayList<>();
+    public List<SportName> relaxActionList = new ArrayList<>();
     private View view;//主界面布局
 
     @Override
@@ -34,38 +43,47 @@ public class BaseDay extends BaseFragment {
     @Override
     protected View initView(LayoutInflater inflater) {
 
-        view = inflater.inflate(R.layout.fragment_day, null);
+        view = inflater.inflate(R.layout.base_day, null);
         findById();
+        initListener();
+
         return view;
     }
 
+    /**
+     * 设置监听事件，调用MakePlanUtils工具类里面定义的事件
+     */
+    private void initListener() {
+        warmUpAdd.setOnClickListener(MakePlanUtils.warmUpAddListener);
+        stretchingAdd.setOnClickListener(MakePlanUtils.stretchingAddListener);
+        mainActionAdd.setOnClickListener(MakePlanUtils.mainActionAddListener);
+        relaxActionAdd.setOnClickListener(MakePlanUtils.relaxActionAddListener);
+    }
+
     private void findById() {
-        dayView = view.findViewById(R.id.day1);
-        warmUpView = dayView.findViewById(R.id.day_warmUp);
-        stretchingView = dayView.findViewById(R.id.day_stretching);
-        mainActionView = dayView.findViewById(R.id.day_mainAction);
-        relaxActionView = dayView.findViewById(R.id.day_relaxAction);
-        tips = (TextView) dayView.findViewById(R.id.makePlan_tip);
 
-        tv_warmUp = (TextView) warmUpView.findViewById(R.id.makePlan_tv);
-        warmUpAdd = (ImageView) warmUpView.findViewById(R.id.makePlan_iv_Add);
-        warmUpRecyclerView = (RecyclerView) warmUpView.findViewById(R.id.makePlan_recyclerView);
+        warmUpView = (RelativeLayout) view.findViewById(R.id.base_day_rl_warmUp);
+        stretchingView = (RelativeLayout) view.findViewById(R.id.base_day_rl_stretching);
+        mainActionView = (RelativeLayout) view.findViewById(R.id.base_day_rl_mainAction);
+        relaxActionView = (RelativeLayout) view.findViewById(R.id.base_day_rl_relaxAction);
+        tips = (TextView) view.findViewById(R.id.makePlan_tip);
 
-        tv_stretching = (TextView) stretchingView.findViewById(R.id.makePlan_tv);
-        stretchingAdd = (ImageView) stretchingView.findViewById(R.id.makePlan_iv_Add);
+        tv_warmUp = (TextView) view.findViewById(R.id.makePlan_tv_warmUp);
+        warmUpAdd = (ImageView) view.findViewById(R.id.makePlan_iv_warmUpAdd);
+        warmUpListView = (ListView) view.findViewById(R.id.makePlan_listView_warmUp);
 
-        stretchingRecyclerView = (RecyclerView) stretchingView.findViewById(R.id.makePlan_recyclerView);
+        tv_stretching = (TextView) view.findViewById(R.id.makePlan_tv_stretching);
+        stretchingAdd = (ImageView) view.findViewById(R.id.makePlan_iv_stretchingAdd);
+        stretchingListView = (ListView) view.findViewById(R.id.makePlan_listView_stretching);
 
-        tv_mainAction = (TextView) mainActionView.findViewById(R.id.makePlan_tv);
-        mainActionAdd = (ImageView) mainActionView.findViewById(R.id.makePlan_iv_Add);
-        mainActionRecyclerView = (RecyclerView) mainActionView.findViewById(R.id.makePlan_recyclerView);
+        tv_mainAction = (TextView) view.findViewById(R.id.makePlan_tv_mainAction);
+        mainActionAdd = (ImageView) view.findViewById(R.id.makePlan_iv_mainActionAdd);
+        mainActionListView = (ListView) view.findViewById(R.id.makePlan_listView_mainAction);
 
-        tv_relaxAction = (TextView) relaxActionView.findViewById(R.id.makePlan_tv);
-        relaxActionAdd = (ImageView) relaxActionView.findViewById(R.id.makePlan_iv_Add);
-        relaxActionRecyclerView = (RecyclerView) relaxActionView.findViewById(R.id.makePlan_recyclerView);
+        tv_relaxAction = (TextView) view.findViewById(R.id.makePlan_tv_relaxAction);
+        relaxActionAdd = (ImageView) view.findViewById(R.id.makePlan_iv_relaxActionAdd);
+        relaxActionListView = (ListView) view.findViewById(R.id.makePlan_listView_relaxAction);
+
     }
 
-    public View getWarmUpView() {
-        return warmUpView;
-    }
 }

@@ -11,11 +11,20 @@
         android:layout_marginTop="8dp"
         android:background="@color/lime_white">
 
+        <ImageView
+            android:id="@+id/choose_item_checkbox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:src="@mipmap/icon_select_default" />
 
         <ImageView
             android:id="@+id/choose_item_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/choose_item_checkbox"
             android:src="@mipmap/loading" />
 
         <TextView

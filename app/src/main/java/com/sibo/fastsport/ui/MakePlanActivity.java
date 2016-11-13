@@ -1,6 +1,5 @@
 package com.sibo.fastsport.ui;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,13 +15,14 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
 import com.sibo.fastsport.fragment.BaseDay;
+import com.sibo.fastsport.utils.MakePlanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MakePlanActivity extends FragmentActivity implements View.OnClickListener {
 
-
+    private boolean click = false;
     //每一个Day的布局ID
     private int[] daysId = {R.id.ll1, R.id.ll2, R.id.ll3, R.id.ll4, R.id.ll5, R.id.ll6, R.id.ll7,};
     private LinearLayout[] days = new LinearLayout[7];
@@ -52,13 +52,16 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private int day_left;
     //ViewPager滑动时ScrollView跟随滑动的距离
     private int srcollToDis;
+
+    private MakePlanUtils makePlanUtils;
     /**
      * 制定计划的按钮监听事件
      */
     private View.OnClickListener okListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(MakePlanActivity.this, ChooseActionActivity.class));
+            // startActivity(new Intent(MakePlanActivity.this, ChooseActionActivity.class));
+
         }
     };
     /**
@@ -79,11 +82,16 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         public void onPageSelected(int arg0) {
             //计算ScrollView滑动的距离
             day_left = days[arg0].getLeft();
+            //滑动的距离是 = 当前控件距离屏幕左边的宽度+控件宽度/2-屏幕宽度/2
             srcollToDis = day_left + day_width / 2 - screen_width / 2;
+            //调用smoothScrollTo()滑动ScrollView控件
             hs.smoothScrollTo(srcollToDis, 0);
             //设置选择栏的背景颜色，用来区别哪一个选项被选择了
             resetTextView();
             days[arg0].setBackgroundColor(getResources().getColor(R.color.light_white));
+            if (isSelected[arg0]) {
+                MakePlanUtils.dayId = arg0;//设置当前选择的是第几天
+            }
         }
 
         @Override
@@ -114,10 +122,15 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                     //改变选择项的图标背景
                     if (!isSelected[i]) {
                         isSelected[i] = true;
+                        MakePlanUtils.dayId = i;//标记选择的是第几天
                         iv_day[i].setImageResource(R.mipmap.icon_ok);
+                        setVisibility(i, View.VISIBLE);
+                        list_day.get(i).tips.setVisibility(View.GONE);//设置提示框消失
                     } else {
                         isSelected[i] = false;
                         iv_day[i].setImageResource(R.mipmap.icon_select_default);
+                        setVisibility(i, View.GONE);
+                        list_day.get(i).tips.setVisibility(View.VISIBLE);//设置提示框显示
                     }
 
                 }
@@ -125,6 +138,20 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
             }
         }
     };
+
+    /**
+     * 如果今天不休息则显示训练的列表
+     * 否则显示提示框
+     *
+     * @param i
+     * @param select
+     */
+    private void setVisibility(int i, int select) {
+        list_day.get(i).warmUpView.setVisibility(select);
+        list_day.get(i).stretchingView.setVisibility(select);
+        list_day.get(i).mainActionView.setVisibility(select);
+        list_day.get(i).relaxActionView.setVisibility(select);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +161,20 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         init();
         initListener();
         getScreenWH();
+    }
+
+    /**
+     * 当界面显示的时候，判断这个界面是不是第一次显示
+     * 是：说明是从选择体型界面跳转过来的，设置isFirst = false
+     * 否：说明是从添加动作界面跳转过来的，执行getResult()将选择的健身动作设置在列表中
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!MakePlanUtils.isFirst) {
+            makePlanUtils.getResult();
+        }
+        MakePlanUtils.isFirst = false;
     }
 
     /**
@@ -153,14 +194,17 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         }
     }
 
+
     /**
      * 初始化数据
      */
     private void init() {
+        MakePlanUtils.context = this;
         for (int i = 0; i < 7; i++) {
             BaseDay day = new BaseDay();
             list_day.add(day);//将第一到第七天的Fragment添加到list中
         }
+
         resetTextView();
         //初始化Fragment适配器
         adapter = new MyDayFragmentAdapter(getSupportFragmentManager(), list_day);
@@ -173,6 +217,8 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         title.setText(R.string.makePlan);
         close.setVisibility(View.GONE);
         make.setText(R.string.ok);
+        //设置选择动作界面的监听
+        makePlanUtils = new MakePlanUtils(this, list_day);
     }
 
     /**
@@ -217,6 +263,9 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                 resetTextView();
                 viewPager.setCurrentItem(i);
                 days[i].setBackgroundColor(getResources().getColor(R.color.light_white));
+                if (isSelected[i]) {
+                    MakePlanUtils.dayId = i;//标记选择的是第几天
+                }
                 break;
             }
         }
@@ -226,10 +275,10 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      * 获得手机屏幕的宽与ScrollView中子控件的宽
      */
     private void getScreenWH() {
+
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screen_width = metrics.widthPixels;
         day_width = days[0].getWidth();
-
     }
 }

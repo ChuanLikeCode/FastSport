@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.utils.MakePlanUtils;
 
 public class BodyjudgmentActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private RelativeLayout bodyLable, bodyLabelByYourself;
@@ -35,6 +36,12 @@ public class BodyjudgmentActivity extends AppCompatActivity implements View.OnCl
         initData();
         initListener();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MakePlanUtils.isFirst = true;//修改选择动作界面为第一次执行
     }
 
     private void initData() {

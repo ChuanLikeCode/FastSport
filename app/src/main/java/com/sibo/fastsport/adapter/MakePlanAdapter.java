@@ -13,21 +13,21 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.domain.SportName;
-import com.sibo.fastsport.ui.ChooseActionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/10/29.
+ * Created by Administrator on 2016/11/12.
  */
-public class MyChooseActionAdapter extends BaseAdapter {
+public class MakePlanAdapter extends BaseAdapter {
     public static SparseBooleanArray status = new SparseBooleanArray();
     private int levelIds[] = {R.id.choose_item_iv_level1, R.id.choose_item_iv_level2,
             R.id.choose_item_iv_level3, R.id.choose_item_iv_level4, R.id.choose_item_iv_level5};
     private List<SportName> list = new ArrayList<SportName>();
     private Context context;
-    public MyChooseActionAdapter(Context context, List<SportName> list) {
+
+    public MakePlanAdapter(Context context, List<SportName> list) {
         this.context = context;
         this.list = list;
     }
@@ -65,42 +65,18 @@ public class MyChooseActionAdapter extends BaseAdapter {
             holder = (ChooseViewHolder) convertView.getTag();
         }
         holder.name.setText(list.get(position).getName());
-        //使用Glide加载动态图gif
         Glide.with(context).load(list.get(position).getIcon().getFileUrl())
-                .asGif()//判断是否为gif
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存图片
-                .placeholder(R.mipmap.loading)//正在加载时候的显示图片
-                .centerCrop()//填满整个控件
-                .error(R.drawable.failed).into(holder.img);//加载出错时显示的图片
+                .asGif().diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.loading)
+                .centerCrop()
+                .error(R.drawable.failed).into(holder.img);
         for (int j = 0; j < holder.level.length; j++) {
             holder.level[j].setVisibility(View.GONE);
         }
         for (int i = 0; i < list.get(position).getLevel(); i++) {
             holder.level[i].setVisibility(View.VISIBLE);
         }
-        final ChooseViewHolder finalHolder = holder;
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!status.get(position, false)) {
-                    finalHolder.checkBox.setImageResource(R.mipmap.icon_ok);
-                    status.put(position, true);
-                    //添加选择的健身动作
-                    ChooseActionActivity.list_result.add(list.get(position));
-                } else {
-                    finalHolder.checkBox.setImageResource(R.mipmap.icon_select_default);
-                    status.put(position, false);
-                    //移除未选择的健身动作
-                    ChooseActionActivity.list_result.add(list.get(position));
-                }
-            }
-        });
-        if (!status.get(position, false)) {
-            holder.checkBox.setImageResource(R.mipmap.icon_select_default);
-
-        } else {
-            holder.checkBox.setImageResource(R.mipmap.icon_ok);
-        }
+        holder.checkBox.setVisibility(View.GONE);
         return convertView;
     }
 
