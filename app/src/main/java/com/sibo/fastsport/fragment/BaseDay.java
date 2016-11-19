@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.adapter.MakePlanAdapter;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.utils.MakePlanUtils;
 
@@ -26,6 +27,11 @@ public class BaseDay extends BaseFragment {
     public List<SportName> stretchingList = new ArrayList<>();
     public List<SportName> mainActionList = new ArrayList<>();
     public List<SportName> relaxActionList = new ArrayList<>();
+    //创建适配器
+    public MakePlanAdapter warmUpAdapter;
+    public MakePlanAdapter stretchingAdapter;
+    public MakePlanAdapter mainActionAdapter;
+    public MakePlanAdapter relaxActionAdapter;
     private View view;//主界面布局
 
     @Override
@@ -38,6 +44,14 @@ public class BaseDay extends BaseFragment {
         stretchingView.setVisibility(View.GONE);
         mainActionView.setVisibility(View.GONE);
         relaxActionView.setVisibility(View.GONE);
+        warmUpAdapter = new MakePlanAdapter(getActivity(), warmUpList);
+        stretchingAdapter = new MakePlanAdapter(getActivity(), stretchingList);
+        mainActionAdapter = new MakePlanAdapter(getActivity(), mainActionList);
+        relaxActionAdapter = new MakePlanAdapter(getActivity(), relaxActionList);
+        warmUpListView.setAdapter(warmUpAdapter);
+        stretchingListView.setAdapter(stretchingAdapter);
+        mainActionListView.setAdapter(mainActionAdapter);
+        relaxActionListView.setAdapter(relaxActionAdapter);
     }
 
     @Override

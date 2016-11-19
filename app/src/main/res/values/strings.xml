@@ -91,4 +91,9 @@
     <string name="choose_action_tips">找不到相关动作(⊙o⊙)\n请重新搜索</string>
     <string name="actionDetails">动作详情</string>
     <string name="longClickToShowDetail">长按可查看动作详情</string>
+    <string name="shaixuan">筛选</string>
+    <string name="selectChannel">选择频道</string>
+    <string name="selectType">选择类别</string>
+    <string name="Login">登录</string>
+    <string name="Register">注册</string>
 </resources>

@@ -15,11 +15,11 @@ import com.sibo.fastsport.R;
 public class LoginActivity extends BaseTranslucentActivity implements View.OnClickListener {
 
     //固定的ToolBar
-    android.support.v7.widget.Toolbar rootToolBar;
+    private Toolbar rootToolBar;
     private ImageView ivClose;
     private ImageView ivBack;
-    private Toolbar toolBar;
-    private TextView tvText;
+    private TextView title;
+    private TextView complete;
 
     private TextView tvToRegister;
 
@@ -30,30 +30,35 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
 
         initView();
         initTitle();
+        initData();
+        initListener();
 
     }
 
+    private void initData() {
+        title.setText(R.string.Login);
+        //隐藏顶部栏不需要的控件
+        ivBack.setVisibility(View.GONE);
+        ivClose.setVisibility(View.GONE);
+        complete.setVisibility(View.GONE);
+    }
+
+    private void initListener() {
+        tvToRegister.setOnClickListener(this);
+    }
+
     private void initTitle() {
-        rootToolBar = (Toolbar) findViewById(R.id.title);
-        toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
+        rootToolBar = (Toolbar) findViewById(R.id.login_title);
         ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
-        tvText = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
-
-        setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
-
-
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
+        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
+        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
+        setOrChangeTranslucentColor(rootToolBar, null, getResources().getColor(R.color.title));
     }
 
     private void initView() {
         tvToRegister = (TextView) findViewById(R.id.tv_register);
-        tvToRegister.setOnClickListener(this);
+
     }
 
 

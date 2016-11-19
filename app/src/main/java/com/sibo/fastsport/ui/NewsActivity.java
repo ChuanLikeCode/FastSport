@@ -2,29 +2,56 @@ package com.sibo.fastsport.ui;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.adapter.ChannelAndTypeGridViewAdapter;
 import com.sibo.fastsport.adapter.MyNewsFragmentAdapter;
+import com.sibo.fastsport.domain.NewsChannel;
 import com.sibo.fastsport.fragment.BaseNews;
+import com.sibo.fastsport.utils.XmlParseUtils;
 import com.sibo.fastsport.view.indicator.PageIndicator;
 import com.sibo.fastsport.view.slidingmenu.SlidingMenu;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsActivity extends FragmentActivity implements View.OnClickListener {
+public class NewsActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    ViewPager viewPager;
-    PageIndicator mIndicator;
-    List<BaseNews> list = new ArrayList<BaseNews>();
-    SlidingMenu slidingMenu;
-    ImageView add_newsChannel, back;
+    public static TextView tv_preSelected;
+    private static int preSelected = 0;
+    private ViewPager viewPager;
+    private PageIndicator mIndicator;
+    private List<BaseNews> list = new ArrayList<BaseNews>();
+    private SlidingMenu slidingMenu;
+    private ImageView add_newsChannel, back;
+    private MyNewsFragmentAdapter adapter;
+    private GridView channelGridView;
+    private ChannelAndTypeGridViewAdapter channelAndTypeGridViewAdapter;
+    private List<String> list_channel;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                initData();
+            }
+        }
+    };
     /* 指示器切换监听 */
     private ViewPager.OnPageChangeListener IndicatorOnPageChangedListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -66,19 +93,57 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_news);
         initView();
         initListener();
-        initData();
+        if (XmlParseUtils.isFirst) {
+            getNewsData();
+            XmlParseUtils.isFirst = false;
+        } else {
+            initData();
+            preSelected = 0;
+        }
     }
 
+
+    private void getNewsData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                XmlParseUtils xmlParseUtils = new XmlParseUtils();
+                try {
+                    URL url = new URL("http://rss.sina.com.cn/sina_all_opml.xml");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setDoInput(true);
+                    InputStream input = connection.getInputStream();
+                    Log.e("getNewsData", "begin");
+                    xmlParseUtils.pullParseChannelXml(input);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                handler.sendEmptyMessage(0);
+
+            }
+        }).start();
+    }
+
+
     private void initData() {
-        for (int i = 0; i < 8; i++) {
-            BaseNews baseNews = new BaseNews(i);
+        List<String> list_title = XmlParseUtils.list_channelAndNews.get(0).getTitle();
+        for (int i = 0; i < list_title.size(); i++) {
+            BaseNews baseNews = new BaseNews(list_title.get(i));
+            baseNews.setChannel(0);
+            baseNews.setIndex(i);
             list.add(baseNews);
         }
-        MyNewsFragmentAdapter adapter = new MyNewsFragmentAdapter(getSupportFragmentManager(), list);
+        adapter = new MyNewsFragmentAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
         mIndicator.setViewPager(viewPager);
-        initSlidingMenu();
-
+        list_channel = new ArrayList<>();
+        for (NewsChannel n :
+                XmlParseUtils.list_channelAndNews) {
+            list_channel.add(n.getChannel());
+        }
+        channelAndTypeGridViewAdapter = new ChannelAndTypeGridViewAdapter(this, list_channel);
+        channelGridView.setAdapter(channelAndTypeGridViewAdapter);
 
     }
 
@@ -111,6 +176,7 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
         mIndicator.setOnPageChangeListener(IndicatorOnPageChangedListener);
         add_newsChannel.setOnClickListener(this);
         back.setOnClickListener(this);
+        channelGridView.setOnItemClickListener(this);
     }
 
     private void initView() {
@@ -118,6 +184,9 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
         mIndicator = (PageIndicator) findViewById(R.id.pvr_user_indicator);
         add_newsChannel = (ImageView) findViewById(R.id.news_add);
         back = (ImageView) findViewById(R.id.news_back);
+        initSlidingMenu();
+        channelGridView = (GridView) findViewById(R.id.sliding_right_channel_GridView);
+        XmlParseUtils.isPreSelectFirst = true;
     }
 
     @Override
@@ -134,5 +203,20 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
 
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        TextView channel = (TextView) view.findViewById(R.id.news_label_items_channel);
+        Log.e("onItemClick-preSelected", preSelected + "");
+        if (preSelected != position) {
+            channel.setBackgroundResource(R.drawable.news_channel_selected_bg);
+            channel.setTextColor(getResources().getColor(R.color.white));
+            tv_preSelected.setBackgroundResource(R.drawable.news_channel_default_bg);
+            tv_preSelected.setTextColor(getResources().getColor(R.color.black));
+            preSelected = position;
+            tv_preSelected = channel;
+        }
+
     }
 }

@@ -11,17 +11,18 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 
 /**
+ *
  * Created by Administrator on 2016/9/21 0021.
  */
 public class RegisterActivity extends BaseTranslucentActivity {
     //固定的ToolBar
-    android.support.v7.widget.Toolbar rootToolBar;
-    Button takeIndentify;
-    TextView sendIndentify, receiverSecond, remainSecond, resetIndentify;
+    private Toolbar rootToolBar;
+    private Button takeIndentify;
+    private TextView sendIndentify, receiverSecond, remainSecond, resetIndentify;
     private ImageView ivClose;
     private ImageView ivBack;
-    private Toolbar toolBar;
-    private TextView tvText;
+    private TextView title;
+    private TextView complete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +31,27 @@ public class RegisterActivity extends BaseTranslucentActivity {
 
         initTitle();
         initView();
+        initListener();
+        initData();
 
+    }
+
+    private void initData() {
+        title.setText(R.string.Register);
+        ivClose.setVisibility(View.GONE);
+    }
+
+    private void initListener() {
 
     }
 
     private void initTitle() {
-        rootToolBar = (Toolbar) findViewById(R.id.title);
-        toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
+        rootToolBar = (Toolbar) findViewById(R.id.register_title);
         ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
         ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
-        tvText = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
+        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
+        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
 
-        tvText.setText("注册");
         ivBack.setVisibility(View.VISIBLE);
         ivClose.setVisibility(View.INVISIBLE);
 
@@ -59,7 +69,7 @@ public class RegisterActivity extends BaseTranslucentActivity {
             }
         });
 
-        setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
+        setOrChangeTranslucentColor(rootToolBar, null, getResources().getColor(R.color.title));
     }
 
     private void initView() {

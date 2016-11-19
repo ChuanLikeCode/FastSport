@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 新闻列表适配器
  * Created by Administrator on 2016/11/02.
  */
 public class MyNewsFragmentAdapter extends FragmentPagerAdapter {
@@ -23,12 +24,11 @@ public class MyNewsFragmentAdapter extends FragmentPagerAdapter {
     public MyNewsFragmentAdapter(FragmentManager fm, List<BaseNews> list) {
         super(fm);
         this.list = list;
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return list.get(position).getIndex() + "";
+        return list.get(position).getTitle();
     }
 
     @Override

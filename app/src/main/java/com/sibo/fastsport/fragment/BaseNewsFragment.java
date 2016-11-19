@@ -13,11 +13,11 @@ import android.view.ViewGroup;
 public abstract class BaseNewsFragment extends Fragment {
     private View rootView;
     private Context context;
-    private int index;
+    private String title;
     private Boolean hasInitData = false;
 
-    public BaseNewsFragment(int index) {
-        this.index = index;
+    public BaseNewsFragment(String title) {
+        this.title = title;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class MyChooseActionAdapter extends BaseAdapter {
     public MyChooseActionAdapter(Context context, List<SportName> list) {
         this.context = context;
         this.list = list;
+        status.clear();//每一次创建适配器都清楚已选择的状态
     }
 
     @Override
@@ -97,9 +98,10 @@ public class MyChooseActionAdapter extends BaseAdapter {
         });
         if (!status.get(position, false)) {
             holder.checkBox.setImageResource(R.mipmap.icon_select_default);
-
+            //Log.e("status",status.get(position)+"");
         } else {
             holder.checkBox.setImageResource(R.mipmap.icon_ok);
+            // Log.e("status",status.get(position)+"");
         }
         return convertView;
     }

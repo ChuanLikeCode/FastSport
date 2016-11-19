@@ -88,6 +88,8 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     private View.OnClickListener backListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            MakePlanUtils.isFirst = true;
+            list_result.clear();
             finish();
         }
     };
@@ -103,6 +105,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
             //MyChooseActionAdapter.status.clear();
             Intent intent = new Intent(ChooseActionActivity.this, MakePlanActivity.class);
             startActivity(intent);
+            finish();
         }
     };
     /**
@@ -146,6 +149,9 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
      * 初始化数据
      */
     private void initData() {
+//        for (int i = 0;i<MakePlanAdapter.status.size();i++){
+//            Log.e("status",MakePlanAdapter.status.get(i)+"");
+//        }
         whorlView.start();//使进度条动起来
         close.setVisibility(View.GONE);
         title.setText(R.string.addDongZuo);

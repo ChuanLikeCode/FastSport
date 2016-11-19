@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
 
     <TextView
+        android:id="@+id/sliding_right_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/light_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="@string/shaixuan"
+        android:textColor="@color/prompt_gray"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/sliding_right_channel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="侧滑菜单" />
-</LinearLayout>
+        android:layout_below="@id/sliding_right_title"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/selectChannel"
+        android:textColor="@color/black" />
+
+    <GridView
+        android:id="@+id/sliding_right_channel_GridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sliding_right_channel"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="4"
+        android:verticalSpacing="4dp" />
+
+</RelativeLayout>

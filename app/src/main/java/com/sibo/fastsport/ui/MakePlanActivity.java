@@ -148,9 +148,13 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      */
     private void setVisibility(int i, int select) {
         list_day.get(i).warmUpView.setVisibility(select);
+        list_day.get(i).warmUpListView.setVisibility(select);
         list_day.get(i).stretchingView.setVisibility(select);
+        list_day.get(i).stretchingListView.setVisibility(select);
         list_day.get(i).mainActionView.setVisibility(select);
+        list_day.get(i).mainActionListView.setVisibility(select);
         list_day.get(i).relaxActionView.setVisibility(select);
+        list_day.get(i).relaxActionListView.setVisibility(select);
     }
 
     @Override
