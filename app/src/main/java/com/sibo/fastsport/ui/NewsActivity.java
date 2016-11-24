@@ -88,10 +88,10 @@ public class NewsActivity extends BaseTranslucentActivity implements View.OnClic
                     Log.e("gaolei", "responseresult--------------MessageActivity------" + responseResult);
                     JSONObject object1 = new JSONObject(responseResult);
                     JSONArray jsonArray = object1.getJSONArray("item");
-                    String content = jsonArray.getJSONObject(0).getString("content");
-                    Log.e("content", content + "");
-                    String[] str = content.split("data-type", 2);
-                    content = str[0];
+                    JSONArray news_item = jsonArray.getJSONObject(0).getJSONObject("content").getJSONArray("news_item");
+                    String content = news_item.getJSONObject(0).getString("content");
+                    //String[] str = content.split("data-type", 2);
+                    //content = str[0];
                     Log.e("content", content + "");
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
