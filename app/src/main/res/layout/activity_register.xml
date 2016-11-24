@@ -36,7 +36,7 @@
 
 
         <EditText
-            android:id="@+id/et_account"
+            android:id="@+id/register_et_account"
             android:layout_width="250dp"
             android:layout_height="28dp"
             android:layout_marginStart="20dp"
@@ -53,7 +53,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/et_account"
+            android:layout_alignTop="@id/register_et_account"
             android:layout_marginRight="10dp"
             android:layout_marginTop="3dp"
             android:src="@mipmap/icon_close" />
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignStart="@id/view1_vertical"
-            android:layout_below="@id/et_account"
+            android:layout_below="@id/register_et_account"
             android:layout_marginTop="15dp"
             android:background="@color/light_white" />
 
@@ -87,10 +87,10 @@
             android:background="@color/light_gray" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/register_et_password"
             android:layout_width="match_parent"
             android:layout_height="28dp"
-            android:layout_alignStart="@id/et_account"
+            android:layout_alignStart="@id/register_et_account"
             android:layout_below="@id/view1_horizontal"
             android:layout_marginTop="18dp"
             android:layout_toEndOf="@id/view2_vertical"
@@ -106,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignStart="@id/view2_vertical"
-            android:layout_below="@id/et_password"
+            android:layout_below="@id/register_et_password"
             android:layout_marginTop="15dp"
             android:background="@color/light_white" />
 
@@ -134,7 +134,7 @@
             android:id="@+id/et_identify"
             android:layout_width="150dp"
             android:layout_height="28dp"
-            android:layout_alignStart="@id/et_account"
+            android:layout_alignStart="@id/register_et_account"
             android:layout_below="@id/view2_horizontal"
             android:layout_marginTop="18dp"
             android:layout_toEndOf="@id/view2_vertical"
@@ -191,17 +191,6 @@
         android:textColor="@color/red"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_resetIdentify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/tv_sendIdentify"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:text="没有收到验证码?"
-        android:textColor="@color/red"
-        android:textSize="14sp" />
 
     <Button
         android:id="@+id/btn_register"

@@ -35,7 +35,7 @@
             android:background="@color/light_gray" />
 
         <EditText
-            android:id="@+id/et_account"
+            android:id="@+id/login_et_account"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:layout_marginEnd="20dp"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignStart="@id/view1_vertical"
-            android:layout_below="@id/et_account"
+            android:layout_below="@id/login_et_account"
             android:layout_marginTop="15dp"
             android:background="@color/light_white" />
 
@@ -77,10 +77,10 @@
             android:background="@color/light_gray" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/login_et_password"
             android:layout_width="match_parent"
             android:layout_height="28dp"
-            android:layout_alignStart="@id/et_account"
+            android:layout_alignStart="@id/login_et_account"
             android:layout_below="@id/view_horizontal"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="18dp"

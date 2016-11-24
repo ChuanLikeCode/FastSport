@@ -20,8 +20,16 @@
     <!-- 允许读取手机状态 用于创建BmobInstallation -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- mob SMS权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -29,6 +37,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.GuideActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -68,8 +80,7 @@
             android:name=".ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.EditMyInfoActivity"
             android:launchMode="singleTask"
@@ -93,6 +104,11 @@
             android:name=".ui.ActionDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AdvertisementActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.RegisterUserInfoActivity"></activity>
     </application>
 
 </manifest>

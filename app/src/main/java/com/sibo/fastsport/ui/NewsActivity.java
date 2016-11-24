@@ -4,85 +4,42 @@ package com.sibo.fastsport.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.adapter.ChannelAndTypeGridViewAdapter;
-import com.sibo.fastsport.adapter.MyNewsFragmentAdapter;
-import com.sibo.fastsport.domain.NewsChannel;
-import com.sibo.fastsport.fragment.BaseNews;
-import com.sibo.fastsport.utils.XmlParseUtils;
-import com.sibo.fastsport.view.indicator.PageIndicator;
-import com.sibo.fastsport.view.slidingmenu.SlidingMenu;
+import com.sibo.fastsport.application.Constant;
+import com.sibo.fastsport.utils.NetUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-public class NewsActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-    public static TextView tv_preSelected;
-    private static int preSelected = 0;
-    private ViewPager viewPager;
-    private PageIndicator mIndicator;
-    private List<BaseNews> list = new ArrayList<BaseNews>();
-    private SlidingMenu slidingMenu;
-    private ImageView add_newsChannel, back;
-    private MyNewsFragmentAdapter adapter;
-    private GridView channelGridView;
-    private ChannelAndTypeGridViewAdapter channelAndTypeGridViewAdapter;
-    private List<String> list_channel;
+
+public class NewsActivity extends BaseTranslucentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+    //返回键
+    private ImageView back;
+    //下拉刷新，上拉加载控件  适配器
+    private PullToRefreshListView pfl;
+
+    //PullToRefreshListView得到的ListView
+    private ListView listView;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0) {
-                initData();
-            }
-        }
-    };
-    /* 指示器切换监听 */
-    private ViewPager.OnPageChangeListener IndicatorOnPageChangedListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-    /* 页卡切换监听 */
-    private ViewPager.OnPageChangeListener viewPagerOnPageChangedListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
 
         }
     };
@@ -93,130 +50,73 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_news);
         initView();
         initListener();
-        if (XmlParseUtils.isFirst) {
-            getNewsData();
-            XmlParseUtils.isFirst = false;
-        } else {
-            initData();
-            preSelected = 0;
-        }
+        initData();
     }
 
-
-    private void getNewsData() {
+    private void initData() {
+        //adapter = new NewsItemAdapter(this,list);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                XmlParseUtils xmlParseUtils = new XmlParseUtils();
+                String getAccessToken = NetUtils.doGet(Constant.getAccessToken);
                 try {
-                    URL url = new URL("http://rss.sina.com.cn/sina_all_opml.xml");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setDoInput(true);
-                    InputStream input = connection.getInputStream();
-                    Log.e("getNewsData", "begin");
-                    xmlParseUtils.pullParseChannelXml(input);
-                } catch (IOException e) {
+                    JSONObject object = new JSONObject(getAccessToken);
+                    Log.e("object", object.toString());
+                    String token = object.getString(Constant.ACCESSTOKEN);
+                    Log.e("NewsActivity", "token-------------" + token);
+                    MediaType MEDIA_TYPE_MARKDOWN
+                            = MediaType.parse("text/x-markdown; charset=utf-8");
+                    String postBody = "{\n" +
+                            "    \"type\":\"news\",\n" +
+                            "    \"offset\":0,\n" +
+                            "    \"count\":10\n" +
+                            "}";
+                    //利用OkHttp来作为网络请求的框架，它的优点有很多
+                    // 1.Android6.0版本之后不支持httpclient，而他是封装的httpurlconnection
+                    //2.它支持https请求
+                    //3.非常高效，支持SPDY、连接池、GZIP和 HTTP 缓存。默认情况下，OKHttp会自动处理常见的网络问题，像二次连接、SSL的握手问题。
+                    // 如果你的应用程序中集成了OKHttp，Retrofit默认会使用OKHttp处理其他网络层请求。OkHttp是一个相对成熟的解决方案，
+                    // 据说Android4.4的源码中可以看到HttpURLConnection已经替换成OkHttp实现了。所以我们更有理由相信OkHttp的强大
+                    OkHttpClient mOkHttpClient = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url(Constant.getMaterial + token)
+                            .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
+                            .build();
+                    mOkHttpClient.connectTimeoutMillis();
+                    Response response = mOkHttpClient.newCall(request).execute();
+                    String responseResult = response.body().string();
+                    Log.e("gaolei", "responseresult--------------MessageActivity------" + responseResult);
+                    JSONObject object1 = new JSONObject(responseResult);
+                    JSONArray jsonArray = object1.getJSONArray("item");
+                    String content = jsonArray.getJSONObject(0).getString("content");
+                    Log.e("content", content + "");
+                    String[] str = content.split("data-type", 2);
+                    content = str[0];
+                    Log.e("content", content + "");
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
-                handler.sendEmptyMessage(0);
-
             }
         }).start();
     }
 
-
-    private void initData() {
-        List<String> list_title = XmlParseUtils.list_channelAndNews.get(0).getTitle();
-        for (int i = 0; i < list_title.size(); i++) {
-            BaseNews baseNews = new BaseNews(list_title.get(i));
-            baseNews.setChannel(0);
-            baseNews.setIndex(i);
-            list.add(baseNews);
-        }
-        adapter = new MyNewsFragmentAdapter(getSupportFragmentManager(), list);
-        viewPager.setAdapter(adapter);
-        mIndicator.setViewPager(viewPager);
-        list_channel = new ArrayList<>();
-        for (NewsChannel n :
-                XmlParseUtils.list_channelAndNews) {
-            list_channel.add(n.getChannel());
-        }
-        channelAndTypeGridViewAdapter = new ChannelAndTypeGridViewAdapter(this, list_channel);
-        channelGridView.setAdapter(channelAndTypeGridViewAdapter);
-
-    }
-
-    private void initSlidingMenu() {
-        slidingMenu = new SlidingMenu(this);
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-        slidingMenu.setMode(SlidingMenu.RIGHT);
-        slidingMenu.setBehindOffset(200);
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        slidingMenu.setMenu(R.layout.sliding_right);
-
-        slidingMenu.setOnCloseListener(new SlidingMenu.OnCloseListener() {
-            @Override
-            public void onClose() {
-                add_newsChannel.startAnimation(StartAnimation(225f, 0f));
-            }
-        });
-    }
-
-    private Animation StartAnimation(float x, float y) {
-        RotateAnimation animation = new RotateAnimation(x, y,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setFillAfter(true);
-        animation.setDuration(300);
-        return animation;
-    }
-
     private void initListener() {
-        viewPager.setOnPageChangeListener(viewPagerOnPageChangedListener);
-        mIndicator.setOnPageChangeListener(IndicatorOnPageChangedListener);
-        add_newsChannel.setOnClickListener(this);
-        back.setOnClickListener(this);
-        channelGridView.setOnItemClickListener(this);
+        //listView.setOnItemClickListener(this);
     }
 
     private void initView() {
-        viewPager = (ViewPager) findViewById(R.id.pvr_user_pager);
-        mIndicator = (PageIndicator) findViewById(R.id.pvr_user_indicator);
-        add_newsChannel = (ImageView) findViewById(R.id.news_add);
-        back = (ImageView) findViewById(R.id.news_back);
-        initSlidingMenu();
-        channelGridView = (GridView) findViewById(R.id.sliding_right_channel_GridView);
-        XmlParseUtils.isPreSelectFirst = true;
+        setOrChangeTranslucentColor(findViewById(R.id.news_rl), getResources().getColor(R.color.dip_red));
+//        pfl = (PullToRefreshListView) findViewById(R.id.news_pfl);
+//        listView = pfl.getRefreshableView();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.news_back:
-                finish();
-                break;
-            case R.id.news_add:
-                if (!slidingMenu.isMenuShowing()) {
-                    add_newsChannel.startAnimation(StartAnimation(0f, 225f));
-                    slidingMenu.showMenu();
-                }
 
-                break;
-        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView channel = (TextView) view.findViewById(R.id.news_label_items_channel);
-        Log.e("onItemClick-preSelected", preSelected + "");
-        if (preSelected != position) {
-            channel.setBackgroundResource(R.drawable.news_channel_selected_bg);
-            channel.setTextColor(getResources().getColor(R.color.white));
-            tv_preSelected.setBackgroundResource(R.drawable.news_channel_default_bg);
-            tv_preSelected.setTextColor(getResources().getColor(R.color.black));
-            preSelected = position;
-            tv_preSelected = channel;
-        }
 
     }
 }
