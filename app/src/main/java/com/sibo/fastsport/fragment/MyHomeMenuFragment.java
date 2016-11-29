@@ -19,7 +19,8 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initData() {
-
+        //提前获取微信的Token
+       // WXArticleUtils.getAccessToken();
     }
 
     @Override

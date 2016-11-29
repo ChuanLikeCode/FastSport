@@ -108,7 +108,8 @@
             android:name=".ui.AdvertisementActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.RegisterUserInfoActivity"></activity>
+        <activity android:name=".ui.RegisterUserInfoActivity" />
+        <activity android:name=".ui.ShowWXActivity"></activity>
     </application>
 
 </manifest>

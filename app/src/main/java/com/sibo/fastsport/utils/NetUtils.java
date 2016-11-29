@@ -1,5 +1,6 @@
 package com.sibo.fastsport.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,5 +36,19 @@ public class NetUtils {
         } catch (Exception e) {
         }
         return sb.toString();
+    }
+
+    public static InputStream getInputStream(String url){
+        InputStream inputStream = null;
+        try {
+            URL url1 = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.setDoInput(true);
+            connection.setRequestMethod("GET");
+            inputStream = connection.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return inputStream;
     }
 }
