@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -45,10 +44,6 @@ public class NewsActivity extends BaseTranslucentActivity implements View.OnClic
             if (msg.what == SUCCESS){
                 adapter.notifyDataSetChanged();
                 pfl.onRefreshComplete();
-                for (WXItem w :
-                        wxItemList) {
-                    Log.e("img",w.getImg().get(1));
-                }
             }
         }
     };

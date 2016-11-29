@@ -61,21 +61,21 @@ public class WXitemAdapter extends BaseAdapter {
         holder.author.setText(list.get(position).getAuthor());
         holder.updataTime.setText(list.get(position).getUpdateTime());
         //Log.e("img1",list.get(position).getTitle());
-        Picasso.with(context).load(list.get(position).getImg().get(1))
+        Picasso.with(context).load(list.get(position).getImg().get(0))
                 .resize(80,80)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.failed)
                 .into(holder.img1);
        // Log.e("img1",list.get(position).getImg().get(0));
-        Picasso.with(context).load(list.get(position).getImg().get(2))
+        Picasso.with(context).load(list.get(position).getImg().get(1))
                 .resize(80,80)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.failed)
                 .into(holder.img2);
        // Log.e("img1",list.get(position).getImg().get(1));
-        Picasso.with(context).load(list.get(position).getImg().get(3))
+        Picasso.with(context).load(list.get(position).getImg().get(2))
                 .resize(80,80)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
