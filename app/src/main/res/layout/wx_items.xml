@@ -7,7 +7,7 @@
         android:id="@+id/wx_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
@@ -21,8 +21,8 @@
         android:layout_alignTop="@+id/wx_img2"
         android:layout_toStartOf="@+id/wx_img2"
         android:layout_marginEnd="20dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/icon_back_my"
         android:layout_below="@id/wx_item_title"/>
 
@@ -30,8 +30,8 @@
         android:id="@+id/wx_img2"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/icon_back_my"
         android:layout_below="@id/wx_item_title"/>
 
@@ -40,14 +40,15 @@
         android:layout_alignTop="@id/wx_img2"
         android:layout_toEndOf="@id/wx_img2"
         android:layout_marginStart="20dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/icon_back_my"
         android:layout_below="@id/wx_item_title"/>
 
     <TextView
         android:id="@+id/wx_author"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="作者"

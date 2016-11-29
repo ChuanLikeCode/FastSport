@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.domain.WXItem;
+import com.sibo.fastsport.utils.DateTransformUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,29 +60,42 @@ public class WXitemAdapter extends BaseAdapter {
         }
         holder.title.setText(list.get(position).getTitle());
         holder.author.setText(list.get(position).getAuthor());
-        holder.updataTime.setText(list.get(position).getUpdateTime());
-        //Log.e("img1",list.get(position).getTitle());
-        Picasso.with(context).load(list.get(position).getImg().get(0))
-                .resize(80,80)
-                .centerCrop()
-                .placeholder(R.mipmap.loading)
-                .error(R.drawable.failed)
-                .into(holder.img1);
-       // Log.e("img1",list.get(position).getImg().get(0));
-        Picasso.with(context).load(list.get(position).getImg().get(1))
-                .resize(80,80)
-                .centerCrop()
-                .placeholder(R.mipmap.loading)
-                .error(R.drawable.failed)
-                .into(holder.img2);
-       // Log.e("img1",list.get(position).getImg().get(1));
-        Picasso.with(context).load(list.get(position).getImg().get(2))
-                .resize(80,80)
-                .centerCrop()
-                .placeholder(R.mipmap.loading)
-                .error(R.drawable.failed)
-                .into(holder.img3);
-        //Log.e("img1",list.get(position).getImg().get(2));
+        holder.updataTime.setText(DateTransformUtils.transfromDate(list.get(position).getUpdateTime()));
+        if (list.get(position).getImg().size()>=3){
+            Picasso.with(context).load(list.get(position).getImg().get(0))
+                    .resize(80,80)
+                    .centerCrop()
+                    .placeholder(R.mipmap.loading)
+                    .error(R.drawable.failed)
+                    .into(holder.img1);
+            Picasso.with(context).load(list.get(position).getImg().get(1))
+                    .resize(80,80)
+                    .centerCrop()
+                    .placeholder(R.mipmap.loading)
+                    .error(R.drawable.failed)
+                    .into(holder.img2);
+            Picasso.with(context).load(list.get(position).getImg().get(2))
+                    .resize(80,80)
+                    .centerCrop()
+                    .placeholder(R.mipmap.loading)
+                    .error(R.drawable.failed)
+                    .into(holder.img3);
+        }else {
+            Picasso.with(context).load(list.get(position).getImg().get(0))
+                    .resize(80,80)
+                    .centerCrop()
+                    .placeholder(R.mipmap.loading)
+                    .error(R.drawable.failed)
+                    .into(holder.img1);
+            Picasso.with(context).load(list.get(position).getImg().get(1))
+                    .resize(80,80)
+                    .centerCrop()
+                    .placeholder(R.mipmap.loading)
+                    .error(R.drawable.failed)
+                    .into(holder.img2);
+            holder.img3.setBackgroundResource(R.drawable.failed);
+        }
+
         return convertView;
     }
 

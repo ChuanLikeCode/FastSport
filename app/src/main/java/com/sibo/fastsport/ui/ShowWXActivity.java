@@ -2,15 +2,17 @@ package com.sibo.fastsport.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
 import com.sibo.fastsport.R;
 
-public class ShowWXActivity extends AppCompatActivity {
+public class ShowWXActivity extends BaseTranslucentActivity {
 
     private WebView webView;
+    private ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,20 +28,17 @@ public class ShowWXActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.loadUrl(url);
-//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-//        webSettings.setAllowFileAccess(true);
-//        webSettings.setBlockNetworkImage(false);
-//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//        webView.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                view.loadUrl(url);
-//                return true;
-//            }
-//        });
     }
 
     private void initView() {
+        setOrChangeTranslucentColor(findViewById(R.id.showx_rl), getResources().getColor(R.color.title));
         webView = (WebView) findViewById(R.id.showwx_webview);
+        back = (ImageView) findViewById(R.id.showx_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
