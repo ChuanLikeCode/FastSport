@@ -1,7 +1,5 @@
 package com.sibo.fastsport.utils;
 
-import android.util.Log;
-
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.domain.WXItem;
 
@@ -27,18 +25,7 @@ import okhttp3.Response;
 public class WXArticleUtils {
     private List<WXItem> temp_wxItemList = new ArrayList<>();
     private String total_count;
-    private boolean isFirst = true;
-    /*public static void getAccessToken(){
-        String getAccessToken = NetUtils.doGet(Constant.getAccessToken);
-        try {
-            Log.e("NewsActivity", "token-------------" + getAccessToken);
-            JSONObject object = new JSONObject(getAccessToken);
-            token = object.getString(Constant.ACCESSTOKEN);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.e("NewsActivity", "token-------------" + token);
-    }*/
+    public static boolean isFirst = true;
 
     public List<WXItem> getArticle(int getNum,int offset){
         temp_wxItemList.clear();
@@ -73,7 +60,7 @@ public class WXArticleUtils {
             //Log.e("gaolei", "responseresult--------------MessageActivity------" + responseResult);
             JSONObject object1 = new JSONObject(responseResult);
             total_count = object1.getString("total_count");
-            Log.e("total_count",total_count);
+            //Log.e("total_count",total_count);
             JSONArray jsonArray = object1.getJSONArray("item");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONArray news_item = jsonArray.getJSONObject(i).getJSONObject("content").getJSONArray("news_item");

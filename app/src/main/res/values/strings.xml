@@ -13,7 +13,7 @@
     <string name="BodyLabelByYourself">自定</string>
     <string name="BodyEditHint">请输入</string>
     <string name="my_home">我的主页</string>
-    <string name="my_news">新闻资讯</string>
+    <string name="my_news">健康资讯</string>
     <string name="my_shoucang">我的收藏</string>
     <string name="plan">计划</string>
     <string name="student">学员</string>
@@ -101,4 +101,10 @@
     <string name="start">启动新鲜体验</string>
     <string name="loading">正在登录...</string>
     <string name="register_loading">正在注册...</string>
+    <string name="noMore">没有更多了，不要扯我啦(┯_┯)</string>
+    <string name="wx_collect_success">已收藏</string>
+    <string name="wx_collect_failed">收藏</string>
+    <string name="myCollection">我的收藏</string>
+    <string name="noCollection">还没有找到自己喜欢的嘛？"\n"赶紧到健康资讯里面淘淘吧~</string>
+    <string name="exit">退出登录</string>
 </resources>

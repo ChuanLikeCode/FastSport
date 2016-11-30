@@ -4,12 +4,16 @@ import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
+import com.sibo.fastsport.application.Constant;
+import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.ui.ChooseActionActivity;
 import com.sibo.fastsport.ui.LoginActivity;
 import com.sibo.fastsport.ui.RegisterActivity;
+import com.sibo.fastsport.ui.WxCollectedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,49 @@ public class MyBombUtils {
         this.context = context;
     }
 
+    /**
+     * 从bmob获取收藏的文章,以后的修改方案，加入本地数据库中，速度更快
+     */
+    public void queryCollection(){
+        BmobQuery<MyCollections> query = new BmobQuery<>();
+        query.findObjects(new FindListener<MyCollections>() {
+            @Override
+            public void done(List<MyCollections> list, BmobException e) {
+                WxCollectedActivity.collectionList.clear();
+                for (MyCollections m:
+                        list) {
+                    if (m.getAccount().equals(MyApplication.mAccount.getAccount())){
+                        WxCollectedActivity.collectionList.add(m);
+                    }
+                }
+                ((WxCollectedActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+            }
+        });
+    }
+    /**
+     * 增加收藏文章
+     * @param list
+     */
+    public void addCollection(List<MyCollections> list){
+        for (MyCollections m :
+                list) {
+            m.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null){
+                        Log.e("addCollection",s);
+                    }else {
+                        Log.e("addCollection","failed");
+                    }
+                }
+            });
+        }
+    }
+    /**
+     * 增加新用户
+     * @param userPhone 账号
+     * @param password 密码
+     */
     public void addUser(String userPhone, String password) {
         Account account = new Account();
         account.setAccount(userPhone);
@@ -57,6 +104,10 @@ public class MyBombUtils {
         });
     }
 
+    /**
+     * 注册新用户验证
+     * @param userPhone 账号
+     */
     public void registerChecked(final String userPhone) {
         BmobQuery<Account> query = new BmobQuery<>();
         query.findObjects(new FindListener<Account>() {
@@ -78,6 +129,11 @@ public class MyBombUtils {
         });
     }
 
+    /**
+     * 登录查询是否账号密码输入错误
+     * @param userPhone 账号
+     * @param password  密码
+     */
     public void queryAccount(final String userPhone, final String password) {
         BmobQuery<Account> bmobQuery = new BmobQuery<>();
         bmobQuery.findObjects(new FindListener<Account>() {

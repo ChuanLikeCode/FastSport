@@ -14,5 +14,7 @@ public class Constant {
     public static String ISFIRSTSTART = "isFirst";
     public static String ISLOGIN = "isLogin";
     public static String ACCESSTOKEN = "access_token";
+    public final static int SUCCESS = 0;
+    public final static int NO_MORE = 1;
 
 }

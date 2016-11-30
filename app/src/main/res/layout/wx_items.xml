@@ -20,40 +20,49 @@
         android:id="@+id/wx_img1"
         android:layout_alignTop="@+id/wx_img2"
         android:layout_toStartOf="@+id/wx_img2"
-        android:layout_marginEnd="20dp"
-        android:layout_width="100dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:src="@mipmap/icon_back_my"
+        android:src="@mipmap/wxitembg"
         android:layout_below="@id/wx_item_title"/>
 
     <ImageView
         android:id="@+id/wx_img2"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:src="@mipmap/icon_back_my"
+        android:src="@mipmap/wxitembg"
         android:layout_below="@id/wx_item_title"/>
 
     <ImageView
         android:id="@+id/wx_img3"
         android:layout_alignTop="@id/wx_img2"
         android:layout_toEndOf="@id/wx_img2"
-        android:layout_marginStart="20dp"
-        android:layout_width="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:src="@mipmap/icon_back_my"
+        android:src="@mipmap/wxitembg"
         android:layout_below="@id/wx_item_title"/>
 
+    <ImageView
+        android:id="@+id/wx_collect"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/banxing"
+        android:layout_below="@id/wx_img1"
+        android:layout_alignStart="@id/wx_item_title"
+        android:layout_marginTop="6dp"/>
     <TextView
         android:id="@+id/wx_author"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="作者"
+        android:layout_marginStart="5dp"
+        android:text="@string/wx_collect_failed"
         android:layout_below="@id/wx_img1"
-        android:layout_alignStart="@id/wx_item_title"/>
+        android:layout_toEndOf="@id/wx_collect"/>
 
     <TextView
         android:id="@+id/wx_time"

@@ -109,7 +109,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.RegisterUserInfoActivity" />
-        <activity android:name=".ui.ShowWXActivity"></activity>
+        <activity android:name=".ui.ShowWXActivity" />
+        <activity android:name=".ui.WxCollectedActivity"></activity>
     </application>
 
 </manifest>

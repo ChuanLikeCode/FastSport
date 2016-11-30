@@ -64,6 +64,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg2 == SPORT_DETAIL_FINISH) {
+                whorlView.stop();
                 whorlView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
                 list.addAll(MyBombUtils.list_sportName);
@@ -173,6 +174,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 }
             }).start();
         } else {
+            whorlView.stop();
             whorlView.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             list.addAll(MyBombUtils.list_sportName);
