@@ -23,8 +23,7 @@ public class ShowWXActivity extends BaseTranslucentActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        final String url = intent.getStringExtra("url");
-        //Log.e("url",url+"");
+        String url = intent.getStringExtra("url");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.loadUrl(url);
