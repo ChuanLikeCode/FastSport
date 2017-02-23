@@ -1,12 +1,17 @@
 package com.sibo.fastsport.ui;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +20,10 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
 import com.sibo.fastsport.fragment.BaseDay;
+import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MakePlanUtils;
+import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.view.WhorlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +54,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private boolean[] isSelected = {false, false, false, false, false, false, false};
     //屏幕的宽
     private int screen_width;
+    private int screen_height;
     //显示第一到第七天的控件宽度
     private int day_width;
     //当前选择的控件离屏幕左边的距离
@@ -54,6 +63,37 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private int srcollToDis;
 
     private MakePlanUtils makePlanUtils;
+
+    private MyBombUtils myBombUtils;
+    private Dialog dialog;
+    private TextView planName;
+    private ImageView showCode;
+
+    private void initDialog() {
+        dialog = new Dialog(this);
+        View view = getLayoutInflater().inflate(R.layout.plan_dialog, null);
+        WhorlView whorlView = (WhorlView) view.findViewById(R.id.loading);
+        planName = (TextView) view.findViewById(R.id.dialog_tv_userPlanName);
+        showCode = (ImageView) findViewById(R.id.dialog_iv_userCode);
+        whorlView.start();
+        planName.setVisibility(View.INVISIBLE);
+        showCode.setVisibility(View.INVISIBLE);
+        Window window = dialog.getWindow();
+        window.requestFeature(Window.FEATURE_NO_TITLE);
+        window.getDecorView().setPadding(50, 50, 50, 50);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.width = 2 * screen_width / 3;
+        layoutParams.height = 2 * screen_height / 3;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(view, layoutParams);
+    }
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+
+        }
+    };
     /**
      * 制定计划的按钮监听事件
      */
@@ -61,6 +101,8 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         @Override
         public void onClick(View v) {
             // startActivity(new Intent(MakePlanActivity.this, ChooseActionActivity.class));
+            dialog.show();
+            myBombUtils.addPlan(CollectPlan.userSportPlan);
 
         }
     };
@@ -165,6 +207,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         init();
         initListener();
         getScreenWH();
+        initDialog();
     }
 
     /**
@@ -204,6 +247,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      */
     private void init() {
         MakePlanUtils.context = this;
+        myBombUtils = new MyBombUtils(this);
         for (int i = 0; i < 7; i++) {
             BaseDay day = new BaseDay();
             list_day.add(day);//将第一到第七天的Fragment添加到list中
@@ -283,6 +327,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screen_width = metrics.widthPixels;
+        screen_height = metrics.heightPixels;
         day_width = days[0].getWidth();
     }
 }

@@ -10,6 +10,7 @@ import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.model.Account;
+import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.ui.ChooseActionActivity;
 import com.sibo.fastsport.ui.LoginActivity;
 import com.sibo.fastsport.ui.RegisterActivity;
@@ -83,6 +84,26 @@ public class MyBombUtils {
             });
         }
     }
+
+    /**
+     * 增加健身计划名字
+     * @param userSportPlan
+     */
+    public void addPlan(UserSportPlan userSportPlan){
+        userSportPlan.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null){
+                    CollectPlan.id = s;
+                    Log.e("addCollection",s);
+
+                }else {
+                    Log.e("addCollection","failed");
+                }
+            }
+        });
+    }
+
     /**
      * 增加新用户
      * @param userPhone 账号

@@ -21,10 +21,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.domain.Pickers;
 import com.sibo.fastsport.ui.BodyjudgmentActivity;
+import com.sibo.fastsport.utils.CollectPlan;
+import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.PickerScrollView;
 
@@ -145,7 +149,16 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 showDialog(exercise);
                 break;
             case R.id.plan_tv_nextStep:
-                startActivity(new Intent(getActivity(), BodyjudgmentActivity.class));
+                String str = name.getText().toString();
+                String str1 = sex.getText().toString();
+                if (str.equals("")||str1.equals("")){
+                    Toast.makeText(getActivity(),"请输入名字和性别",Toast.LENGTH_SHORT).show();
+                }else {
+                    CollectPlan.userSportPlan.setPlanName(str+"的健身计划");
+                    CollectPlan.userSportPlan.setAccount(MyApplication.mAccount.getAccount());
+                    startActivity(new Intent(getActivity(), BodyjudgmentActivity.class));
+                }
+
                 break;
             case R.id.plan_ll_userBodyFat:
                 llSelected = 4;
@@ -253,7 +266,12 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void afterTextChanged(Editable s) {
         //s--最终内容
-
+        if (name.getText().toString().equals("")||name.getText() == null){
+            name.setBackgroundResource(R.drawable.plan_btn_background);
+        }
+        if (sex.getText().toString().equals("")||sex.getText() == null){
+            sex.setBackgroundResource(R.drawable.plan_btn_background);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.sibo.fastsport.adapter.MakePlanAdapter;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.fragment.BaseDay;
+import com.sibo.fastsport.model.DayPlan;
 import com.sibo.fastsport.ui.ChooseActionActivity;
 
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class MakePlanUtils {
      */
     public void getResult() {
         // Log.e("listSize", list.size() + "");
+
         switch (typeId) {
             case 1:
                 list_day.get(dayId).warmUpList.clear();
@@ -97,7 +99,9 @@ public class MakePlanUtils {
                 list_day.get(dayId).warmUpAdapter.notifyDataSetChanged();
                 list_day.get(dayId).warmUpListView.setVisibility(View.VISIBLE);
                 sp_warmUp.clear();
-                sp_warmUp.put(dayId, list);
+                sp_warmUp.put(dayId, list);//收集天数  动作
+                setDayTrueOrFalse();
+                ///CollectPlan.typeDayNamePlan.put(typeId,sp_warmUp);//收集健身计划类型 天 动作
                 break;
             case 2:
                 list_day.get(dayId).stretchingList.clear();
@@ -107,6 +111,8 @@ public class MakePlanUtils {
                 list_day.get(dayId).stretchingListView.setVisibility(View.VISIBLE);
                 sp_stretching.clear();
                 sp_stretching.put(dayId, list);
+                setDayTrueOrFalse();
+                //CollectPlan.typeDayNamePlan.put(typeId,sp_stretching);
                 break;
             case 3:
                 list_day.get(dayId).mainActionList.clear();
@@ -116,6 +122,8 @@ public class MakePlanUtils {
                 list_day.get(dayId).mainActionListView.setVisibility(View.VISIBLE);
                 sp_mainAction.clear();
                 sp_mainAction.put(dayId, list);
+                setDayTrueOrFalse();
+                //CollectPlan.typeDayNamePlan.put(typeId,sp_mainAction);
                 break;
             case 4:
                 list_day.get(dayId).relaxActionList.clear();
@@ -125,6 +133,8 @@ public class MakePlanUtils {
                 list_day.get(dayId).relaxActionListView.setVisibility(View.VISIBLE);
                 sp_relaxAction.clear();
                 sp_relaxAction.put(dayId, list);
+                setDayTrueOrFalse();
+                //CollectPlan.typeDayNamePlan.put(typeId,sp_relaxAction);
                 break;
         }
 
@@ -152,4 +162,26 @@ public class MakePlanUtils {
         params.height = totalHeight;
         listView.setLayoutParams(params);
     }
+
+    /**
+     * 收集判断每一天有没有健身计划
+     */
+    public void setDayTrueOrFalse(){
+        DayPlan dayPlan = new DayPlan();
+        switch (dayId){
+            case 1:
+                setType();
+                break;
+        }
+    }
+
+    /**
+     * 判断健身类型
+     */
+    private void setType() {
+        switch (typeId){
+            case 1:break;
+        }
+    }
+
 }
