@@ -1,2 +1,2 @@
-include ':app', ':loopview', ':pulltorefresh'
+include ':app', ':loopview', ':pulltorefresh', ':lib-zxing'
 include ':pulltorefresh'

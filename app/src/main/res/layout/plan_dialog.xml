@@ -12,18 +12,11 @@
         android:textSize="20sp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/black"/>
-    <ImageView
-        android:id="@+id/dialog_iv_userCode"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_below="@id/dialog_tv_userPlanName"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"/>
 
     <com.sibo.fastsport.view.WhorlView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/loading"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="110dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +25,14 @@
         app:WhorlView_MiddleWhorlColor="@color/turquoise"
         app:WhorlView_Parallax="fast"
         app:WhorlView_SmallWhorlColor="@color/turquoise"
-        app:WhorlView_StrokeWidth="6"
+        app:WhorlView_StrokeWidth="10"
         app:WhorlView_SweepAngle="180" />
+
+    <ImageView
+        android:id="@+id/dialog_iv_userCode"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/dialog_tv_userPlanName"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

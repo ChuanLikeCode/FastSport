@@ -10,9 +10,15 @@ import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.model.Account;
+import com.sibo.fastsport.model.DayPlan;
+import com.sibo.fastsport.model.MainAction;
+import com.sibo.fastsport.model.RelaxAction;
+import com.sibo.fastsport.model.Stretching;
 import com.sibo.fastsport.model.UserSportPlan;
+import com.sibo.fastsport.model.WarmUp;
 import com.sibo.fastsport.ui.ChooseActionActivity;
 import com.sibo.fastsport.ui.LoginActivity;
+import com.sibo.fastsport.ui.MakePlanActivity;
 import com.sibo.fastsport.ui.RegisterActivity;
 import com.sibo.fastsport.ui.WxCollectedActivity;
 
@@ -30,6 +36,19 @@ import cn.bmob.v3.listener.SaveListener;
  * Created by Administrator on 2016/10/31.
  */
 public class MyBombUtils {
+
+    public static int  ADD_PLAN = 0;
+    public static int  ADD_WARM = 0;
+    public static int  ADD_STRE = 0;
+    public static int  ADD_MAIN = 0;
+    public static int  ADD_RELAX = 0;
+
+    private int plan = 0;
+    private int warmUp = 0;
+    private int stre = 0;
+    private int mainAction = 0;
+    private int relaxAction = 0;
+
 
     private final static int SPORT_NAME_FINISH = 1;
     private final static int SPORT_DETAIL_FINISH = 2;
@@ -90,18 +109,147 @@ public class MyBombUtils {
      * @param userSportPlan
      */
     public void addPlan(UserSportPlan userSportPlan){
+
         userSportPlan.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null){
                     CollectPlan.id = s;
-                    Log.e("addCollection",s);
-
+                    CollectPlan.prepareToPush();
+                    addDayPlan();
+                    Log.e("addPlan",s);
+                    ((MakePlanActivity)context).handler2.sendEmptyMessage(Constant.SHOW);
                 }else {
-                    Log.e("addCollection","failed");
+                    e.printStackTrace();
+                    Log.e("addPlan","failed");
                 }
             }
         });
+    }
+
+
+
+    /**
+     * 增加计划列表DayPlan
+     */
+    public void addDayPlan(){
+        for (DayPlan d : CollectPlan.dayPlan){
+            d.setId(CollectPlan.id);
+            //plan++;
+            d.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null){
+                        Log.e("addDayPlan",s);
+
+                    }else {
+                        Log.e("addDayPlan","failed");
+                    }
+                }
+            });
+        }
+    }
+
+    public void addWarmUp(){
+        Log.e("Bmobsp_warmUp",CollectPlan.warmUps.size()+"");
+        if (CollectPlan.warmUps.size()!=0){
+            for (WarmUp w : CollectPlan.warmUps){
+               // warmUp++;
+                w.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null){
+                            Log.e("addWarmUp",s);
+//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
+//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
+//                                    &&(relaxAction == ADD_RELAX )){
+//                                Log.e("addWarmUpupload","全部上传完成");
+//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+//                            }
+                        }else {
+                            Log.e("addWarmUp","failed");
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+    public void addStretching(){
+        Log.e("addStretching",CollectPlan.stretchings.size()+"");
+        if (CollectPlan.stretchings.size() != 0){
+            for (Stretching s : CollectPlan.stretchings){
+                //stre++;
+                s.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null){
+                            Log.e("addStretching",s);
+//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
+//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
+//                                    &&(relaxAction == ADD_RELAX )){
+//                                Log.e("addStretchingupload","全部上传完成");
+//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+//                            }
+                        }else {
+                            Log.e("addStretching","failed");
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+    public void addMainAction(){
+        Log.e("addMainAction",CollectPlan.mainActions.size()+"");
+        if (CollectPlan.mainActions.size() != 0){
+            for (MainAction m : CollectPlan.mainActions){
+                //mainAction++;
+                m.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null){
+                            Log.e("addMainAction",s);
+//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
+//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
+//                                    &&(relaxAction == ADD_RELAX )){
+//                                Log.e("addMainActionupload","全部上传完成");
+//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+//                            }
+                        }else {
+                            Log.e("addMainAction","failed");
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+    public void addRelaxAction(){
+        Log.e("addRelaxAction",CollectPlan.relaxActions.size()+"");
+        if (CollectPlan.relaxActions.size() != 0){
+            for (RelaxAction r : CollectPlan.relaxActions){
+                //relaxAction++;
+                r.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null){
+                            //((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+                            Log.e("addRelaxAction",s);
+//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
+//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
+//                                    &&(relaxAction == ADD_RELAX )){
+//                                Log.e("addRelaxActionupload","全部上传完成");
+//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+//                            }
+                        }else {
+                            Log.e("addRelaxAction","failed");
+                        }
+                    }
+                });
+            }
+        }
+
     }
 
     /**

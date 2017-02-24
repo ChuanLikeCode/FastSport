@@ -42,6 +42,10 @@ public class BodyjudgmentActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         MakePlanUtils.isFirst = true;//修改选择动作界面为第一次执行
+        MakePlanUtils.sp_relaxAction.clear();
+        MakePlanUtils.sp_warmUp.clear();
+        MakePlanUtils.sp_mainAction.clear();
+        MakePlanUtils.sp_stretching.clear();
     }
 
     private void initData() {

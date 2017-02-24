@@ -7,5 +7,7 @@ package com.sibo.fastsport.utils;
  */
 
 public class PushPlan {
+        public void showCodeAndName(){
 
+        }
 }

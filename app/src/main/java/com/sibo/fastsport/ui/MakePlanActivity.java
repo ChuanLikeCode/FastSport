@@ -1,6 +1,8 @@
 package com.sibo.fastsport.ui;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,14 +19,18 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
+import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.fragment.BaseDay;
+import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,35 +72,89 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private MakePlanUtils makePlanUtils;
 
     private MyBombUtils myBombUtils;
+    //private CollectPlan collectPlan;
     private Dialog dialog;
+    private WhorlView whorlView;
     private TextView planName;
     private ImageView showCode;
+
+
 
     private void initDialog() {
         dialog = new Dialog(this);
         View view = getLayoutInflater().inflate(R.layout.plan_dialog, null);
-        WhorlView whorlView = (WhorlView) view.findViewById(R.id.loading);
+        whorlView= (WhorlView) view.findViewById(R.id.loading);
         planName = (TextView) view.findViewById(R.id.dialog_tv_userPlanName);
-        showCode = (ImageView) findViewById(R.id.dialog_iv_userCode);
+        showCode = (ImageView) view.findViewById(R.id.dialog_iv_userCode);
         whorlView.start();
         planName.setVisibility(View.INVISIBLE);
         showCode.setVisibility(View.INVISIBLE);
         Window window = dialog.getWindow();
         window.requestFeature(Window.FEATURE_NO_TITLE);
         window.getDecorView().setPadding(50, 50, 50, 50);
-        window.setBackgroundDrawableResource(android.R.color.transparent);
+        window.setBackgroundDrawableResource(android.R.color.white);
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         layoutParams.width = 2 * screen_width / 3;
-        layoutParams.height = 2 * screen_height / 3;
+        layoutParams.height = screen_height / 2;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(view, layoutParams);
     }
+    //用来处理上传热身拉伸具体放松动作
+    public Handler handler2 = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Log.e("msg-handler2",msg.what+"");
+            if (Constant.SHOW == msg.what){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            myBombUtils.addWarmUp();
+                            myBombUtils.addStretching();
+                            myBombUtils.addMainAction();
+                            myBombUtils.addRelaxAction();
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        handler.sendEmptyMessage(Constant.SUCCESS);
+                    }
+                }).start();
+            }
+        }
+    };
+    //用来显示二维码
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-
+            Log.e("msg-handler2",msg.what+"");
+            if (msg.what == Constant.SUCCESS){
+                whorlView.stop();
+                whorlView.setVisibility(View.INVISIBLE);
+                planName.setVisibility(View.VISIBLE);
+                showCode.setVisibility(View.VISIBLE);
+                loadCode();
+            }
         }
     };
+
+    /**
+     * 生产二维码
+     */
+    public void loadCode(){
+        //获取健身计划的ID-计划名字-教练名字
+        StringBuffer str = new StringBuffer();
+        str.append(CollectPlan.userSportPlan.getObjectId())
+        .append("-")
+        .append(CollectPlan.userSportPlan.getPlanName())
+        .append("-")
+        .append(CollectPlan.userSportPlan.getAccount());
+        Bitmap bitmap = CodeUtils.createImage(str.toString(),250,250, BitmapFactory.decodeResource(getResources(),R.mipmap.logo));
+        showCode.setImageBitmap(bitmap);
+    }
+
+
     /**
      * 制定计划的按钮监听事件
      */
@@ -101,8 +162,34 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         @Override
         public void onClick(View v) {
             // startActivity(new Intent(MakePlanActivity.this, ChooseActionActivity.class));
-            dialog.show();
-            myBombUtils.addPlan(CollectPlan.userSportPlan);
+            boolean ok = false;
+            for (int i = 0 ; i < isSelected.length ; i++) {
+                //Log.e("isSelect--",isSelected[i]+""+i);
+                if (isSelected[i]){
+                    ok = true;
+                }
+            }
+                if (ok){
+                    if ((MakePlanUtils.sp_warmUp.size() != 0)
+                            || (MakePlanUtils.sp_stretching.size() != 0)
+                            || (MakePlanUtils.sp_mainAction.size() != 0)
+                            || (MakePlanUtils.sp_relaxAction.size() != 0)){
+                        dialog.show();
+                        myBombUtils.addPlan(CollectPlan.userSportPlan);
+
+                    }else {
+
+
+                        Toast.makeText(MakePlanActivity.this , "请编辑健身计划~~",Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(MakePlanActivity.this , "请编辑健身计划~~",Toast.LENGTH_SHORT).show();
+                }
+
+
+            //collectPlan.addPlan(CollectPlan.userSportPlan);
+
 
         }
     };
@@ -112,6 +199,18 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private View.OnClickListener backListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            for (BaseDay b :
+                    list_day) {
+                b.relaxActionList.clear();
+                b.warmUpList.clear();
+                b.mainActionList.clear();
+                b.stretchingList.clear();
+                CollectPlan.dayPlan.clear();
+                CollectPlan.warmUps.clear();
+                CollectPlan.stretchings.clear();
+                CollectPlan.mainActions.clear();
+                CollectPlan.relaxActions.clear();
+            }
             finish();
         }
     };
@@ -164,12 +263,14 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                     //改变选择项的图标背景
                     if (!isSelected[i]) {
                         isSelected[i] = true;
+                        //CollectPlan.dayId.add(i);
                         MakePlanUtils.dayId = i;//标记选择的是第几天
                         iv_day[i].setImageResource(R.mipmap.icon_ok);
                         setVisibility(i, View.VISIBLE);
                         list_day.get(i).tips.setVisibility(View.GONE);//设置提示框消失
                     } else {
                         isSelected[i] = false;
+                        //CollectPlan.dayId.remove(i);
                         iv_day[i].setImageResource(R.mipmap.icon_select_default);
                         setVisibility(i, View.GONE);
                         list_day.get(i).tips.setVisibility(View.VISIBLE);//设置提示框显示
@@ -208,6 +309,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         initListener();
         getScreenWH();
         initDialog();
+        CollectPlan.initDayPlan();
     }
 
     /**
@@ -247,6 +349,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      */
     private void init() {
         MakePlanUtils.context = this;
+        //collectPlan = new CollectPlan(this);
         myBombUtils = new MyBombUtils(this);
         for (int i = 0; i < 7; i++) {
             BaseDay day = new BaseDay();

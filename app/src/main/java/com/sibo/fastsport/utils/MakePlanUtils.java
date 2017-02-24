@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class MakePlanUtils {
     public static int dayId;//设置当前是第几天
+    public static int preDayId = -1;//
     //设置当前是选择哪一个类型的健身动作 热身--1、拉伸--2、具体--3、放松--4
     public static int typeId;
     public static boolean isFirst = true;//是否第一次执行这个界面
@@ -34,6 +35,7 @@ public class MakePlanUtils {
     public static SparseArray<List<SportName>> sp_stretching = new SparseArray<>();
     public static SparseArray<List<SportName>> sp_mainAction = new SparseArray<>();
     public static SparseArray<List<SportName>> sp_relaxAction = new SparseArray<>();
+
     /**
      * 添加具体动作的监听事件
      */
@@ -79,7 +81,7 @@ public class MakePlanUtils {
         }
     };
     //第一到第七天的Fragment
-    private static List<BaseDay> list_day = new ArrayList<>();
+    public static List<BaseDay> list_day = new ArrayList<>();
     public MakePlanUtils(Context context, List<BaseDay> list_day) {
         MakePlanUtils.context = context;
         MakePlanUtils.list_day = list_day;
@@ -98,9 +100,12 @@ public class MakePlanUtils {
                 setListViewHeight(list_day.get(dayId).warmUpListView);
                 list_day.get(dayId).warmUpAdapter.notifyDataSetChanged();
                 list_day.get(dayId).warmUpListView.setVisibility(View.VISIBLE);
-                sp_warmUp.clear();
+                if (preDayId == dayId){
+                    sp_warmUp.clear();
+                }
                 sp_warmUp.put(dayId, list);//收集天数  动作
-                setDayTrueOrFalse();
+
+                //setDayTrueOrFalse();
                 ///CollectPlan.typeDayNamePlan.put(typeId,sp_warmUp);//收集健身计划类型 天 动作
                 break;
             case 2:
@@ -109,9 +114,11 @@ public class MakePlanUtils {
                 setListViewHeight(list_day.get(dayId).stretchingListView);
                 list_day.get(dayId).stretchingAdapter.notifyDataSetChanged();
                 list_day.get(dayId).stretchingListView.setVisibility(View.VISIBLE);
-                sp_stretching.clear();
+                if (preDayId == dayId){
+                    sp_stretching.clear();
+                }
                 sp_stretching.put(dayId, list);
-                setDayTrueOrFalse();
+                //setDayTrueOrFalse();
                 //CollectPlan.typeDayNamePlan.put(typeId,sp_stretching);
                 break;
             case 3:
@@ -120,9 +127,11 @@ public class MakePlanUtils {
                 setListViewHeight(list_day.get(dayId).mainActionListView);
                 list_day.get(dayId).mainActionAdapter.notifyDataSetChanged();
                 list_day.get(dayId).mainActionListView.setVisibility(View.VISIBLE);
-                sp_mainAction.clear();
+                if (preDayId == dayId){
+                    sp_mainAction.clear();
+                }
                 sp_mainAction.put(dayId, list);
-                setDayTrueOrFalse();
+                //etDayTrueOrFalse();
                 //CollectPlan.typeDayNamePlan.put(typeId,sp_mainAction);
                 break;
             case 4:
@@ -131,13 +140,15 @@ public class MakePlanUtils {
                 setListViewHeight(list_day.get(dayId).relaxActionListView);
                 list_day.get(dayId).relaxActionAdapter.notifyDataSetChanged();
                 list_day.get(dayId).relaxActionListView.setVisibility(View.VISIBLE);
-                sp_relaxAction.clear();
+                if (preDayId == dayId){
+                    sp_relaxAction.clear();
+                }
                 sp_relaxAction.put(dayId, list);
-                setDayTrueOrFalse();
+                //setDayTrueOrFalse();
                 //CollectPlan.typeDayNamePlan.put(typeId,sp_relaxAction);
                 break;
         }
-
+        setDayTrueOrFalse();
     }
 
     /**
@@ -167,20 +178,28 @@ public class MakePlanUtils {
      * 收集判断每一天有没有健身计划
      */
     public void setDayTrueOrFalse(){
-        DayPlan dayPlan = new DayPlan();
-        switch (dayId){
-            case 1:
-                setType();
-                break;
-        }
+        //CollectPlan.dayPlan.get(dayId).setId(CollectPlan.id);
+        //CollectPlan.dayPlan.get(dayId).setDayId(dayId);
+        setType(CollectPlan.dayPlan.get(dayId));
     }
 
     /**
      * 判断健身类型
      */
-    private void setType() {
+    private void setType(DayPlan dayPlan) {
         switch (typeId){
-            case 1:break;
+            case 1:
+                dayPlan.setWarmUp(true);
+                break;
+            case 2:
+                dayPlan.setStretching(true);
+                break;
+            case 3:
+                dayPlan.setMainAction(true);
+                break;
+            case 4:
+                dayPlan.setRelaxAction(true);
+                break;
         }
     }
 

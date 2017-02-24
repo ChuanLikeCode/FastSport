@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyChooseActionAdapter;
@@ -101,12 +102,17 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     private View.OnClickListener okListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            MakePlanUtils.list.addAll(list_result);
-            list_result.clear();
-            //MyChooseActionAdapter.status.clear();
-            Intent intent = new Intent(ChooseActionActivity.this, MakePlanActivity.class);
-            startActivity(intent);
-            finish();
+            if (!list_result.isEmpty()){
+                MakePlanUtils.list.addAll(list_result);
+                list_result.clear();
+                //MyChooseActionAdapter.status.clear();
+                Intent intent = new Intent(ChooseActionActivity.this, MakePlanActivity.class);
+                startActivity(intent);
+                finish();
+            }else {
+                Toast.makeText(ChooseActionActivity.this,"还没有选择健身动作哦~~",Toast.LENGTH_SHORT).show();
+            }
+
         }
     };
     /**

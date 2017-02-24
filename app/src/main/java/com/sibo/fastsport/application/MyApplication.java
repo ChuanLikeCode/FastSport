@@ -7,6 +7,7 @@ import android.content.Context;
 import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.bmob.v3.Bmob;
 import cn.smssdk.SMSSDK;
@@ -56,6 +57,7 @@ public class MyApplication extends Application {
 //            RongIM.init(this);
 
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            ZXingLibrary.initDisplayOpinion(this);
             SMSSDK.initSDK(this, "193141f4621c1", "b393e87172c18c5069feaf2a4286bc15");
             Bmob.initialize(this, "f79d34f38040f7e7512a4228ea4d0c7a");
             initLoginParams();
