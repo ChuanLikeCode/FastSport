@@ -60,7 +60,7 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
                     MyApplication.mAccount.setAccount(userAccount.getText().toString());
                     MyApplication.mAccount.setPassword(userPassWord.getText().toString());
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, AdvertisementActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ChooseActivity.class);
                     startActivity(intent);
                     MyApplication.mUser.setLogin(false);
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
@@ -123,7 +123,7 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
         myApplication = (MyApplication) getApplication();
         Log.e("checkLoginisLogin", myApplication.isLogin + "");
         if (!myApplication.isLogin) {
-            startActivity(new Intent(this, AdvertisementActivity.class));
+            startActivity(new Intent(this, ChooseActivity.class));
             finish();
         }
     }

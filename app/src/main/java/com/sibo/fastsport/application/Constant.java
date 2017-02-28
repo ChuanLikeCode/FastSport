@@ -19,5 +19,7 @@ public class Constant {
     public static String ISFIRSTSTART = "isFirst";
     public static String ISLOGIN = "isLogin";
     public static String ACCESSTOKEN = "access_token";
+    public static String PLANOBJECTID ="plan";
+    public static String USER_TYPE ="plan";
 
 }

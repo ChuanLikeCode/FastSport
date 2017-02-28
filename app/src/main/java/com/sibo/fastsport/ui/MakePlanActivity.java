@@ -1,6 +1,8 @@
 package com.sibo.fastsport.ui;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,6 +27,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.fragment.BaseDay;
+import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MakePlanUtils;
@@ -77,7 +80,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private WhorlView whorlView;
     private TextView planName;
     private ImageView showCode;
-
+    private ImageView dialog_close;
 
 
     private void initDialog() {
@@ -86,6 +89,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         whorlView= (WhorlView) view.findViewById(R.id.loading);
         planName = (TextView) view.findViewById(R.id.dialog_tv_userPlanName);
         showCode = (ImageView) view.findViewById(R.id.dialog_iv_userCode);
+        dialog_close = (ImageView) view.findViewById(R.id.dialog_iv_close);
         whorlView.start();
         planName.setVisibility(View.INVISIBLE);
         showCode.setVisibility(View.INVISIBLE);
@@ -98,6 +102,28 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         layoutParams.height = screen_height / 2;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(view, layoutParams);
+        dialog_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                for (BaseDay b :
+                        list_day) {
+                    b.relaxActionList.clear();
+                    b.warmUpList.clear();
+                    b.mainActionList.clear();
+                    b.stretchingList.clear();
+                    CollectPlan.dayPlan.clear();
+                    CollectPlan.warmUps.clear();
+                    CollectPlan.stretchings.clear();
+                    CollectPlan.mainActions.clear();
+                    CollectPlan.relaxActions.clear();
+                }
+                Intent intent = new Intent(MakePlanActivity.this,MainActivity.class);
+                intent.putExtra("finish",111);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     //用来处理上传热身拉伸具体放松动作
     public Handler handler2 = new Handler(){
@@ -150,9 +176,18 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         .append(CollectPlan.userSportPlan.getPlanName())
         .append("-")
         .append(CollectPlan.userSportPlan.getAccount());
+        planName.setText(CollectPlan.userSportPlan.getPlanName());
         Bitmap bitmap = CodeUtils.createImage(str.toString(),250,250, BitmapFactory.decodeResource(getResources(),R.mipmap.logo));
         showCode.setImageBitmap(bitmap);
+        for (int i = 0; i < 7 ; i++){
+            list_day.get(i).relaxActionList.clear();
+            list_day.get(i).mainActionList.clear();
+            list_day.get(i).warmUpList.clear();
+            list_day.get(i).stretchingList.clear();
+        }
+
     }
+
 
 
     /**
@@ -341,6 +376,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         for (int j = 0; j < iv_day.length; j++) {
             iv_day[j].setOnClickListener(daysListener);
         }
+
     }
 
 

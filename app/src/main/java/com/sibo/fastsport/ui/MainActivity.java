@@ -1,28 +1,32 @@
 package com.sibo.fastsport.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyFragmentAdapter;
+import com.sibo.fastsport.application.Constant;
+import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.fragment.MyHomeMenuFragment;
+import com.sibo.fastsport.fragment.MyPlanFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.widgets.MetaballMenu;
 import com.sibo.fastsport.widgets.MetaballMenuImageView;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements MetaballMenu.MetaballMenuClickListener {
-    //固定的ToolBar
-//    android.support.v7.widget.Toolbar rootToolBar;
-//
-//    private Toolbar toolBar;
+
     private List<Fragment> list = new ArrayList<Fragment>();//三个主界面的Fragment的list
     private MyFragmentAdapter myFragmentAdapter;//Fragment的适配器
     private MetaballMenu menu;//底部菜单栏
@@ -31,6 +35,7 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
     private MakePlanFragment makePlan;//主界面---计划
     private StudentFragment student;//主界面---学员
     private MyHomeMenuFragment myHomeMenu;//主界面--我的
+    private MyPlanFragment myPlanFragment;//健身计划列表
     private ViewPager viewPager;
     //viewPager切换时需要做的事情，viewPager监听事件
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
@@ -65,12 +70,30 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
     };
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if (intent != null){
+
+            if (intent.getIntExtra("finish",0)==111){
+
+                if (makePlan !=null){
+
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("finish",true);
+                    makePlan.setArguments(bundle);
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // initBmob();
+
         initView();
-//        initTitle();
+
         initData();
         initListener();
         MakePlanUtils.isFirst = true;
@@ -83,7 +106,14 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         makePlan = new MakePlanFragment();
         student = new StudentFragment();
         myHomeMenu = new MyHomeMenuFragment();
-        list.add(makePlan);
+        myPlanFragment = new MyPlanFragment();
+        String str = MyApplication.mUser.getType();
+        if (str.equals("1")){
+            list.add(makePlan);
+        }else {
+            list.add(myPlanFragment);
+        }
+
         list.add(student);
         list.add(myHomeMenu);
         //设置Fragment适配器
@@ -111,14 +141,6 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         menuMakePlan = (MetaballMenuImageView) menu.findViewById(R.id.menuPlan);
         menuStudent = (MetaballMenuImageView) menu.findViewById(R.id.menuStudent);
         menuMyHome = (MetaballMenuImageView) menu.findViewById(R.id.menuMyhome);
-        /*ivHead = (ImageView) findViewById(R.id.activity_my_main_iv_touxiang);
-        ivSetting = (ImageView) findViewById(R.id.activity_my_main_iv_setting);
-        rlZhuYe = (RelativeLayout) findViewById(R.id.rl_zhuye);
-        rlZhuYe.setOnClickListener(this);
-        ivHead.setOnClickListener(this);
-        ivSetting.setOnClickListener(this);
-        //让图片全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
     }
 
     /**
@@ -141,90 +163,28 @@ public class MainActivity extends FragmentActivity implements MetaballMenu.Metab
         }
     }
 
-    /* private void initData() {
-       final User obj = new User();
-        obj.setName("豆豆");
-        obj.setSex("女");
-        obj.setAge("18");
-        obj.setHeight("165");
-        obj.setWeight("55");
-        obj.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if(e == null){
-                    Toast.makeText(MainActivity.this,"数据添加成功"+s,Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this,"数据添加失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
+    //发送扫描到的数据给健身计划界面Fragment
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 123){
+            Log.e("onActivityResult","ok");
+            if (null != data){
+                Bundle bundle = data.getExtras();
+                if (bundle == null){
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS){
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    //Toast.makeText(this,"扫描成功",Toast.LENGTH_SHORT).show();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("scanner",result);
+                    myPlanFragment.setArguments(bundle1);
+
+                }else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED){
+                    Toast.makeText(this,"扫描失败",Toast.LENGTH_SHORT).show();
+
                 }
             }
-        });
-
-        BmobQuery<User> bmobQuery = new BmobQuery<User>();
-        bmobQuery.getObject("dda707bfce", new QueryListener<User>() {
-            @Override
-            public void done(User user, BmobException e) {
-                if(e == null){
-                    Toast.makeText(MainActivity.this,"查询成功",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this,"查询失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        obj.setName("更新的豆豆");
-        obj.update("dda707bfce", new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e == null){
-                    Toast.makeText(MainActivity.this,"更新成功"+obj.getUpdatedAt(),Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this,"更新失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        obj.setObjectId("89b099c073");
-        obj.delete(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e == null){
-                    Toast.makeText(MainActivity.this,"删除成功"+obj.getUpdatedAt(),Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this,"删除失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }*/
-
-  /*  private void initBmob() {
-        //第一：默认初始化
-        Bmob.initialize(this, "f79d34f38040f7e7512a4228ea4d0c7a");
-        //第二：自v3.4.7版本开始,设置BmobConfig,允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)，
-        //BmobConfig config =new BmobConfig.Builder(this);
-        ////设置appkey
-        //.setApplicationId("Your Application ID")
-        ////请求超时时间（单位为秒）：默认15s
-        //.setConnectTimeout(30)
-        ////文件分片上传时每片的大小（单位字节），默认512*1024
-        //.setUploadBlockSize(1024*1024)
-        ////文件的过期时间(单位为秒)：默认1800s
-        //.setFileExpiration(2500)
-        //.build();
-        //Bmob.initialize(config);
-    }*/
-
-   /* private void initTitle() {
-        rootToolBar = (Toolbar) findViewById(R.id.title);
-        toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
-        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
-        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
-        tvText = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
-        ivClose.setVisibility(View.INVISIBLE);
-        tvText.setText("我的主页");
-        ivBack.setVisibility(View.VISIBLE);
-        setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
-
-    }*/
-
-
+        }
+    }
 }

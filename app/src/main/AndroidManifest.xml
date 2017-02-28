@@ -28,6 +28,15 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -78,7 +87,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -105,12 +113,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.AdvertisementActivity"
+            android:name=".ui.ChooseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.RegisterUserInfoActivity" />
         <activity android:name=".ui.ShowWXActivity" />
         <activity android:name=".ui.WxCollectedActivity"></activity>
+        <activity android:name=".ui.ScannerActivity"/>
     </application>
 
 </manifest>

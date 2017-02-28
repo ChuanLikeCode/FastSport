@@ -21,7 +21,7 @@ public class MyApplication extends Application {
     public static UserInfo mUser = null;
     public boolean isFirstStart = true;
     public boolean isLogin = true;
-
+    public static String planObjectId = "";
     /**
      * 获得当前进程号
      *
@@ -86,11 +86,15 @@ public class MyApplication extends Application {
         String userPassword = SharepreferencesUtilSystemSettings.getValue(this, Constant.USERPASSWORDCOOKIE, "");
         isFirstStart = SharepreferencesUtilSystemSettings.getValue(this, Constant.ISFIRSTSTART, true);
         isLogin = SharepreferencesUtilSystemSettings.getValue(this, Constant.ISLOGIN, true);
+        planObjectId = SharepreferencesUtilSystemSettings.getValue(this,Constant.PLANOBJECTID,"");
+        String type = SharepreferencesUtilSystemSettings.getValue(this,Constant.USER_TYPE,"none");
         mUser = new UserInfo();
         mAccount = new Account();
         mAccount.setAccount(userAccount);
         mAccount.setPassword(userPassword);
         mUser.setLogin(isLogin);
+        mUser.setPlanObjectId(planObjectId);
+        mUser.setType(type);
     }
 
     @Override

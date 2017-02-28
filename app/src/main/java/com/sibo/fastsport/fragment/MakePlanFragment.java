@@ -7,9 +7,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ import java.util.List;
 
 public class MakePlanFragment extends BaseFragment implements View.OnClickListener, TextWatcher, PickerScrollView.onSelectListener {
     private static final int IMAGE = 1;
-    public static List<Pickers> exercise, pickerHeight, pickerWeight, pickerMuscleMass, pickerBodyFat;
+    public static List<Pickers> exercise, pickerHeight, pickerWeight, pickerMuscleMass, pickerBodyFat,pickerSex;
     private static int image = 1;
     private View makePlanFragment;
     private TextView nextStep, userHeight, userWeight, usermuscleMass, userBodyFat, exerciseMass, ok, no;
@@ -53,8 +55,31 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
     private Dialog dialog;
 
     @Override
+    public void onResume() {
+
+        super.onResume();
+        Bundle bundle = getArguments();
+
+        if (bundle != null){
+
+            if (bundle.getBoolean("finish",false)){
+
+                name.setText("");
+                sex.setText("");
+                touxiang.setImageResource(R.mipmap.icon_camera02);
+                contrastPhoto.setImageResource(R.mipmap.icon_camera);
+                userHeight.setText("0CM");
+                userBodyFat.setText("0%");
+                usermuscleMass.setText("0KG");
+                userWeight.setText("0KG");
+            }
+        }
+    }
+
+    @Override
     protected View initView(LayoutInflater inflater) {
         makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, null);
+
         initView();
         initData();
         initListener();
@@ -68,6 +93,7 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
         pickerHeight = new ArrayList<>();
         pickerMuscleMass = new ArrayList<>();
         pickerBodyFat = new ArrayList<>();
+        pickerSex = new ArrayList<>();
         for (int i = 0; i < 121; i++) {
             String j = i + 30 + "KG";
             Pickers pickers = new Pickers();
@@ -103,12 +129,20 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
             pickers.setShowConetnt(str[i]);
             exercise.add(pickers);
         }
+        String[] str1 = {"男", "女"};
+        for (int i = 0; i < 2; i++) {
+            Pickers pickers = new Pickers();
+            pickers.setShowId(i + "");
+            pickers.setShowConetnt(str1[i]);
+            pickerSex.add(pickers);
+        }
     }
 
 
     private void initListener() {
         nextStep.setOnClickListener(this);
-        sex.addTextChangedListener(this);
+        //sex.addTextChangedListener(this);
+        sex.setOnClickListener(this);
         name.addTextChangedListener(this);
         llUserBodyFat.setOnClickListener(this);
         llUserWeight.setOnClickListener(this);
@@ -155,6 +189,7 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                     Toast.makeText(getActivity(),"请输入名字和性别",Toast.LENGTH_SHORT).show();
                 }else {
                     CollectPlan.userSportPlan.setPlanName(str+"的健身计划");
+                    //Log.e("name",CollectPlan.userSportPlan.getPlanName());
                     CollectPlan.userSportPlan.setAccount(MyApplication.mAccount.getAccount());
                     startActivity(new Intent(getActivity(), BodyjudgmentActivity.class));
                 }
@@ -175,6 +210,10 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
             case R.id.plan_ll_userMuscleMass:
                 llSelected = 3;
                 showDialog(pickerMuscleMass);
+                break;
+            case R.id.plan_et_sex:
+                llSelected = 6;
+                showDialog(pickerSex);
                 break;
             case R.id.plan_iv_camera:
                 image = 1;
@@ -291,6 +330,9 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 break;
             case 5:
                 exerciseMass.setText(pickers.getShowConetnt());
+                break;
+            case 6:
+                sex.setText(pickers.getShowConetnt());
                 break;
         }
     }

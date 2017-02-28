@@ -35,4 +35,13 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/dialog_tv_userPlanName"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/dialog_iv_close"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignRight="@id/dialog_iv_userCode"
+        android:layout_alignTop="@id/dialog_tv_userPlanName"
+        android:layout_toRightOf="@id/dialog_tv_userPlanName"
+        android:src="@mipmap/icon_close"/>
 </RelativeLayout>
