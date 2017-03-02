@@ -1,12 +1,22 @@
 package com.sibo.fastsport.model;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by Administrator on 2016/11/20.
  */
-public class UserInfo {
-    private boolean isLogin;
+public class UserInfo extends BmobObject{
     private String planObjectId;
     private String type;//1---教练  2----学员
+    private String account;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public String getType() {
         return type;
@@ -24,11 +34,4 @@ public class UserInfo {
         this.planObjectId = planObjectId;
     }
 
-    public boolean getIsLogin() {
-        return isLogin;
-    }
-
-    public void setLogin(boolean login) {
-        isLogin = login;
-    }
 }

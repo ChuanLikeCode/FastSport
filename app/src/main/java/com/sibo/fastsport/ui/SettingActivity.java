@@ -66,8 +66,12 @@ public class SettingActivity extends BaseTranslucentActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.activity_setting_btn_exit:
-                MyApplication.mUser.setLogin(true);
-                SharepreferencesUtilSystemSettings.putValue(this, Constant.ISLOGIN,MyApplication.mUser.getIsLogin());
+                SharepreferencesUtilSystemSettings.clear(this);
+                SharepreferencesUtilSystemSettings.putValue(this, Constant.ISFIRSTSTART, false);
+                MyApplication.mAccount = null;
+                MyApplication.mUser = null;
+                MyApplication.isLogin = true;
+                MyApplication.planObjectId = "";
                 startActivity(new Intent(SettingActivity.this,LoginActivity.class));
                 finish();
                 break;

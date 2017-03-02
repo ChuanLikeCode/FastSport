@@ -170,12 +170,13 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      */
     public void loadCode(){
         //获取健身计划的ID-计划名字-教练名字
-        StringBuffer str = new StringBuffer();
-        str.append(CollectPlan.userSportPlan.getObjectId())
-        .append("-")
-        .append(CollectPlan.userSportPlan.getPlanName())
-        .append("-")
-        .append(CollectPlan.userSportPlan.getAccount());
+        String str = CollectPlan.userSportPlan.getObjectId();
+//        StringBuffer str = new StringBuffer();
+//        str.append(CollectPlan.userSportPlan.getObjectId())
+//        .append("-")
+//        .append(CollectPlan.userSportPlan.getPlanName())
+//        .append("-")
+//        .append(CollectPlan.userSportPlan.getAccount());
         planName.setText(CollectPlan.userSportPlan.getPlanName());
         Bitmap bitmap = CodeUtils.createImage(str.toString(),250,250, BitmapFactory.decodeResource(getResources(),R.mipmap.logo));
         showCode.setImageBitmap(bitmap);

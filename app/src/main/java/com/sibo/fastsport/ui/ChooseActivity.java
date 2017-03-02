@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -11,11 +12,13 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 
 public class ChooseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView trainer,student;
+    private MyBombUtils bombUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
         student = (TextView) findViewById(R.id.choose_student);
         trainer.setOnClickListener(this);
         student.setOnClickListener(this);
+        bombUtils = new MyBombUtils(this);
     }
 
     @Override
@@ -37,11 +41,13 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.USER_TYPE,"1");
                 intent.putExtra(Constant.USER_TYPE,"1");
                 MyApplication.mUser.setType("1");
+                bombUtils.updateUserInfo(MyApplication.mUser);
                 break;
             case R.id.choose_student:
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.USER_TYPE,"2");
                 intent.putExtra(Constant.USER_TYPE,"2");
                 MyApplication.mUser.setType("2");
+                bombUtils.updateUserInfo(MyApplication.mUser);
                 break;
         }
         startActivity(intent);
@@ -52,7 +58,8 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         String type = MyApplication.mUser.getType();
-        if (!type.equals("none")){
+        //Log.e("type",type+"");
+        if (type != null){
             startActivity(new Intent(ChooseActivity.this,MainActivity.class));
             finish();
         }

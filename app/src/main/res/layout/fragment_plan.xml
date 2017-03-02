@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
 
-    <include layout="@layout/activity_title_bar"/>
-    <include layout="@layout/base_day"/>
-</LinearLayout>
+    <include
+        android:id="@+id/makePlanFragment_title"
+        layout="@layout/activity_title_bar"/>
+    <include
+        android:id="@+id/makePlanFragment_rl_plan"
+        android:layout_below="@id/makePlanFragment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/base_day"/>
+    <TextView
+        android:id="@+id/makePlanFragment_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="还没有健身计划\n赶快找个教练吧~"
+        android:textColor="@color/gray_hint"
+        android:textSize="16sp"/>
+    <com.sibo.fastsport.view.WhorlView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading"
+
+        android:layout_centerInParent="true"
+        android:layout_marginTop="110dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:WhorlView_BigWhorlColor="@color/turquoise"
+        app:WhorlView_CircleSpeed="270"
+        app:WhorlView_MiddleWhorlColor="@color/turquoise"
+        app:WhorlView_Parallax="fast"
+        app:WhorlView_SmallWhorlColor="@color/turquoise"
+        app:WhorlView_StrokeWidth="10"
+        app:WhorlView_SweepAngle="180" />
+</RelativeLayout>

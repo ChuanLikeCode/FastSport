@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
 
@@ -89,7 +90,12 @@ public class RegisterActivity extends BaseTranslucentActivity implements View.On
                             takeIdentify.setBackgroundResource(R.drawable.register_btn_selected);
                             takeIdentify.setClickable(false);
                             userPassword = password.getText().toString();
-                            myBmobUtils.addUser(userPhone, userPassword);
+                            //myBmobUtils.addUser(userPhone, userPassword);
+                            MyApplication.mAccount.setAccount(userPhone);
+                            MyApplication.mAccount.setPassword(userPassword);
+                            MyApplication.mUser.setAccount(userPhone);
+                            //MyApplication.mUser.setType(null);
+                            myBmobUtils.addUser(MyApplication.mAccount);
                             dialog.dismiss();
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             finish();
@@ -320,6 +326,7 @@ public class RegisterActivity extends BaseTranslucentActivity implements View.On
         takeIdentify.setClickable(false);
         takeIdentify.setBackgroundResource(R.drawable.register_btn_selected);
         setIdentifyVisibility(View.VISIBLE);
+        remainSecond.setText("60S");
         identifyCountDown();
     }
 
@@ -333,7 +340,7 @@ public class RegisterActivity extends BaseTranslucentActivity implements View.On
                 for (int i = 60; i > 0; i--) {
                     TIME--;
                     handler.sendEmptyMessage(CODE_ING);
-                    if (i <= 0) {
+                    if (i <= 1) {
                         break;
                     }
                     try {

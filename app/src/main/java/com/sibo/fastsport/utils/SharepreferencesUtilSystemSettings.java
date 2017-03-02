@@ -5,12 +5,20 @@ import android.content.SharedPreferences;
 
 import com.sibo.fastsport.application.Constant;
 
+import java.net.ConnectException;
+
 
 /**
  * Created by Administrator on 2016/11/21.
  */
 public class SharepreferencesUtilSystemSettings {
     public final static String SETTING = Constant.PATH;
+
+    public static void clear(Context context){
+        SharedPreferences.Editor sp = context.getSharedPreferences(SETTING,Context.MODE_PRIVATE).edit();
+        sp.clear();
+        sp.commit();
+    }
 
     public static void putValue(Context context, String key, int value) {
         SharedPreferences.Editor sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE)

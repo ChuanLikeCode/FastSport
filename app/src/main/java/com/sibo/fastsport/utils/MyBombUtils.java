@@ -14,6 +14,7 @@ import com.sibo.fastsport.model.DayPlan;
 import com.sibo.fastsport.model.MainAction;
 import com.sibo.fastsport.model.RelaxAction;
 import com.sibo.fastsport.model.Stretching;
+import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.model.WarmUp;
 import com.sibo.fastsport.ui.ChooseActionActivity;
@@ -29,6 +30,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 
 /**
@@ -37,19 +39,8 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class MyBombUtils {
 
-    public static int  ADD_PLAN = 0;
-    public static int  ADD_WARM = 0;
-    public static int  ADD_STRE = 0;
-    public static int  ADD_MAIN = 0;
-    public static int  ADD_RELAX = 0;
 
-    private int plan = 0;
-    private int warmUp = 0;
-    private int stre = 0;
-    private int mainAction = 0;
-    private int relaxAction = 0;
-
-
+    public static int COUNT = 0;
     private final static int SPORT_NAME_FINISH = 1;
     private final static int SPORT_DETAIL_FINISH = 2;
 
@@ -135,7 +126,6 @@ public class MyBombUtils {
     public void addDayPlan(){
         for (DayPlan d : CollectPlan.dayPlan){
             d.setId(CollectPlan.id);
-            //plan++;
             d.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
@@ -151,21 +141,15 @@ public class MyBombUtils {
     }
 
     public void addWarmUp(){
-        Log.e("Bmobsp_warmUp",CollectPlan.warmUps.size()+"");
+       //Log.e("Bmobsp_warmUp",CollectPlan.warmUps.size()+"");
         if (CollectPlan.warmUps.size()!=0){
             for (WarmUp w : CollectPlan.warmUps){
-               // warmUp++;
+
                 w.save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null){
                             Log.e("addWarmUp",s);
-//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
-//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
-//                                    &&(relaxAction == ADD_RELAX )){
-//                                Log.e("addWarmUpupload","全部上传完成");
-//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
-//                            }
                         }else {
                             Log.e("addWarmUp","failed");
                         }
@@ -176,7 +160,7 @@ public class MyBombUtils {
 
     }
     public void addStretching(){
-        Log.e("addStretching",CollectPlan.stretchings.size()+"");
+        //Log.e("addStretching",CollectPlan.stretchings.size()+"");
         if (CollectPlan.stretchings.size() != 0){
             for (Stretching s : CollectPlan.stretchings){
                 //stre++;
@@ -185,12 +169,6 @@ public class MyBombUtils {
                     public void done(String s, BmobException e) {
                         if (e == null){
                             Log.e("addStretching",s);
-//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
-//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
-//                                    &&(relaxAction == ADD_RELAX )){
-//                                Log.e("addStretchingupload","全部上传完成");
-//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
-//                            }
                         }else {
                             Log.e("addStretching","failed");
                         }
@@ -201,7 +179,7 @@ public class MyBombUtils {
 
     }
     public void addMainAction(){
-        Log.e("addMainAction",CollectPlan.mainActions.size()+"");
+        //Log.e("addMainAction",CollectPlan.mainActions.size()+"");
         if (CollectPlan.mainActions.size() != 0){
             for (MainAction m : CollectPlan.mainActions){
                 //mainAction++;
@@ -210,12 +188,7 @@ public class MyBombUtils {
                     public void done(String s, BmobException e) {
                         if (e == null){
                             Log.e("addMainAction",s);
-//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
-//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
-//                                    &&(relaxAction == ADD_RELAX )){
-//                                Log.e("addMainActionupload","全部上传完成");
-//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
-//                            }
+
                         }else {
                             Log.e("addMainAction","failed");
                         }
@@ -226,7 +199,7 @@ public class MyBombUtils {
 
     }
     public void addRelaxAction(){
-        Log.e("addRelaxAction",CollectPlan.relaxActions.size()+"");
+      //  Log.e("addRelaxAction",CollectPlan.relaxActions.size()+"");
         if (CollectPlan.relaxActions.size() != 0){
             for (RelaxAction r : CollectPlan.relaxActions){
                 //relaxAction++;
@@ -234,14 +207,9 @@ public class MyBombUtils {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null){
-                            //((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
+
                             Log.e("addRelaxAction",s);
-//                            if ((plan == ADD_PLAN )&&(warmUp == ADD_WARM )
-//                                    &&(stre == ADD_STRE )&&(mainAction == ADD_MAIN )
-//                                    &&(relaxAction == ADD_RELAX )){
-//                                Log.e("addRelaxActionupload","全部上传完成");
-//                                ((MakePlanActivity)context).handler.sendEmptyMessage(Constant.SUCCESS);
-//                            }
+
                         }else {
                             Log.e("addRelaxAction","failed");
                         }
@@ -254,20 +222,190 @@ public class MyBombUtils {
 
     /**
      * 增加新用户
-     * @param userPhone 账号
-     * @param password 密码
+     *
      */
-    public void addUser(String userPhone, String password) {
-        Account account = new Account();
-        account.setAccount(userPhone);
-        account.setPassword(password);
+    public void addUser(Account account) {
         account.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-addUserSuccess", s);
+                    addUserInfo(MyApplication.mUser);
                 } else {
                     Log.e("Bmob-addUserFailed", "Failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * 增加用户信息
+     * @param userInfo
+     */
+    public void addUserInfo(UserInfo userInfo){
+        userInfo.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-addUserInfoSuccess", s);
+                } else {
+                    Log.e("Bmob-addUserInfoFailed", "Failed");
+                }
+            }
+        });
+    }
+/***************************************获取健身计划***********************************************************/
+    /**
+     * 获取用户的健身名字和id
+     */
+    public static UserSportPlan userSportPlan ;
+    public void getUserSportPlan(final String id){
+        BmobQuery<UserSportPlan> query = new BmobQuery<>();
+        query.findObjects(new FindListener<UserSportPlan>() {
+            @Override
+            public void done(List<UserSportPlan> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-UserSportSuccess", "ok");
+                    for (UserSportPlan s : list){
+                        if (id.equals(s.getObjectId())){
+                            userSportPlan = s;
+                            break;
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-UserSport", "Failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取用户的每天健身计划
+     */
+    public static List<DayPlan> list_userDayPlan = new ArrayList<>();
+    public void getDayPlan(final String id){
+        BmobQuery<DayPlan> query = new BmobQuery<>();
+        query.findObjects(new FindListener<DayPlan>() {
+            @Override
+            public void done(List<DayPlan> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-getDayPlanSuccess", "ok");
+                    for (DayPlan d : list){
+                        if (d.getId().equals(id)){
+                            list_userDayPlan.add(d);
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-getDayPlanFailed", "Failed");
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 获取热身动作
+     */
+    public static List<WarmUp> list_warmUp = new ArrayList<>();
+    public void getWarmUp(final String id){
+        BmobQuery<WarmUp> query = new BmobQuery<>();
+        query.findObjects(new FindListener<WarmUp>() {
+            @Override
+            public void done(List<WarmUp> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-getWarmUpSuccess", "ok");
+                    for (WarmUp w : list){
+                        if (w.getId().equals(id)){
+                            list_warmUp.add(w);
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-getWarmUpFailed", "Failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取拉伸动作
+     */
+    public static List<Stretching> list_stretching = new ArrayList<>();
+    public void getStretching(final String id){
+        BmobQuery<Stretching> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Stretching>() {
+            @Override
+            public void done(List<Stretching> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-getWarmUpSuccess", "ok");
+                    for (Stretching s : list){
+                        if (s.getId().equals(id)){
+                            list_stretching.add(s);
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-getWarmUpFailed", "Failed");
+                }
+            }
+        });
+    }
+    /**
+     * 获取具体动作
+     */
+    public static List<MainAction> list_mainAction = new ArrayList<>();
+    public void getMainAction(final String id){
+        BmobQuery<MainAction> query = new BmobQuery<>();
+        query.findObjects(new FindListener<MainAction>() {
+            @Override
+            public void done(List<MainAction> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-getWarmUpSuccess", "ok");
+                    for (MainAction m : list){
+                        if (m.getId().equals(id)){
+                            list_mainAction.add(m);
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-getWarmUpFailed", "Failed");
+                }
+            }
+        });
+    }
+    /**
+     * 获取放松动作
+     */
+    public static List<RelaxAction> list_relaxAction = new ArrayList<>();
+    public void getRelaxAction(final String id){
+        BmobQuery<RelaxAction> query = new BmobQuery<>();
+        query.findObjects(new FindListener<RelaxAction>() {
+            @Override
+            public void done(List<RelaxAction> list, BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-getWarmUpSuccess", "ok");
+                    for (RelaxAction r : list){
+                        if (r.getId().equals(id)){
+                            list_relaxAction.add(r);
+                        }
+                    }
+                } else {
+                    Log.e("Bmob-getWarmUpFailed", "Failed");
+                }
+            }
+        });
+    }
+ /**************************************************************************************************/
+
+    /**
+     * 更新User信息
+     * @param userInfo
+     */
+    public void updateUserInfo(UserInfo userInfo){
+        userInfo.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Log.e("Bmob-addUserInfoSuccess", "ok");
+                } else {
+                    Log.e("Bmob-addUserInfoFailed", "Failed");
                 }
             }
         });
@@ -316,6 +454,19 @@ public class MyBombUtils {
                     }
                 }
                 ((LoginActivity) context).handler.sendEmptyMessage(0);
+                BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                query.findObjects(new FindListener<UserInfo>() {
+                    @Override
+                    public void done(List<UserInfo> list, BmobException e) {
+                        for (UserInfo a :
+                                list) {
+                            if (MyApplication.mUser.getAccount() == a.getAccount()){
+                                MyApplication.mUser.setType(a.getType());
+                                MyApplication.mUser.setPlanObjectId(a.getPlanObjectId());
+                            }
+                        }
+                    }
+                });
             }
         });
     }
@@ -356,20 +507,4 @@ public class MyBombUtils {
             }
         });
     }
-    /*public void initBmob() {
-        //第一：默认初始化
-        //Bmob.initialize(context, "f79d34f38040f7e7512a4228ea4d0c7a");
-        //第二：自v3.4.7版本开始,设置BmobConfig,允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)，
-        //BmobConfig config =new BmobConfig.Builder(this);
-        ////设置appkey
-        //.setApplicationId("Your Application ID")
-        ////请求超时时间（单位为秒）：默认15s
-        //.setConnectTimeout(30)
-        ////文件分片上传时每片的大小（单位字节），默认512*1024
-        //.setUploadBlockSize(1024*1024)
-        ////文件的过期时间(单位为秒)：默认1800s
-        //.setFileExpiration(2500)
-        //.build();
-        //Bmob.initialize(config);
-    }*/
 }

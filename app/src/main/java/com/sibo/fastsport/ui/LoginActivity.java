@@ -62,13 +62,16 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this, ChooseActivity.class);
                     startActivity(intent);
-                    MyApplication.mUser.setLogin(false);
+                    MyApplication.isLogin = false;
+                    MyApplication.mUser.setAccount(userAccount.getText().toString());
+                    SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
+                            Constant.USERACCOUNTCOOKIE, MyApplication.mUser.getAccount());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
                             Constant.USERACCOUNTCOOKIE, MyApplication.mAccount.getAccount());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
                             Constant.USERPASSWORDCOOKIE, MyApplication.mAccount.getPassword());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
-                            Constant.ISLOGIN, MyApplication.mUser.getIsLogin());
+                            Constant.ISLOGIN, MyApplication.isLogin);
                     finish();
                 } else {
                     dialog.dismiss();
@@ -120,9 +123,9 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
     }
 
     private void checkIsFirstLogin() {
-        myApplication = (MyApplication) getApplication();
-        Log.e("checkLoginisLogin", myApplication.isLogin + "");
-        if (!myApplication.isLogin) {
+        //myApplication = (MyApplication) getApplication();
+        Log.e("checkLoginisLogin", MyApplication.isLogin + "");
+        if (!MyApplication.isLogin) {
             startActivity(new Intent(this, ChooseActivity.class));
             finish();
         }
