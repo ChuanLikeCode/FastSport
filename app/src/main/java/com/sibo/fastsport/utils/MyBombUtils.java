@@ -1,6 +1,7 @@
 package com.sibo.fastsport.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.util.Log;
 
@@ -17,6 +18,7 @@ import com.sibo.fastsport.model.Stretching;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.model.WarmUp;
+import com.sibo.fastsport.receiver.MyBroadcastReceiver;
 import com.sibo.fastsport.ui.ChooseActionActivity;
 import com.sibo.fastsport.ui.LoginActivity;
 import com.sibo.fastsport.ui.MakePlanActivity;
@@ -51,9 +53,10 @@ public class MyBombUtils {
     public static boolean identifySuccess = false;
     public Context context;
     private boolean registerSuccess = true;
-
+    private MyBroadcastReceiver receiver;
     public MyBombUtils(Context context) {
         this.context = context;
+
     }
 
     /**
@@ -266,6 +269,9 @@ public class MyBombUtils {
             public void done(List<UserSportPlan> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-UserSportSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (UserSportPlan s : list){
                         if (id.equals(s.getObjectId())){
                             userSportPlan = s;
@@ -290,6 +296,9 @@ public class MyBombUtils {
             public void done(List<DayPlan> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getDayPlanSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (DayPlan d : list){
                         if (d.getId().equals(id)){
                             list_userDayPlan.add(d);
@@ -314,6 +323,9 @@ public class MyBombUtils {
             public void done(List<WarmUp> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (WarmUp w : list){
                         if (w.getId().equals(id)){
                             list_warmUp.add(w);
@@ -337,6 +349,9 @@ public class MyBombUtils {
             public void done(List<Stretching> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (Stretching s : list){
                         if (s.getId().equals(id)){
                             list_stretching.add(s);
@@ -359,6 +374,9 @@ public class MyBombUtils {
             public void done(List<MainAction> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (MainAction m : list){
                         if (m.getId().equals(id)){
                             list_mainAction.add(m);
@@ -381,6 +399,9 @@ public class MyBombUtils {
             public void done(List<RelaxAction> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
+                    Intent intent = new Intent("finish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
                     for (RelaxAction r : list){
                         if (r.getId().equals(id)){
                             list_relaxAction.add(r);

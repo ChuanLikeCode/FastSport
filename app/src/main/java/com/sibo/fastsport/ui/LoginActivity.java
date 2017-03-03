@@ -57,6 +57,7 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
                 if (MyBombUtils.identifySuccess) {
                     //Log.e("identifySuccess",MyBmobUtils.identifySuccess+"");
                     dialog.dismiss();
+                    Log.e("mAcount",MyApplication.mAccount+"");
                     MyApplication.mAccount.setAccount(userAccount.getText().toString());
                     MyApplication.mAccount.setPassword(userPassWord.getText().toString());
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();

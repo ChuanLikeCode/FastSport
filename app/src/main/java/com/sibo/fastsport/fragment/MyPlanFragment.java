@@ -2,6 +2,7 @@ package com.sibo.fastsport.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.application.Constant;
+import com.sibo.fastsport.receiver.MyBroadcastReceiver;
 import com.sibo.fastsport.ui.ScannerActivity;
+import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -43,10 +47,14 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     private RelativeLayout plan_rl;
     private WhorlView whorlView;
     private TextView tips;
+    private MyBroadcastReceiver receiver;
+    private MyBombUtils bombUtils;
     public static Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-
+            if (msg.what == Constant.SUCCESS){
+                Log.e("SCANNER","OK");
+            }
         }
     };
     @Override
@@ -74,7 +82,12 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void getPlanDetail() {
-
+        bombUtils.getUserSportPlan(scanner_str);
+        bombUtils.getDayPlan(scanner_str);
+        bombUtils.getWarmUp(scanner_str);
+        bombUtils.getStretching(scanner_str);
+        bombUtils.getMainAction(scanner_str);
+        bombUtils.getRelaxAction(scanner_str);
     }
 
     private void findView(View view) {
@@ -110,7 +123,16 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
             down[i].setImageResource(R.drawable.xl_icon_07);
         }
         scanner.setOnClickListener(this);
+        receiver = new MyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter("finish");
+        getActivity().registerReceiver(receiver,filter);
+        bombUtils = new MyBombUtils(getActivity());
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     @Override

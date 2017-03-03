@@ -57,11 +57,6 @@ public class CollectPlan {
     }
 
     public static void prepareToPush(){
-        MyBombUtils.ADD_PLAN = dayPlan.size();
-        MyBombUtils.ADD_WARM = warmUps.size();
-        MyBombUtils.ADD_STRE = stretchings.size();
-        MyBombUtils.ADD_MAIN = mainActions.size();
-        MyBombUtils.ADD_RELAX = relaxActions.size();
 
         for (int i = 0;i < 7 ; i++){
             if (MakePlanUtils.list_day.get(i).warmUpList.size() != 0){
