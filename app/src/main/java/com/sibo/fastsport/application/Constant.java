@@ -11,8 +11,10 @@ public class Constant {
     public static final String getAccessToken = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + AppID + "&secret=" + AppSecret;
     public static final String getMaterial = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
     public final static int SUCCESS = 0;
+    public final static int FAILED = 88;
     public final static int SHOW = 3;
     public final static int NO_MORE = 1;
+    public static final boolean Debug = true;
     public static String PATH = "config";
     public static String USERACCOUNTCOOKIE = "account";
     public static String USERPASSWORDCOOKIE = "password";
@@ -21,5 +23,4 @@ public class Constant {
     public static String ACCESSTOKEN = "access_token";
     public static String PLANOBJECTID ="plan";
     public static String USER_TYPE ="plan";
-
 }

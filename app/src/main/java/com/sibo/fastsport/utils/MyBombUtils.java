@@ -10,6 +10,7 @@ import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
+import com.sibo.fastsport.fragment.MyPlanFragment;
 import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.DayPlan;
 import com.sibo.fastsport.model.MainAction;
@@ -42,15 +43,40 @@ import cn.bmob.v3.listener.UpdateListener;
 public class MyBombUtils {
 
 
-    public static int COUNT = 0;
     private final static int SPORT_NAME_FINISH = 1;
     private final static int SPORT_DETAIL_FINISH = 2;
-
+    public static int COUNT = 0;
+    public static int MAKE = 0;
+    public static int addDayPlan = 0;
     public static List<SportName> list_sportName = new ArrayList<SportName>();
     public static List<SportDetail> list_sportDetail = new ArrayList<SportDetail>();
     public static boolean isFirst = true;
 
     public static boolean identifySuccess = false;
+    /**
+     * 获取用户的健身名字和id
+     */
+    public static UserSportPlan userSportPlan;
+    /**
+     * 获取用户的每天健身计划
+     */
+    public static List<DayPlan> list_userDayPlan = new ArrayList<>();
+    /**
+     * 获取热身动作
+     */
+    public static List<WarmUp> list_warmUp = new ArrayList<>();
+    /**
+     * 获取拉伸动作
+     */
+    public static List<Stretching> list_stretching = new ArrayList<>();
+    /**
+     * 获取具体动作
+     */
+    public static List<MainAction> list_mainAction = new ArrayList<>();
+    /**
+     * 获取放松动作
+     */
+    public static List<RelaxAction> list_relaxAction = new ArrayList<>();
     public Context context;
     private boolean registerSuccess = true;
     private MyBroadcastReceiver receiver;
@@ -78,6 +104,7 @@ public class MyBombUtils {
             }
         });
     }
+
     /**
      * 增加收藏文章
      * @param list
@@ -112,7 +139,7 @@ public class MyBombUtils {
                     CollectPlan.prepareToPush();
                     addDayPlan();
                     Log.e("addPlan",s);
-                    ((MakePlanActivity)context).handler2.sendEmptyMessage(Constant.SHOW);
+                    //((MakePlanActivity)context).handler2.sendEmptyMessage(Constant.SHOW);
                 }else {
                     e.printStackTrace();
                     Log.e("addPlan","failed");
@@ -120,8 +147,6 @@ public class MyBombUtils {
             }
         });
     }
-
-
 
     /**
      * 增加计划列表DayPlan
@@ -134,7 +159,7 @@ public class MyBombUtils {
                 public void done(String s, BmobException e) {
                     if (e == null){
                         Log.e("addDayPlan",s);
-
+                        ((MakePlanActivity) context).handler2.sendEmptyMessage(Constant.SHOW);
                     }else {
                         Log.e("addDayPlan","failed");
                     }
@@ -143,8 +168,12 @@ public class MyBombUtils {
         }
     }
 
-    public void addWarmUp(){
-       //Log.e("Bmobsp_warmUp",CollectPlan.warmUps.size()+"");
+    /***************************************
+     * 获取健身计划
+     ***********************************************************/
+
+    public void addWarmUp() {
+        Log.e("Bmobsp_warmUp", CollectPlan.warmUps.size()+"");
         if (CollectPlan.warmUps.size()!=0){
             for (WarmUp w : CollectPlan.warmUps){
 
@@ -152,7 +181,10 @@ public class MyBombUtils {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null){
-                            Log.e("addWarmUp",s);
+                            Log.e("addWarmUp", s);
+                            Intent intent = new Intent("makePlan");
+                            intent.putExtra("up", 1);
+                            context.sendBroadcast(intent);
                         }else {
                             Log.e("addWarmUp","failed");
                         }
@@ -162,6 +194,7 @@ public class MyBombUtils {
         }
 
     }
+
     public void addStretching(){
         //Log.e("addStretching",CollectPlan.stretchings.size()+"");
         if (CollectPlan.stretchings.size() != 0){
@@ -171,7 +204,10 @@ public class MyBombUtils {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null){
-                            Log.e("addStretching",s);
+                            Log.e("addStretching", s);
+                            Intent intent = new Intent("makePlan");
+                            intent.putExtra("up", 1);
+                            context.sendBroadcast(intent);
                         }else {
                             Log.e("addStretching","failed");
                         }
@@ -181,6 +217,7 @@ public class MyBombUtils {
         }
 
     }
+
     public void addMainAction(){
         //Log.e("addMainAction",CollectPlan.mainActions.size()+"");
         if (CollectPlan.mainActions.size() != 0){
@@ -190,8 +227,10 @@ public class MyBombUtils {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null){
-                            Log.e("addMainAction",s);
-
+                            Log.e("addMainAction", s);
+                            Intent intent = new Intent("makePlan");
+                            intent.putExtra("up", 1);
+                            context.sendBroadcast(intent);
                         }else {
                             Log.e("addMainAction","failed");
                         }
@@ -201,6 +240,7 @@ public class MyBombUtils {
         }
 
     }
+
     public void addRelaxAction(){
       //  Log.e("addRelaxAction",CollectPlan.relaxActions.size()+"");
         if (CollectPlan.relaxActions.size() != 0){
@@ -211,8 +251,10 @@ public class MyBombUtils {
                     public void done(String s, BmobException e) {
                         if (e == null){
 
-                            Log.e("addRelaxAction",s);
-
+                            Log.e("addRelaxAction", s);
+                            Intent intent = new Intent("makePlan");
+                            intent.putExtra("up", 1);
+                            context.sendBroadcast(intent);
                         }else {
                             Log.e("addRelaxAction","failed");
                         }
@@ -257,11 +299,7 @@ public class MyBombUtils {
             }
         });
     }
-/***************************************获取健身计划***********************************************************/
-    /**
-     * 获取用户的健身名字和id
-     */
-    public static UserSportPlan userSportPlan ;
+
     public void getUserSportPlan(final String id){
         BmobQuery<UserSportPlan> query = new BmobQuery<>();
         query.findObjects(new FindListener<UserSportPlan>() {
@@ -269,7 +307,7 @@ public class MyBombUtils {
             public void done(List<UserSportPlan> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-UserSportSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (UserSportPlan s : list){
@@ -279,16 +317,13 @@ public class MyBombUtils {
                         }
                     }
                 } else {
+                    MyPlanFragment.handler.sendEmptyMessage(Constant.FAILED);
                     Log.e("Bmob-UserSport", "Failed");
                 }
             }
         });
     }
 
-    /**
-     * 获取用户的每天健身计划
-     */
-    public static List<DayPlan> list_userDayPlan = new ArrayList<>();
     public void getDayPlan(final String id){
         BmobQuery<DayPlan> query = new BmobQuery<>();
         query.findObjects(new FindListener<DayPlan>() {
@@ -296,7 +331,7 @@ public class MyBombUtils {
             public void done(List<DayPlan> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getDayPlanSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (DayPlan d : list){
@@ -312,10 +347,6 @@ public class MyBombUtils {
         });
     }
 
-    /**
-     * 获取热身动作
-     */
-    public static List<WarmUp> list_warmUp = new ArrayList<>();
     public void getWarmUp(final String id){
         BmobQuery<WarmUp> query = new BmobQuery<>();
         query.findObjects(new FindListener<WarmUp>() {
@@ -323,7 +354,7 @@ public class MyBombUtils {
             public void done(List<WarmUp> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (WarmUp w : list){
@@ -338,10 +369,6 @@ public class MyBombUtils {
         });
     }
 
-    /**
-     * 获取拉伸动作
-     */
-    public static List<Stretching> list_stretching = new ArrayList<>();
     public void getStretching(final String id){
         BmobQuery<Stretching> query = new BmobQuery<>();
         query.findObjects(new FindListener<Stretching>() {
@@ -349,7 +376,7 @@ public class MyBombUtils {
             public void done(List<Stretching> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (Stretching s : list){
@@ -363,10 +390,7 @@ public class MyBombUtils {
             }
         });
     }
-    /**
-     * 获取具体动作
-     */
-    public static List<MainAction> list_mainAction = new ArrayList<>();
+
     public void getMainAction(final String id){
         BmobQuery<MainAction> query = new BmobQuery<>();
         query.findObjects(new FindListener<MainAction>() {
@@ -374,7 +398,7 @@ public class MyBombUtils {
             public void done(List<MainAction> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (MainAction m : list){
@@ -388,10 +412,7 @@ public class MyBombUtils {
             }
         });
     }
-    /**
-     * 获取放松动作
-     */
-    public static List<RelaxAction> list_relaxAction = new ArrayList<>();
+
     public void getRelaxAction(final String id){
         BmobQuery<RelaxAction> query = new BmobQuery<>();
         query.findObjects(new FindListener<RelaxAction>() {
@@ -399,7 +420,7 @@ public class MyBombUtils {
             public void done(List<RelaxAction> list, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-getWarmUpSuccess", "ok");
-                    Intent intent = new Intent("finish");
+                    Intent intent = new Intent("scannerFinish");
                     intent.putExtra("finish",1);
                     context.sendBroadcast(intent);
                     for (RelaxAction r : list){
@@ -424,9 +445,10 @@ public class MyBombUtils {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    Log.e("Bmob-addUserInfoSuccess", "ok");
+                    Log.e("updateUserInfo", "ok");
                 } else {
-                    Log.e("Bmob-addUserInfoFailed", "Failed");
+                    e.printStackTrace();
+                    Log.e("updateUserInfo", "failed");
                 }
             }
         });
@@ -467,27 +489,37 @@ public class MyBombUtils {
         bmobQuery.findObjects(new FindListener<Account>() {
             @Override
             public void done(List<Account> list, BmobException e) {
-                for (Account a :
-                        list) {
-                    if (a.getAccount().equals(userPhone) && a.getPassword().equals(password)) {
-                        identifySuccess = true;
-                        break;
-                    }
-                }
-                ((LoginActivity) context).handler.sendEmptyMessage(0);
-                BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
-                query.findObjects(new FindListener<UserInfo>() {
-                    @Override
-                    public void done(List<UserInfo> list, BmobException e) {
-                        for (UserInfo a :
-                                list) {
-                            if (MyApplication.mUser.getAccount() == a.getAccount()){
-                                MyApplication.mUser.setType(a.getType());
-                                MyApplication.mUser.setPlanObjectId(a.getPlanObjectId());
-                            }
+                if (e == null) {
+                    Log.e("Bmob-querySuccess", "ok");
+                    for (Account a :
+                            list) {
+                        if (a.getAccount().equals(userPhone) && a.getPassword().equals(password)) {
+                            identifySuccess = true;
+                            MyApplication.mUser.setAccount(userPhone);
+                            break;
                         }
                     }
-                });
+                    BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                    query.findObjects(new FindListener<UserInfo>() {
+                        @Override
+                        public void done(List<UserInfo> list, BmobException e) {
+                            ((LoginActivity) context).handler.sendEmptyMessage(0);
+                            for (UserInfo a :
+                                    list) {
+                                //Log.e("account",a.getAccount()+"---"+MyApplication.mUser.getAccount());
+                                if (MyApplication.mUser.getAccount().equals(a.getAccount())) {
+                                    MyApplication.mUser.setType(a.getType());
+                                    MyApplication.mUser.setPlanObjectId(a.getPlanObjectId());
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    e.printStackTrace();
+                    Log.e("Bmob-updateInfoFailed", "Failed");
+                }
+
             }
         });
     }

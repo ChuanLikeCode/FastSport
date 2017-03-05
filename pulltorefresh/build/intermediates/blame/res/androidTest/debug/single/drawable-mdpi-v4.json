@@ -1,13 +1,5 @@
 [
     {
-        "merged": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
-        "source": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
-    },
-    {
-        "merged": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
-        "source": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
-    },
-    {
         "merged": "E:\\workspace1\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
         "source": "E:\\workspace1\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     },
@@ -16,23 +8,7 @@
         "source": "E:\\workspace1\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
     },
     {
-        "merged": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
-        "source": "C:\\Users\\yyuand\\Desktop\\zc\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
-    },
-    {
-        "merged": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
-        "source": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
-    },
-    {
-        "merged": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
-        "source": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
-    },
-    {
         "merged": "E:\\workspace1\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
         "source": "E:\\workspace1\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
-    },
-    {
-        "merged": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
-        "source": "E:\\MyWork\\FastSport\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     }
 ]

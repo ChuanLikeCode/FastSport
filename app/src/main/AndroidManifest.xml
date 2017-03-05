@@ -46,11 +46,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.LoginActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.GuideActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,30 +60,21 @@
         </activity>
         <activity
             android:name=".ui.SettingActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.BaseTranslucentActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.EditHomePageActivity"
-            android:launchMode="singleTask" />
+            android:name=".ui.EditHomePageActivity" />
         <activity
             android:name=".ui.PersonalInfoActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RegisterActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BodyjudgmentActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.BaseActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
@@ -91,7 +82,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.EditMyInfoActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MakePlanActivity"
@@ -102,19 +93,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MyHomeActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.NewsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ActionDetailsActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChooseActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.RegisterUserInfoActivity" />
         <activity android:name=".ui.ShowWXActivity" />

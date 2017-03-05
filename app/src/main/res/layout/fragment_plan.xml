@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <include
-        android:id="@+id/makePlanFragment_title"
-        layout="@layout/activity_title_bar"/>
-    <include
-        android:id="@+id/makePlanFragment_rl_plan"
-        android:layout_below="@id/makePlanFragment_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/base_day"/>
+        android:id="@+id/plan_icd"
+        layout="@layout/activity_make_plan" />
     <TextView
         android:id="@+id/makePlanFragment_tips"
         android:layout_width="wrap_content"
@@ -26,10 +20,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/loading"
 
-        android:layout_centerInParent="true"
-        android:layout_marginTop="110dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="110dp"
         app:WhorlView_BigWhorlColor="@color/turquoise"
         app:WhorlView_CircleSpeed="270"
         app:WhorlView_MiddleWhorlColor="@color/turquoise"

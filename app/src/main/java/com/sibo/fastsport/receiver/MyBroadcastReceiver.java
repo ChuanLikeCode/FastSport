@@ -15,10 +15,21 @@ import com.sibo.fastsport.utils.MyBombUtils;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
+    private static MyBroadcastReceiver receiver = null;
+
+    public static MyBroadcastReceiver newInstancce() {
+        if (receiver == null) {
+            receiver = new MyBroadcastReceiver();
+        }
+        return receiver;
+    }
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("finish")){
+        //Log.e("onReceive","ok");
+        if (intent.getAction().equals("scannerFinish")) {
+            // Log.e("scannerFinish","ok");
             if (intent.getIntExtra("finish",0) == 1){
+                //  Log.e("finish","ok");
                 MyBombUtils.COUNT++;
                 if (MyBombUtils.COUNT == 6){
                     MyPlanFragment.handler.sendEmptyMessage(Constant.SUCCESS);

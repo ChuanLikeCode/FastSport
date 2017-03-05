@@ -2,6 +2,7 @@ package com.sibo.fastsport.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -55,9 +56,9 @@ public class BaseDay extends BaseFragment {
     }
 
     @Override
-    protected View initView(LayoutInflater inflater) {
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
 
-        view = inflater.inflate(R.layout.base_day, null);
+        view = inflater.inflate(R.layout.base_day, container, false);
         findById();
         initListener();
 

@@ -1,23 +1,21 @@
 package com.sibo.fastsport.ui;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyFragmentAdapter;
-import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
-import com.sibo.fastsport.base.*;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.fragment.MyHomeMenuFragment;
 import com.sibo.fastsport.fragment.MyPlanFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
+import com.sibo.fastsport.receiver.MyBroadcastReceiver;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.widgets.MetaballMenu;
 import com.sibo.fastsport.widgets.MetaballMenuImageView;
@@ -26,7 +24,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends com.sibo.fastsport.base.BaseActivity implements MetaballMenu.MetaballMenuClickListener {
+public class MainActivity extends BaseActivity implements MetaballMenu.MetaballMenuClickListener {
 
     private List<Fragment> list = new ArrayList<Fragment>();//三个主界面的Fragment的list
     private MyFragmentAdapter myFragmentAdapter;//Fragment的适配器
@@ -38,6 +36,7 @@ public class MainActivity extends com.sibo.fastsport.base.BaseActivity implement
     private MyHomeMenuFragment myHomeMenu;//主界面--我的
     private MyPlanFragment myPlanFragment;//健身计划列表
     private ViewPager viewPager;
+    private MyBroadcastReceiver receiver;
     //viewPager切换时需要做的事情，viewPager监听事件
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -146,7 +145,15 @@ public class MainActivity extends com.sibo.fastsport.base.BaseActivity implement
         viewPager.setAdapter(myFragmentAdapter);
         //使ViewPager默认显示第一个界面
         viewPager.setCurrentItem(0);
+        IntentFilter filter = new IntentFilter("scannerFinish");
+        receiver = MyBroadcastReceiver.newInstancce();
+        registerReceiver(receiver, filter);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     /**

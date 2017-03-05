@@ -1,6 +1,5 @@
 package com.sibo.fastsport.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +12,12 @@ import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.PersonalInfoRecyclerView;
+import com.sibo.fastsport.base.BaseActivity;
 
 /**
  * Created by Administrator on 2016/7/25 0025.
  */
-public class PersonalInfoActivity extends Activity implements View.OnClickListener {
+public class PersonalInfoActivity extends BaseActivity implements View.OnClickListener {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
@@ -27,16 +27,7 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
     private TextView tvInfo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myinfo);
-
-        initView();
-
-
-    }
-
-    private void initView() {
+    protected void findViewByIDS() {
         loginTitle = (Toolbar) findViewById(R.id.title);
         ivBack = (ImageView) loginTitle.findViewById(R.id.iv_back_titlebar);
         ivBack.setVisibility(View.VISIBLE);
@@ -62,6 +53,13 @@ public class PersonalInfoActivity extends Activity implements View.OnClickListen
 
         tvInfo.setText("个人信息");
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_myinfo);
+    }
+
 
     @Override
     public void onClick(View v) {

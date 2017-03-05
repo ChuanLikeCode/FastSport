@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyChooseActionAdapter;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.utils.MakePlanUtils;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChooseActionActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class ChooseActionActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener {
     //完成网络请求标志 sportName = 1 sportDetail = 2
     private final static int SPORT_NAME_FINISH = 1;
     private final static int SPORT_DETAIL_FINISH = 2;
@@ -130,10 +130,25 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     };
 
     @Override
+    protected void findViewByIDS() {
+        listView = (ListView) findViewById(R.id.choose_action_listView);
+        whorlView = (WhorlView) findViewById(R.id.loading);
+        tips = (TextView) findViewById(R.id.choose_action_tips);
+        toolbar = (Toolbar) findViewById(R.id.choose_title);
+        title = (TextView) toolbar.findViewById(R.id.tv_title_bar);
+        ok = (TextView) toolbar.findViewById(R.id.tv_complete_titlebar);
+        back = (ImageView) toolbar.findViewById(R.id.iv_back_titlebar);
+        close = (ImageView) toolbar.findViewById(R.id.iv_close_titlebar);
+        for (int i = 0; i < pealIds.length; i++) {
+            peal[i] = (TextView) findViewById(pealIds[i]);
+            iv_peal[i] = (ImageView) findViewById(iv_pealIds[i]);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_action);
-        initView();
         initData();
         initListener();
         MakePlanUtils.list.clear();
@@ -195,23 +210,6 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         builder = new AlertDialog.Builder(this);
     }
 
-    /**
-     * 初始化控件
-     */
-    private void initView() {
-        listView = (ListView) findViewById(R.id.choose_action_listView);
-        whorlView = (WhorlView) findViewById(R.id.loading);
-        tips = (TextView) findViewById(R.id.choose_action_tips);
-        toolbar = (Toolbar) findViewById(R.id.choose_title);
-        title = (TextView) toolbar.findViewById(R.id.tv_title_bar);
-        ok = (TextView) toolbar.findViewById(R.id.tv_complete_titlebar);
-        back = (ImageView) toolbar.findViewById(R.id.iv_back_titlebar);
-        close = (ImageView) toolbar.findViewById(R.id.iv_close_titlebar);
-        for (int i = 0; i < pealIds.length; i++) {
-            peal[i] = (TextView) findViewById(pealIds[i]);
-            iv_peal[i] = (ImageView) findViewById(iv_pealIds[i]);
-        }
-    }
 
     /**
      * 点击显示对话框

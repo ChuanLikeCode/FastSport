@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 import com.sibo.fastsport.view.WhorlView;
@@ -27,7 +28,7 @@ import com.sibo.fastsport.view.WhorlView;
 /**
  * Created by Administrator on 2016/9/21 0021.
  */
-public class LoginActivity extends BaseTranslucentActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     //固定的ToolBar
     private Toolbar rootToolBar;
@@ -57,7 +58,7 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
                 if (MyBombUtils.identifySuccess) {
                     //Log.e("identifySuccess",MyBmobUtils.identifySuccess+"");
                     dialog.dismiss();
-                    Log.e("mAcount",MyApplication.mAccount+"");
+                    //Log.e("mAcount",MyApplication.mAccount+"");
                     MyApplication.mAccount.setAccount(userAccount.getText().toString());
                     MyApplication.mAccount.setPassword(userPassWord.getText().toString());
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
@@ -87,13 +88,24 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
     private int screen_width;
 
     @Override
+    protected void findViewByIDS() {
+        rootToolBar = (Toolbar) findViewById(R.id.login_title);
+        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
+        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
+        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
+        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
+        tvToRegister = (TextView) findViewById(R.id.tv_register);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        userAccount = (EditText) findViewById(R.id.login_et_account);
+        userPassWord = (EditText) findViewById(R.id.login_et_password);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkIsFirstLogin();
         getScreenWH();
         setContentView(R.layout.activity_login);
-        initView();
-        initTitle();
         initData();
         initListener();
         initDialog();
@@ -125,6 +137,7 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
 
     private void checkIsFirstLogin() {
         //myApplication = (MyApplication) getApplication();
+
         Log.e("checkLoginisLogin", MyApplication.isLogin + "");
         if (!MyApplication.isLogin) {
             startActivity(new Intent(this, ChooseActivity.class));
@@ -144,23 +157,6 @@ public class LoginActivity extends BaseTranslucentActivity implements View.OnCli
     private void initListener() {
         tvToRegister.setOnClickListener(this);
         btn_login.setOnClickListener(this);
-    }
-
-    private void initTitle() {
-        rootToolBar = (Toolbar) findViewById(R.id.login_title);
-        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
-        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
-        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
-        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
-        setOrChangeTranslucentColor(rootToolBar, null, getResources().getColor(R.color.title));
-    }
-
-    private void initView() {
-        tvToRegister = (TextView) findViewById(R.id.tv_register);
-        btn_login = (Button) findViewById(R.id.btn_login);
-        userAccount = (EditText) findViewById(R.id.login_et_account);
-        userPassWord = (EditText) findViewById(R.id.login_et_password);
-
     }
 
 

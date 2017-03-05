@@ -2,9 +2,7 @@ package com.sibo.fastsport.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -15,9 +13,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MakePlanUtils;
 
-public class BodyjudgmentActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class BodyjudgmentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private RelativeLayout bodyLable, bodyLabelByYourself;
     private Switch selectBody_switch;
     private Toolbar head;
@@ -30,10 +29,26 @@ public class BodyjudgmentActivity extends AppCompatActivity implements View.OnCl
             R.id.tv_bodyLabel7, R.id.tv_bodyLabel8};
 
     @Override
+    protected void findViewByIDS() {
+        head = (Toolbar) findViewById(R.id.bodyTitle);
+        title = (TextView) head.findViewById(R.id.tv_title_bar);
+        back = (ImageView) head.findViewById(R.id.iv_back_titlebar);
+        close = (ImageView) head.findViewById(R.id.iv_close_titlebar);
+
+        zhiding = (TextView) head.findViewById(R.id.tv_complete_titlebar);
+        selectBody_switch = (Switch) findViewById(R.id.selectBody_switch);
+        bodyLabelByYourself = (RelativeLayout) findViewById(R.id.rl_bodyLabelByYourself);
+        bodyLable = (RelativeLayout) findViewById(R.id.rl_bodyLabel);
+
+        for (int i = 0; i < labels.length; i++) {
+            bodyLabels[i] = (TextView) findViewById(labels[i]);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bodyjudgment);
-        initView();
         initData();
         initListener();
 
@@ -65,21 +80,6 @@ public class BodyjudgmentActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void initView() {
-        head = (Toolbar) findViewById(R.id.bodyTitle);
-        title = (TextView) head.findViewById(R.id.tv_title_bar);
-        back = (ImageView) head.findViewById(R.id.iv_back_titlebar);
-        close = (ImageView) head.findViewById(R.id.iv_close_titlebar);
-
-        zhiding = (TextView) head.findViewById(R.id.tv_complete_titlebar);
-        selectBody_switch = (Switch) findViewById(R.id.selectBody_switch);
-        bodyLabelByYourself = (RelativeLayout) findViewById(R.id.rl_bodyLabelByYourself);
-        bodyLable = (RelativeLayout) findViewById(R.id.rl_bodyLabel);
-
-        for (int i = 0; i < labels.length; i++) {
-            bodyLabels[i] = (TextView) findViewById(labels[i]);
-        }
-    }
 
     @Override
     public void onClick(View v) {

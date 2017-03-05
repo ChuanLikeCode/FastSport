@@ -15,13 +15,14 @@ import com.dalong.library.listener.OnItemSelectedListener;
 import com.dalong.library.listener.OnLoopViewTouchListener;
 import com.dalong.library.view.LoopRotarySwitchView;
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.view.DragScaleImageView;
 
 
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class MyHomeActivity extends BaseTranslucentActivity {
+public class MyHomeActivity extends BaseActivity {
 
     private int[] imageNum = {R.drawable.imagefirst, R.drawable.imagesecond, R.drawable.imagethree,
             R.drawable.imagefour, R.drawable.imagefive, R.drawable.imagesix,
@@ -37,10 +38,21 @@ public class MyHomeActivity extends BaseTranslucentActivity {
     }
 
     @Override
+    protected void findViewByIDS() {
+        mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.activity_myhome_loopView);
+        mDragScaleImageView = (DragScaleImageView) findViewById(R.id.rl_head);
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;     // 屏幕宽度（像素）
+        int height = metric.heightPixels;   // 屏幕高度（像素）
+        preHeight = dip2px(this, 223);
+        mDragScaleImageView.setImageWidthAndHeight(width, preHeight);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myhome);
-        initView();
         initData();
         initLinstener();
     }
@@ -64,17 +76,6 @@ public class MyHomeActivity extends BaseTranslucentActivity {
     }
 
 
-    private void initView() {
-        mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.activity_myhome_loopView);
-        mDragScaleImageView = (DragScaleImageView) findViewById(R.id.rl_head);
-        DisplayMetrics metric = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
-        int width = metric.widthPixels;     // 屏幕宽度（像素）
-        int height = metric.heightPixels;   // 屏幕高度（像素）
-        preHeight = dip2px(this, 223);
-        mDragScaleImageView.setImageWidthAndHeight(width, preHeight);
-        //setOrChangeTranslucentColor(null, getResources().getColor(R.color.black));
-    }
 
     /**
      * 图片旋转的

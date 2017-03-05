@@ -8,11 +8,19 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.base.BaseActivity;
 
-public class ShowWXActivity extends BaseTranslucentActivity {
+public class ShowWXActivity extends BaseActivity {
 
     private WebView webView;
     private ImageView back;
+
+    @Override
+    protected void findViewByIDS() {
+        webView = (WebView) findViewById(R.id.showwx_webview);
+        back = (ImageView) findViewById(R.id.showx_back);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +38,6 @@ public class ShowWXActivity extends BaseTranslucentActivity {
     }
 
     private void initView() {
-        setOrChangeTranslucentColor(findViewById(R.id.showx_rl), getResources().getColor(R.color.title));
-        webView = (WebView) findViewById(R.id.showwx_webview);
-        back = (ImageView) findViewById(R.id.showx_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

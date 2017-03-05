@@ -27,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         if (rootView == null) {
-            rootView = initView(inflater);
+            rootView = initView(inflater, container);
         }
         return rootView;
     }
@@ -51,7 +51,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initData();
 
-    protected abstract View initView(LayoutInflater inflater);
+    protected abstract View initView(LayoutInflater inflater, ViewGroup container);
     /**
      * 封装从网络下载数据
      */

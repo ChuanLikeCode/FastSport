@@ -1,8 +1,8 @@
 package com.sibo.fastsport.ui;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,8 +27,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.fragment.BaseDay;
-import com.sibo.fastsport.fragment.MakePlanFragment;
-import com.sibo.fastsport.model.UserSportPlan;
+import com.sibo.fastsport.receiver.MakePlanBroadcastReceiver;
 import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
@@ -75,81 +74,29 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     private MakePlanUtils makePlanUtils;
 
     private MyBombUtils myBombUtils;
+    //用来处理上传热身拉伸具体放松动作
+    public Handler handler2 = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            //Log.e("msg-handler2",msg.what+"");
+            if (Constant.SHOW == msg.what) {
+                MyBombUtils.addDayPlan++;
+                if (MyBombUtils.addDayPlan == 7) {
+                    myBombUtils.addWarmUp();
+                    myBombUtils.addStretching();
+                    myBombUtils.addMainAction();
+                    myBombUtils.addRelaxAction();
+                }
+
+                //handler.sendEmptyMessage(Constant.SUCCESS);
+            }
+        }
+    };
     //private CollectPlan collectPlan;
     private Dialog dialog;
     private WhorlView whorlView;
     private TextView planName;
     private ImageView showCode;
-    private ImageView dialog_close;
-
-
-    private void initDialog() {
-        dialog = new Dialog(this);
-        View view = getLayoutInflater().inflate(R.layout.plan_dialog, null);
-        whorlView= (WhorlView) view.findViewById(R.id.loading);
-        planName = (TextView) view.findViewById(R.id.dialog_tv_userPlanName);
-        showCode = (ImageView) view.findViewById(R.id.dialog_iv_userCode);
-        dialog_close = (ImageView) view.findViewById(R.id.dialog_iv_close);
-        whorlView.start();
-        planName.setVisibility(View.INVISIBLE);
-        showCode.setVisibility(View.INVISIBLE);
-        Window window = dialog.getWindow();
-        window.requestFeature(Window.FEATURE_NO_TITLE);
-        window.getDecorView().setPadding(50, 50, 50, 50);
-        window.setBackgroundDrawableResource(android.R.color.white);
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.width = 2 * screen_width / 3;
-        layoutParams.height = screen_height / 2;
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(view, layoutParams);
-        dialog_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                for (BaseDay b :
-                        list_day) {
-                    b.relaxActionList.clear();
-                    b.warmUpList.clear();
-                    b.mainActionList.clear();
-                    b.stretchingList.clear();
-                    CollectPlan.dayPlan.clear();
-                    CollectPlan.warmUps.clear();
-                    CollectPlan.stretchings.clear();
-                    CollectPlan.mainActions.clear();
-                    CollectPlan.relaxActions.clear();
-                }
-                Intent intent = new Intent(MakePlanActivity.this,MainActivity.class);
-                intent.putExtra("finish",111);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-    //用来处理上传热身拉伸具体放松动作
-    public Handler handler2 = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Log.e("msg-handler2",msg.what+"");
-            if (Constant.SHOW == msg.what){
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(3000);
-                            myBombUtils.addWarmUp();
-                            myBombUtils.addStretching();
-                            myBombUtils.addMainAction();
-                            myBombUtils.addRelaxAction();
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        handler.sendEmptyMessage(Constant.SUCCESS);
-                    }
-                }).start();
-            }
-        }
-    };
     //用来显示二维码
     public Handler handler = new Handler(){
         @Override
@@ -164,33 +111,8 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
             }
         }
     };
-
-    /**
-     * 生产二维码
-     */
-    public void loadCode(){
-        //获取健身计划的ID-计划名字-教练名字
-        String str = CollectPlan.userSportPlan.getObjectId();
-//        StringBuffer str = new StringBuffer();
-//        str.append(CollectPlan.userSportPlan.getObjectId())
-//        .append("-")
-//        .append(CollectPlan.userSportPlan.getPlanName())
-//        .append("-")
-//        .append(CollectPlan.userSportPlan.getAccount());
-        planName.setText(CollectPlan.userSportPlan.getPlanName());
-        Bitmap bitmap = CodeUtils.createImage(str.toString(),250,250, BitmapFactory.decodeResource(getResources(),R.mipmap.logo));
-        showCode.setImageBitmap(bitmap);
-        for (int i = 0; i < 7 ; i++){
-            list_day.get(i).relaxActionList.clear();
-            list_day.get(i).mainActionList.clear();
-            list_day.get(i).warmUpList.clear();
-            list_day.get(i).stretchingList.clear();
-        }
-
-    }
-
-
-
+    private ImageView dialog_close;
+    private MakePlanBroadcastReceiver receiver;
     /**
      * 制定计划的按钮监听事件
      */
@@ -211,8 +133,10 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                             || (MakePlanUtils.sp_mainAction.size() != 0)
                             || (MakePlanUtils.sp_relaxAction.size() != 0)){
                         dialog.show();
+                        receiver = new MakePlanBroadcastReceiver();
+                        IntentFilter filter = new IntentFilter("makePlan");
+                        registerReceiver(receiver, filter);
                         myBombUtils.addPlan(CollectPlan.userSportPlan);
-
                     }else {
 
 
@@ -241,12 +165,13 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                 b.warmUpList.clear();
                 b.mainActionList.clear();
                 b.stretchingList.clear();
-                CollectPlan.dayPlan.clear();
-                CollectPlan.warmUps.clear();
-                CollectPlan.stretchings.clear();
-                CollectPlan.mainActions.clear();
-                CollectPlan.relaxActions.clear();
+
             }
+            CollectPlan.dayPlan.clear();
+            CollectPlan.warmUps.clear();
+            CollectPlan.stretchings.clear();
+            CollectPlan.mainActions.clear();
+            CollectPlan.relaxActions.clear();
             finish();
         }
     };
@@ -318,6 +243,76 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         }
     };
 
+    private void initDialog() {
+        dialog = new Dialog(this);
+        View view = getLayoutInflater().inflate(R.layout.plan_dialog, null);
+        whorlView = (WhorlView) view.findViewById(R.id.loading);
+        planName = (TextView) view.findViewById(R.id.dialog_tv_userPlanName);
+        showCode = (ImageView) view.findViewById(R.id.dialog_iv_userCode);
+        dialog_close = (ImageView) view.findViewById(R.id.dialog_iv_close);
+        whorlView.start();
+        planName.setVisibility(View.INVISIBLE);
+        showCode.setVisibility(View.INVISIBLE);
+        Window window = dialog.getWindow();
+        window.requestFeature(Window.FEATURE_NO_TITLE);
+        window.getDecorView().setPadding(50, 50, 50, 50);
+        window.setBackgroundDrawableResource(android.R.color.white);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.width = 2 * screen_width / 3;
+        layoutParams.height = screen_height / 2;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(view, layoutParams);
+        dialog_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                for (BaseDay b :
+                        list_day) {
+                    b.relaxActionList.clear();
+                    b.warmUpList.clear();
+                    b.mainActionList.clear();
+                    b.stretchingList.clear();
+                }
+                CollectPlan.dayPlan.clear();
+                CollectPlan.warmUps.clear();
+                CollectPlan.stretchings.clear();
+                CollectPlan.mainActions.clear();
+                CollectPlan.relaxActions.clear();
+                Intent intent = new Intent(MakePlanActivity.this, MainActivity.class);
+                intent.putExtra("finish", 111);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 生产二维码
+     */
+    public void loadCode() {
+        //获取健身计划的ID-计划名字-教练名字
+        String str = CollectPlan.userSportPlan.getObjectId();
+        planName.setText(CollectPlan.userSportPlan.getPlanName());
+        Bitmap bitmap = CodeUtils.createImage(str.toString(), 250, 250, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
+        showCode.setImageBitmap(bitmap);
+        MyBombUtils.COUNT = 0;
+        MyBombUtils.MAKE = 0;
+        MyBombUtils.addDayPlan = 0;
+        for (int i = 0; i < 7; i++) {
+            list_day.get(i).relaxActionList.clear();
+            list_day.get(i).mainActionList.clear();
+            list_day.get(i).warmUpList.clear();
+            list_day.get(i).stretchingList.clear();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     /**
      * 如果今天不休息则显示训练的列表
      * 否则显示提示框
@@ -336,11 +331,27 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         list_day.get(i).relaxActionListView.setVisibility(select);
     }
 
+    protected void findViewByIDS() {
+        for (int i = 0; i < daysId.length; i++) {
+            days[i] = (LinearLayout) findViewById(daysId[i]);
+        }
+        for (int j = 0; j < iv_day.length; j++) {
+            iv_day[j] = (ImageView) findViewById(iv_dayIds[j]);
+        }
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        head = (Toolbar) findViewById(R.id.makePlanActivity_title);
+        title = (TextView) head.findViewById(R.id.tv_title_bar);
+        back = (ImageView) head.findViewById(R.id.iv_back_titlebar);
+        close = (ImageView) head.findViewById(R.id.iv_close_titlebar);
+        make = (TextView) head.findViewById(R.id.tv_complete_titlebar);
+        hs = (HorizontalScrollView) findViewById(R.id.makePlanActivity_scrollView);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_plan);
-        findById();
+        findViewByIDS();
         init();
         initListener();
         getScreenWH();
@@ -409,25 +420,6 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         makePlanUtils = new MakePlanUtils(this, list_day);
     }
 
-    /**
-     * 初始化布局文件中的控件，使得Activity中可以操作
-     */
-    private void findById() {
-        // TODO Auto-generated method stub
-        for (int i = 0; i < daysId.length; i++) {
-            days[i] = (LinearLayout) findViewById(daysId[i]);
-        }
-        for (int j = 0; j < iv_day.length; j++) {
-            iv_day[j] = (ImageView) findViewById(iv_dayIds[j]);
-        }
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        head = (Toolbar) findViewById(R.id.makePlanActivity_title);
-        title = (TextView) head.findViewById(R.id.tv_title_bar);
-        back = (ImageView) head.findViewById(R.id.iv_back_titlebar);
-        close = (ImageView) head.findViewById(R.id.iv_close_titlebar);
-        make = (TextView) head.findViewById(R.id.tv_complete_titlebar);
-        hs = (HorizontalScrollView) findViewById(R.id.makePlanActivity_scrollView);
-    }
 
     /**
      * 重置选项卡的背景颜色

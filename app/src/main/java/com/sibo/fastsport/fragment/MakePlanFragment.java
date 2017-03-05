@@ -11,11 +11,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -30,7 +30,6 @@ import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.domain.Pickers;
 import com.sibo.fastsport.ui.BodyjudgmentActivity;
 import com.sibo.fastsport.utils.CollectPlan;
-import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.PickerScrollView;
 
@@ -77,8 +76,8 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    protected View initView(LayoutInflater inflater) {
-        makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, null);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, container, false);
 
         initView();
         initData();
@@ -143,6 +142,7 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
         nextStep.setOnClickListener(this);
         //sex.addTextChangedListener(this);
         sex.setOnClickListener(this);
+
         name.addTextChangedListener(this);
         llUserBodyFat.setOnClickListener(this);
         llUserWeight.setOnClickListener(this);
@@ -298,19 +298,19 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
         //before--原始文字被删除的个数
         //count--新添加的内容的个数
         //---------start和count结合从s中获取新添加的内容-------
-        name.setBackgroundResource(R.drawable.plan_bg_change);
-        sex.setBackgroundResource(R.drawable.plan_bg_change);
+//        name.setBackgroundResource(R.drawable.plan_bg_change);
+//        sex.setBackgroundResource(R.drawable.plan_bg_change);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-        //s--最终内容
-        if (name.getText().toString().equals("")||name.getText() == null){
-            name.setBackgroundResource(R.drawable.plan_btn_background);
-        }
-        if (sex.getText().toString().equals("")||sex.getText() == null){
-            sex.setBackgroundResource(R.drawable.plan_btn_background);
-        }
+//        //s--最终内容
+//        if (name.getText().toString().equals("")||name.getText() == null){
+//            name.setBackgroundResource(R.drawable.plan_btn_background);
+//        }
+//        if (sex.getText().toString().equals("")||sex.getText() == null){
+//            sex.setBackgroundResource(R.drawable.plan_btn_background);
+//        }
     }
 
     @Override

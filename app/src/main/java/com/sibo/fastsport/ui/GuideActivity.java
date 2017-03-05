@@ -3,7 +3,6 @@ package com.sibo.fastsport.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,12 +13,13 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyViewPagerAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuideActivity extends AppCompatActivity implements View.OnClickListener {
+public class GuideActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView[] iv_point = new ImageView[3];
     private int[] pointIds = {R.id.guide_point1, R.id.guide_point2, R.id.guide_point3};
@@ -32,6 +32,15 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     private MyApplication myApplication;
 
     @Override
+    protected void findViewByIDS() {
+        for (int i = 0; i < pointIds.length; i++) {
+            iv_point[i] = (ImageView) findViewById(pointIds[i]);
+        }
+        viewPager = (ViewPager) findViewById(R.id.guide_viewPager);
+        start = (TextView) findViewById(R.id.guide_start);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //隐藏通知栏
@@ -40,7 +49,6 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         getScreenWH();
         checkIsFirst();
         setContentView(R.layout.activity_guide);
-        initView();
         initListener();
         initData();
     }
@@ -142,16 +150,6 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    /**
-     * 控件初始化
-     */
-    private void initView() {
-        for (int i = 0; i < pointIds.length; i++) {
-            iv_point[i] = (ImageView) findViewById(pointIds[i]);
-        }
-        viewPager = (ViewPager) findViewById(R.id.guide_viewPager);
-        start = (TextView) findViewById(R.id.guide_start);
-    }
 
     @Override
     public void onClick(View v) {

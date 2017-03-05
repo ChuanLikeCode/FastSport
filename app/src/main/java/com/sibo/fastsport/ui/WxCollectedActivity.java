@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyCollectionAdapter;
 import com.sibo.fastsport.application.Constant;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
@@ -20,8 +21,10 @@ import com.sibo.fastsport.view.WhorlView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WxCollectedActivity extends BaseTranslucentActivity implements AdapterView.OnItemClickListener {
+public class WxCollectedActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
+    //收藏的集合
+    public static List<MyCollections> collectionList = new ArrayList<>();
     //标题栏控件
     private ImageView back;
     private TextView title;
@@ -31,8 +34,6 @@ public class WxCollectedActivity extends BaseTranslucentActivity implements Adap
     private WhorlView whorlView;
     //适配器
     private MyCollectionAdapter adapter;
-    //收藏的集合
-    public static List<MyCollections> collectionList = new ArrayList<>();
     //提示文字
     private TextView tips;
     public Handler handler = new Handler(){
@@ -55,11 +56,20 @@ public class WxCollectedActivity extends BaseTranslucentActivity implements Adap
             }
         }
     };
+
+    @Override
+    protected void findViewByIDS() {
+        whorlView = (WhorlView) findViewById(R.id.collected_loading);
+        tips = (TextView) findViewById(R.id.collected_tip);
+        back = (ImageView) findViewById(R.id.collected_back);
+        title = (TextView) findViewById(R.id.collected_title);
+        listView = (ListView) findViewById(R.id.collected_listView);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wx_collected);
-        initView();
         initData();
         initListener();
     }
@@ -90,15 +100,6 @@ public class WxCollectedActivity extends BaseTranslucentActivity implements Adap
         title.setText(R.string.myCollection);
         adapter = new MyCollectionAdapter(this,collectionList);
         listView.setAdapter(adapter);
-    }
-
-    private void initView() {
-        whorlView = (WhorlView) findViewById(R.id.collected_loading);
-        tips = (TextView) findViewById(R.id.collected_tip);
-        back = (ImageView) findViewById(R.id.collected_back);
-        title = (TextView) findViewById(R.id.collected_title);
-        listView = (ListView) findViewById(R.id.collected_listView);
-        setOrChangeTranslucentColor(findViewById(R.id.wxcollect_rl),getResources().getColor(R.color.title));
     }
 
     @Override

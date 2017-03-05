@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.UserInfo;
+import com.sibo.fastsport.utils.AppManager;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
@@ -19,9 +20,15 @@ public class MyApplication extends Application {
 
     public static Account mAccount = null;
     public static UserInfo mUser = null;
-    public boolean isFirstStart = true;
     public static boolean isLogin = true;
     public static String planObjectId = "";
+    private static MyApplication mInstance = null;
+    public boolean isFirstStart = true;
+    private AppManager mAppManager = null;
+
+    public static MyApplication getInstance() {
+        return mInstance;
+    }
     /**
      * 获得当前进程号
      *
@@ -44,6 +51,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance = this;
         /*DeadObjectException 异常出现，一般原因
         app进程不存在，在底层回调时找不到callback
         ipc进程崩溃也会出现改异常
@@ -101,6 +109,19 @@ public class MyApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         System.exit(0);
+    }
+
+    /**
+     * activity栈管理
+     *
+     * @author chensong
+     * @date 2016-5-25
+     */
+    public AppManager getActivityManager() {
+        if (mAppManager == null) {
+            mAppManager = AppManager.getInstance();
+        }
+        return mAppManager;
     }
 
 }

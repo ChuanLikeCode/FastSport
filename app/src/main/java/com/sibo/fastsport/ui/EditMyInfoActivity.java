@@ -1,7 +1,6 @@
 package com.sibo.fastsport.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -10,8 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.base.BaseActivity;
 
-public class EditMyInfoActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditMyInfoActivity extends BaseActivity implements View.OnClickListener {
     EditText name, sex, telephone, age, height, weight, jiaoling, address, clubName;
     RelativeLayout jiaolingRl;
     ImageView ivBackTitle, ivCloseTitle;
@@ -20,13 +20,7 @@ public class EditMyInfoActivity extends AppCompatActivity implements View.OnClic
     android.support.v7.widget.Toolbar rootToolBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editmyinfo);
-        initView();
-    }
-
-    private void initView() {
+    protected void findViewByIDS() {
         name = (EditText) findViewById(R.id.edit_myinfo_et_name);
         sex = (EditText) findViewById(R.id.edit_myinfo_et_sex);
         telephone = (EditText) findViewById(R.id.edit_myinfo_et_telephone);
@@ -43,6 +37,13 @@ public class EditMyInfoActivity extends AppCompatActivity implements View.OnClic
         tvNameTitle = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
         tvComplete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_editmyinfo);
+    }
+
 
     @Override
     public void onClick(View v) {

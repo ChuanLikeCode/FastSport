@@ -18,6 +18,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.WXitemAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.WXItem;
 import com.sibo.fastsport.utils.MyBombUtils;
@@ -28,26 +29,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NewsActivity extends BaseTranslucentActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class NewsActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+    public static int screen_height;
+    public static int screen_width;
+    //用于显示的列表集合
+    private static List<WXItem> wxItemList = new ArrayList<>();
+    private static int TAG = 0;//标记上拉下拉
+    private static int offset = 0;//标记每次获取文章的偏移量
+    private static int count = 1;//标记第几次获取文章
+    //文章的收藏集合
+    public List<WXItem> collectionList = new ArrayList<>();
     //返回键
     private ImageView back;
     //下拉刷新，上拉加载控件  适配器
     private PullToRefreshListView pfl;
-    //文章的收藏集合
-    public List<WXItem> collectionList = new ArrayList<>();
     //PullToRefreshListView得到的ListView
     private ListView listView;
-    //用于显示的列表集合
-    private static List<WXItem> wxItemList = new ArrayList<>();
     //微信文章适配器
     private WXitemAdapter adapter;
     private WhorlView whorlView;
-    private static int TAG = 0;//标记上拉下拉
-    private static int offset = 0;//标记每次获取文章的偏移量
-    private static int count = 1;//标记第几次获取文章
     private WXArticleUtils wxArticleUtils;//获取微信文章的工具类
-    public static int screen_height;
-    public static int screen_width;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -68,11 +69,20 @@ public class NewsActivity extends BaseTranslucentActivity implements View.OnClic
 
 
     @Override
+    protected void findViewByIDS() {
+        pfl = (PullToRefreshListView) findViewById(R.id.wx_pfl);
+        back = (ImageView) findViewById(R.id.news_back);
+        whorlView = (WhorlView) findViewById(R.id.news_loading);
+        pfl.setMode(PullToRefreshBase.Mode.BOTH);
+        listView = pfl.getRefreshableView();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getScreenWH();
         setContentView(R.layout.activity_news);
-        initView();
+
         initListener();
         initData();
         if (WXArticleUtils.isFirst){
@@ -142,15 +152,6 @@ public class NewsActivity extends BaseTranslucentActivity implements View.OnClic
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screen_height = metrics.heightPixels/3-80;
         screen_width = (metrics.widthPixels-50)/3;
-    }
-
-    private void initView() {
-        setOrChangeTranslucentColor(findViewById(R.id.news_rl), getResources().getColor(R.color.title));
-        pfl = (PullToRefreshListView) findViewById(R.id.wx_pfl);
-        back = (ImageView) findViewById(R.id.news_back);
-        whorlView = (WhorlView) findViewById(R.id.news_loading);
-        pfl.setMode(PullToRefreshBase.Mode.BOTH);
-        listView = pfl.getRefreshableView();
     }
 
     /**

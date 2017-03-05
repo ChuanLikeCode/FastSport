@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
 
@@ -30,7 +31,7 @@ import cn.smssdk.SMSSDK;
  *
  * Created by Administrator on 2016/9/21 0021.
  */
-public class RegisterActivity extends BaseTranslucentActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private static final int CODE_ING = 1;   //已发送，倒计时
     private static final int CODE_REPEAT = 2;  //重新发送
     private static final int SMSDDK_HANDLER = 3;  //短信回调
@@ -118,12 +119,28 @@ public class RegisterActivity extends BaseTranslucentActivity implements View.On
     private int screen_width;
 
     @Override
+    protected void findViewByIDS() {
+        btn_register = (Button) findViewById(R.id.btn_register);
+        takeIdentify = (Button) findViewById(R.id.takeIndentify);
+        sendIdentify = (TextView) findViewById(R.id.tv_sendIdentify);
+        receiverSecond = (TextView) findViewById(R.id.tv_receiverSecond);
+        remainSecond = (TextView) findViewById(R.id.tv_remainSecond);
+        account = (EditText) findViewById(R.id.register_et_account);
+        password = (EditText) findViewById(R.id.register_et_password);
+        identify = (EditText) findViewById(R.id.et_identify);
+        ivDelete = (ImageView) findViewById(R.id.cancel_number);
+        rootToolBar = (Toolbar) findViewById(R.id.register_title);
+        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
+        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
+        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
+        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getScreenWH();
-        initTitle();
-        initView();
         initListener();
         initData();
         initSMS();
@@ -220,28 +237,6 @@ public class RegisterActivity extends BaseTranslucentActivity implements View.On
         ivDelete.setOnClickListener(this);
     }
 
-    private void initTitle() {
-        rootToolBar = (Toolbar) findViewById(R.id.register_title);
-        ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
-        ivBack = (ImageView) rootToolBar.findViewById(R.id.iv_back_titlebar);
-        title = (TextView) rootToolBar.findViewById(R.id.tv_title_bar);
-        complete = (TextView) rootToolBar.findViewById(R.id.tv_complete_titlebar);
-        setOrChangeTranslucentColor(rootToolBar, null, getResources().getColor(R.color.title));
-    }
-
-    private void initView() {
-
-        btn_register = (Button) findViewById(R.id.btn_register);
-        takeIdentify = (Button) findViewById(R.id.takeIndentify);
-        sendIdentify = (TextView) findViewById(R.id.tv_sendIdentify);
-        receiverSecond = (TextView) findViewById(R.id.tv_receiverSecond);
-        remainSecond = (TextView) findViewById(R.id.tv_remainSecond);
-        account = (EditText) findViewById(R.id.register_et_account);
-        password = (EditText) findViewById(R.id.register_et_password);
-        identify = (EditText) findViewById(R.id.et_identify);
-        ivDelete = (ImageView) findViewById(R.id.cancel_number);
-
-    }
 
     @Override
     public void onClick(View v) {

@@ -11,12 +11,15 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.base.BaseActivity;
+import com.sibo.fastsport.model.Account;
+import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 
 /**
  * Created by Administrator on 2016/7/25 0025.
  */
-public class SettingActivity extends BaseTranslucentActivity implements View.OnClickListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
     //固定的ToolBar
     android.support.v7.widget.Toolbar rootToolBar;
     private ImageView ivClose;
@@ -28,26 +31,8 @@ public class SettingActivity extends BaseTranslucentActivity implements View.OnC
     private Button exit;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        initView();
-        initTitle();
-        initListener();
-
-    }
-
-    private void initListener() {
-        exit.setOnClickListener(this);
-        ivBack.setOnClickListener(this);
-    }
-
-    private void initView() {
+    protected void findViewByIDS() {
         exit = (Button) findViewById(R.id.activity_setting_btn_exit);
-
-    }
-
-    private void initTitle() {
         rootToolBar = (Toolbar) findViewById(R.id.title);
         toolBar = (Toolbar) rootToolBar.findViewById(R.id.act_title_bar);
         ivClose = (ImageView) rootToolBar.findViewById(R.id.iv_close_titlebar);
@@ -58,8 +43,23 @@ public class SettingActivity extends BaseTranslucentActivity implements View.OnC
         ivBack.setVisibility(View.VISIBLE);
         ivClose.setVisibility(View.INVISIBLE);
         tvText.setText("设置");
-        setOrChangeTranslucentColor(toolBar, null, getResources().getColor(R.color.title));
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
+
+        initListener();
+
+    }
+
+    private void initListener() {
+        exit.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
+    }
+
+
 
 
     @Override
@@ -68,8 +68,8 @@ public class SettingActivity extends BaseTranslucentActivity implements View.OnC
             case R.id.activity_setting_btn_exit:
                 SharepreferencesUtilSystemSettings.clear(this);
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.ISFIRSTSTART, false);
-                MyApplication.mAccount = null;
-                MyApplication.mUser = null;
+                MyApplication.mAccount = new Account();
+                MyApplication.mUser = new UserInfo();
                 MyApplication.isLogin = true;
                 MyApplication.planObjectId = "";
                 startActivity(new Intent(SettingActivity.this,LoginActivity.class));

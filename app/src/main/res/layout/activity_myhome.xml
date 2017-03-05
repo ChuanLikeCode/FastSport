@@ -15,21 +15,14 @@
         >
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignTop="@+id/activity_myhome_iv_share"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/edit" />
-
-        <ImageView
-            android:id="@+id/activity_myhome_iv_share"
+            android:id="@+id/myhome_iv_xiugai"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/set" />
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@mipmap/edit" />
+
 
         <com.sibo.fastsport.view.CircleImageView
             android:id="@+id/activity_mylhome_iv_touxiang"

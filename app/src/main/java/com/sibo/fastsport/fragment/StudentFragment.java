@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.StudentRecyclerView;
@@ -21,8 +22,8 @@ public class StudentFragment extends BaseFragment {
     private View studentFragment;
 
     @Override
-    protected View initView(LayoutInflater inflater) {
-        studentFragment = inflater.inflate(R.layout.fragment_student, null);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        studentFragment = inflater.inflate(R.layout.fragment_student, container, false);
         initView();
         initData();
         return studentFragment;

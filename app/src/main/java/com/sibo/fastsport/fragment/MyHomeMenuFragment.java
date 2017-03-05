@@ -3,6 +3,7 @@ package com.sibo.fastsport.fragment;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -28,8 +29,8 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
     }
 
     @Override
-    protected View initView(LayoutInflater inflater) {
-        myhomemenu = inflater.inflate(R.layout.fragment_myhomemenu, null);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        myhomemenu = inflater.inflate(R.layout.fragment_myhomemenu, container, false);
         findById();
         initListener();
         return myhomemenu;
