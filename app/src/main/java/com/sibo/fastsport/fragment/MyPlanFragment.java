@@ -2,14 +2,19 @@ package com.sibo.fastsport.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,11 +22,15 @@ import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MakePlanAdapter;
+import com.sibo.fastsport.adapter.MyDayFragmentAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.ui.ScannerActivity;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -32,6 +41,44 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MyPlanFragment extends BaseFragment implements View.OnClickListener {
 
+
+    private String scanner_str;//扫描二维码获得的id
+    private View view;
+    private TextView title,right;//标题和最右边的
+    private ImageView back,close,scanner;//返回键 关闭键 扫描键
+    private WhorlView whorlView;
+    private TextView tips;
+    private MyBombUtils bombUtils;
+    private MakePlanUtils makePlanUtils;
+
+
+    private boolean click = false;
+    //每一个Day的布局ID
+    private int[] daysId = {R.id.ll1, R.id.ll2, R.id.ll3, R.id.ll4, R.id.ll5, R.id.ll6, R.id.ll7,};
+    private LinearLayout[] days = new LinearLayout[7];
+    //ViewPager的适配器
+    private MyDayFragmentAdapter adapter;
+    private ViewPager viewPager;
+    //顶部标题栏
+    private Toolbar head;
+    //横向ScrollView来显示第一到第七天
+    private HorizontalScrollView hs;
+    //第一到第七天的选择图片
+    private ImageView[] iv_day = new ImageView[7];
+    private int[] iv_dayIds = {R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7};
+    //第一到第七天的Fragment list
+    private List<BaseDay> list_day = new ArrayList<>();
+    //用来保存选择的ViewPager角标
+    private boolean[] isSelected = {false, false, false, false, false, false, false};
+    //屏幕的宽
+    private int screen_width;
+    private int screen_height;
+    //显示第一到第七天的控件宽度
+    private int day_width;
+    //当前选择的控件离屏幕左边的距离
+    private int day_left;
+    //ViewPager滑动时ScrollView跟随滑动的距离
+    private int srcollToDis;
     /**
      * 扫描结果处理
      */
@@ -48,36 +95,6 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
             }
         }
     };
-    private String scanner_str;//扫描二维码获得的id
-    private View view;
-    private TextView title,right;//标题和最右边的
-    private ImageView back,close,scanner;//返回键 关闭键 扫描键
-    //    private RelativeLayout[] rl_type = new RelativeLayout[4];//健身计划的四个类型框框
-//    private int[] rl_ids = {R.id.base_day_rl_warmUp,R.id.base_day_rl_stretching,R.id.base_day_rl_mainAction,R.id.base_day_rl_relaxAction};
-//    private TextView tip;//健身计划的复用多出来的提示框
-//    private ListView[] listViews = new ListView[4];//健身计划类型的listview
-//    private boolean[] show = {false,false,false,false};//点击操作 隐藏和显示 标识
-//    private ImageView[] down = new ImageView[4];//健身类型最左边的那个按钮
-//    private int[] down_ids = {R.id.makePlan_iv_warmUpAdd,R.id.makePlan_iv_stretchingAdd,R.id.makePlan_iv_mainActionAdd,R.id.makePlan_iv_relaxActionAdd};
-//    private int[] listViewIds = {R.id.makePlan_listView_warmUp,R.id.makePlan_listView_stretching
-//                                ,R.id.makePlan_listView_mainAction,R.id.makePlan_listView_relaxAction};
-//    private static ListView[] listViewStatic;
-//    public static List<SportName> warmUpList = new ArrayList<>();
-//    public static List<SportName> stretchingList = new ArrayList<>();
-//    public static List<SportName> mainActionList = new ArrayList<>();
-//    public static List<SportName> relaxActionList = new ArrayList<>();
-//    //创建适配器
-//    public static MakePlanAdapter warmUpAdapter;
-//    public static MakePlanAdapter stretchingAdapter;
-//    public static MakePlanAdapter mainActionAdapter;
-//    public static MakePlanAdapter relaxActionAdapter;
-    private RelativeLayout plan_rl;
-    private WhorlView whorlView;
-    private TextView tips;
-    //    private MyBroadcastReceiver receiver;
-    private MyBombUtils bombUtils;
-    private MakePlanUtils makePlanUtils;
-
     /**
      * 初始化健身模块 七天的。。。。。
      */
@@ -90,15 +107,48 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         view = inflater.inflate(R.layout.fragment_plan, container, false);
         findView(view);
         scannerCode();
+        bind();
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //getActivity().unregisterReceiver(receiver);
+    private void bind() {
+        viewPager.setOnPageChangeListener(listener);
+        //选择项的监听设置
+        for (int i = 0; i < days.length; i++) {
+            days[i].setOnClickListener(this);
+            iv_day[i].setVisibility(View.GONE);
+        }
     }
+    /**
+     * 当滑动ViewPager时，需要改变选择栏的背景颜色，改变ScrollView滑动的距离
+     */
+    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
 
+        @Override
+        public void onPageSelected(int arg0) {
+            //计算ScrollView滑动的距离
+            day_left = days[arg0].getLeft();
+            //滑动的距离是 = 当前控件距离屏幕左边的宽度+控件宽度/2-屏幕宽度/2
+            srcollToDis = day_left + day_width / 2 - screen_width / 2;
+            //调用smoothScrollTo()滑动ScrollView控件
+            hs.smoothScrollTo(srcollToDis, 0);
+            //设置选择栏的背景颜色，用来区别哪一个选项被选择了
+            resetTextView();
+            days[arg0].setBackgroundColor(getResources().getColor(R.color.light_white));
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+            // TODO Auto-generated method stub
+
+        }
+    };
     public void scannerCode(){
         Bundle bundle = getArguments();
         //Log.e("bundle",bundle+"");
@@ -131,21 +181,31 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void findView(View view) {
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        hs = (HorizontalScrollView) view.findViewById(R.id.makePlanActivity_scrollView);
         tips = (TextView) view.findViewById(R.id.makePlanFragment_tips);
-        //plan_rl = (RelativeLayout) view.findViewById(R.id.makePlanFragment_rl_plan);
         whorlView = (WhorlView) view.findViewById(R.id.loading);
         title = (TextView) view.findViewById(R.id.tv_title_bar);
         scanner = (ImageView) view.findViewById(R.id.iv_scanner_titlebar);
         back = (ImageView) view.findViewById(R.id.iv_back_titlebar);
         right = (TextView) view.findViewById(R.id.tv_complete_titlebar);
         close = (ImageView) view.findViewById(R.id.iv_close_titlebar);
-//        for (int i = 0;i<listViews.length;i++){
-//            listViews[i] = (ListView) view.findViewById(listViewIds[i]);
-//            rl_type[i] = (RelativeLayout) view.findViewById(rl_ids[i]);
-//            down[i] = (ImageView) view.findViewById(down_ids[i]);
-//        }
-//        tip = (TextView) view.findViewById(R.id.makePlan_tip);
-//        listViewStatic = listViews;
+        for (int i = 0; i < daysId.length; i++) {
+            days[i] = (LinearLayout) view.findViewById(daysId[i]);
+        }
+        for (int j = 0; j < iv_day.length; j++) {
+            iv_day[j] = (ImageView) view.findViewById(iv_dayIds[j]);
+        }
+    }
+
+    /**
+     * 重置选项卡的背景颜色
+     */
+    private void resetTextView() {
+        // TODO Auto-generated method stub
+        for (int i = 0; i < days.length; i++) {
+            days[i].setBackgroundColor(Color.WHITE);
+        }
     }
 
     @Override
@@ -155,49 +215,33 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         close.setVisibility(View.GONE);
         right.setVisibility(View.GONE);
         back.setVisibility(View.GONE);
-        //tip.setVisibility(View.GONE);
-        //plan_rl.setVisibility(View.GONE);//计划模块
         whorlView.setVisibility(View.GONE);//进度条
         scanner.setVisibility(View.VISIBLE);
-//        for (int i = 0;i<listViews.length;i++){
-//            rl_type[i].setOnClickListener(this);
-//            down[i].setOnClickListener(this);
-//            down[i].setImageResource(R.drawable.xl_icon_07);
-//        }
         scanner.setOnClickListener(this);
-//        warmUpAdapter = new MakePlanAdapter(getActivity(), warmUpList);
-//        stretchingAdapter = new MakePlanAdapter(getActivity(), stretchingList);
-//        mainActionAdapter = new MakePlanAdapter(getActivity(), mainActionList);
-//        relaxActionAdapter = new MakePlanAdapter(getActivity(), relaxActionList);
 
-    }
+        MakePlanUtils.context = getActivity();
+        //collectPlan = new CollectPlan(this);
+        bombUtils = new MyBombUtils(getActivity());
+        for (int i = 0; i < 7; i++) {
+            BaseDay day = new BaseDay();
+            list_day.add(day);//将第一到第七天的Fragment添加到list中
+        }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //getActivity().unregisterReceiver(receiver);
+        resetTextView();
+        //初始化Fragment适配器
+        adapter = new MyDayFragmentAdapter(getChildFragmentManager(), list_day);
+        //ViewPager设置适配器
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);//默认显示第一个页面
+        //默认选择项为第一个，改变背景颜色
+        days[0].setBackgroundColor(getResources().getColor(R.color.light_white));
+        makePlanUtils = new MakePlanUtils(getActivity(), list_day);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-//            //点击显示隐藏健身计划
-//            case R.id.makePlan_iv_warmUpAdd:
-//            case R.id.base_day_rl_warmUp:
-//                showListView(0);
-//                break;
-//            case R.id.makePlan_iv_stretchingAdd:
-//            case R.id.base_day_rl_stretching:
-//                showListView(1);
-//                break;
-//            case R.id.makePlan_iv_mainActionAdd:
-//            case R.id.base_day_rl_mainAction:
-//                showListView(2);
-//                break;
-//            case R.id.makePlan_iv_relaxActionAdd:
-//            case R.id.base_day_rl_relaxAction:
-//                showListView(3);
-//                break;
             case R.id.iv_scanner_titlebar:
                 if (EasyPermissions.hasPermissions(getActivity(), Manifest.permission.CAMERA)){
                     Intent intent = new Intent(getActivity(), ScannerActivity.class);
@@ -207,17 +251,6 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-//    public void showListView(int i){
-//        if (show[i]){
-//            listViews[i].setVisibility(View.VISIBLE);
-//            down[i].setImageResource(R.drawable.xl_icon_07);
-//            show[i] = false;
-//        }else {
-//            listViews[i].setVisibility(View.GONE);
-//            down[i].setImageResource(R.drawable.hx_icon_10);
-//            show[i] = true;
-//        }
-//    }
 
     /**
      * 由于ScrollView中嵌套ListView显示的时候，高度只显示一行数据的高度
