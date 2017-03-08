@@ -31,7 +31,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             if (intent.getIntExtra("finish",0) == 1){
                 //  Log.e("finish","ok");
                 MyBombUtils.COUNT++;
-                if (MyBombUtils.COUNT == 6){
+                if (MyBombUtils.COUNT == 8){
                     MyPlanFragment.handler.sendEmptyMessage(Constant.SUCCESS);
                 }
             }

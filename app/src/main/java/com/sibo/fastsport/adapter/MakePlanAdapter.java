@@ -64,19 +64,22 @@ public class MakePlanAdapter extends BaseAdapter {
         } else {
             holder = (ChooseViewHolder) convertView.getTag();
         }
-        holder.name.setText(list.get(position).getName());
-        Glide.with(context).load(list.get(position).getIcon().getFileUrl())
-                .asGif().diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.loading)
-                .centerCrop()
-                .error(R.drawable.failed).into(holder.img);
-        for (int j = 0; j < holder.level.length; j++) {
-            holder.level[j].setVisibility(View.GONE);
+        if (list.size() != 0){
+            holder.name.setText(list.get(position).getName());
+            Glide.with(context).load(list.get(position).getIcon().getFileUrl())
+                    .asGif().diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.loading)
+                    .centerCrop()
+                    .error(R.drawable.failed).into(holder.img);
+            for (int j = 0; j < holder.level.length; j++) {
+                holder.level[j].setVisibility(View.GONE);
+            }
+            for (int i = 0; i < list.get(position).getLevel(); i++) {
+                holder.level[i].setVisibility(View.VISIBLE);
+            }
+            holder.checkBox.setVisibility(View.GONE);
         }
-        for (int i = 0; i < list.get(position).getLevel(); i++) {
-            holder.level[i].setVisibility(View.VISIBLE);
-        }
-        holder.checkBox.setVisibility(View.GONE);
+
         return convertView;
     }
 

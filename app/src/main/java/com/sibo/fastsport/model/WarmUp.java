@@ -7,9 +7,9 @@ import cn.bmob.v3.BmobObject;
  */
 
 public class WarmUp extends BmobObject {
-    private String id;
-    private int dayId;
-    private String warmId;
+    private String id;//健身计划的id
+    private int dayId;//标识第几天的健身动作
+    private String warmId;//健身动作的SportName  objectId
 
     public String getId() {
         return id;

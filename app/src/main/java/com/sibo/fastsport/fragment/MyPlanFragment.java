@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,11 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     private View view;
     private TextView title,right;//标题和最右边的
     private ImageView back,close,scanner;//返回键 关闭键 扫描键
-    private WhorlView whorlView;
-    private TextView tips;
+    private static WhorlView whorlView;
+    private static TextView tips;
     private MyBombUtils bombUtils;
     private MakePlanUtils makePlanUtils;
+    private static RelativeLayout plan_rl;
 
 
     private boolean click = false;
@@ -58,16 +60,16 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     private LinearLayout[] days = new LinearLayout[7];
     //ViewPager的适配器
     private MyDayFragmentAdapter adapter;
-    private ViewPager viewPager;
+    private static ViewPager viewPager;
     //顶部标题栏
-    private Toolbar head;
+    //private Toolbar head;
     //横向ScrollView来显示第一到第七天
-    private HorizontalScrollView hs;
+    private static HorizontalScrollView hs;
     //第一到第七天的选择图片
     private ImageView[] iv_day = new ImageView[7];
     private int[] iv_dayIds = {R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7};
     //第一到第七天的Fragment list
-    private List<BaseDay> list_day = new ArrayList<>();
+    private static List<BaseDay> list_day = new ArrayList<>();
     //用来保存选择的ViewPager角标
     private boolean[] isSelected = {false, false, false, false, false, false, false};
     //屏幕的宽
@@ -79,6 +81,18 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     private int day_left;
     //ViewPager滑动时ScrollView跟随滑动的距离
     private int srcollToDis;
+    private static Handler completeHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 888){
+                hs.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.VISIBLE);
+                whorlView.stop();
+                whorlView.setVisibility(View.GONE);
+                tips.setVisibility(View.GONE);
+            }
+        }
+    };
     /**
      * 扫描结果处理
      */
@@ -91,15 +105,183 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
                     break;
                 case Constant.FAILED:
                     Log.e("scanner", "failed");
+                    whorlView.stop();
+                    whorlView.setVisibility(View.GONE);
+                    hs.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+                    tips.setVisibility(View.VISIBLE);
+                    //Toast.makeText(get,"获取数据失败，请重新扫描",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
+    private View.OnClickListener dayListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            for (int i = 0; i < days.length; i++) {
+                if (v.getId() == daysId[i]) {
+                    resetTextView();
+                    viewPager.setCurrentItem(i);
+                    days[i].setBackgroundColor(getResources().getColor(R.color.light_white));
+                    break;
+                }
+            }
+        }
+    };
+
     /**
      * 初始化健身模块 七天的。。。。。
      */
     private static void initializePlan() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                classifyPlan();
+                initEveryDayWarmUpPlan();
+                initEveryDayStretchPlan();
+                initEveryDayMainActionPlan();
+                initEveryDayRelaxActionPlan();
+                //showPlan();
+                completeHandler.sendEmptyMessage(888);
+            }
+        }).start();
 
+    }
+
+    /**
+     * 展示每天的计划
+     */
+    private static void showPlan() {
+        for (int i = 0; i < list_day.size(); i++) {
+            setListViewHeight(list_day.get(i).warmUpListView);
+            setListViewHeight(list_day.get(i).stretchingListView);
+            setListViewHeight(list_day.get(i).mainActionListView);
+            setListViewHeight(list_day.get(i).relaxActionListView);
+            list_day.get(i).warmUpAdapter.notifyDataSetChanged();
+            list_day.get(i).stretchingAdapter.notifyDataSetChanged();
+            list_day.get(i).mainActionAdapter.notifyDataSetChanged();
+            list_day.get(i).relaxActionAdapter.notifyDataSetChanged();
+            //list_day.get(i).warmUpListView.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    /**
+     * 分类初始化每天的热身动作计划
+     */
+    private static void initEveryDayRelaxActionPlan() {
+        for (int i = 0;i<MyBombUtils.list_relaxAction.size();i++){
+            for (int j = 0;j<MyBombUtils.list_relaxActionPlan.size();j++){
+                if (MyBombUtils.list_relaxAction.get(i).getRelaxAction().equals(MyBombUtils.list_relaxActionPlan.get(j).getObjectId())){
+                    switch (MyBombUtils.list_mainAction.get(i).getDayId()){
+                        case 1:list_day.get(0).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 2:list_day.get(1).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 3:list_day.get(2).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 4:list_day.get(3).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 5:list_day.get(4).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 6:list_day.get(5).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                        case 7:list_day.get(6).relaxActionList.add(MyBombUtils.list_relaxActionPlan.get(j));break;
+                    }
+                }
+            }
+
+        }
+    }
+    /**
+     * 分类初始化每天的热身动作计划
+     */
+    private static void initEveryDayMainActionPlan() {
+        for (int i = 0;i<MyBombUtils.list_mainAction.size();i++){
+            for (int j = 0;j<MyBombUtils.list_mainActionPlan.size();j++){
+                if (MyBombUtils.list_mainAction.get(i).getMainAction().equals(MyBombUtils.list_mainActionPlan.get(j).getObjectId())){
+                    switch (MyBombUtils.list_mainAction.get(i).getDayId()){
+                        case 1:list_day.get(0).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 2:list_day.get(1).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 3:list_day.get(2).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 4:list_day.get(3).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 5:list_day.get(4).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 6:list_day.get(5).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                        case 7:list_day.get(6).mainActionList.add(MyBombUtils.list_mainActionPlan.get(j));break;
+                    }
+                }
+            }
+
+        }
+    }
+    /**
+     * 分类初始化每天的拉伸动作计划
+     */
+    private static void initEveryDayStretchPlan() {
+        for (int i = 0;i<MyBombUtils.list_stretching.size();i++){
+            for (int j = 0;j<MyBombUtils.list_stretchPlan.size();j++){
+                if (MyBombUtils.list_stretching.get(i).getStretchingId().equals(MyBombUtils.list_stretchPlan.get(j).getObjectId())){
+                    switch (MyBombUtils.list_warmUp.get(i).getDayId()){
+                        case 1:list_day.get(0).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 2:list_day.get(1).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 3:list_day.get(2).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 4:list_day.get(3).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 5:list_day.get(4).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 6:list_day.get(5).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                        case 7:list_day.get(6).stretchingList.add(MyBombUtils.list_stretchPlan.get(j));break;
+                    }
+                }
+            }
+
+        }
+    }
+
+    /**
+     * 分类初始化每天的热身动作计划
+     */
+    private static void initEveryDayWarmUpPlan() {
+        for (int i = 0;i<MyBombUtils.list_warmUp.size();i++){
+            for (int j = 0;j<MyBombUtils.list_warmPlan.size();j++){
+                if (MyBombUtils.list_warmUp.get(i).getWarmId().equals(MyBombUtils.list_warmPlan.get(j).getObjectId())){
+                    switch (MyBombUtils.list_warmUp.get(i).getDayId()){
+                        case 1:list_day.get(0).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 2:list_day.get(1).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 3:list_day.get(2).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 4:list_day.get(3).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 5:list_day.get(4).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 6:list_day.get(5).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                        case 7:list_day.get(6).warmUpList.add(MyBombUtils.list_warmPlan.get(j));break;
+                    }
+                }
+            }
+
+        }
+    }
+
+    /**
+     * 分类健身动作
+     */
+    private static void classifyPlan() {
+        MyBombUtils.list_warmPlan.clear();
+        MyBombUtils.list_stretchPlan.clear();
+        MyBombUtils.list_mainActionPlan.clear();
+        MyBombUtils.list_relaxActionPlan.clear();
+        for (int i = 0;i<MyBombUtils.list_sportName.size();i++){
+            for (int j = 0;j<MyBombUtils.list_warmUp.size();j++){
+                if (MyBombUtils.list_sportName.get(i).getObjectId().equals(MyBombUtils.list_warmUp.get(j).getObjectId())){
+                    MyBombUtils.list_warmPlan.add(MyBombUtils.list_sportName.get(i));
+                }
+            }
+            for (int  k= 0;k<MyBombUtils.list_stretching.size();k++){
+                if (MyBombUtils.list_sportName.get(i).getObjectId().equals(MyBombUtils.list_stretching.get(k).getObjectId())){
+                    MyBombUtils.list_stretchPlan.add(MyBombUtils.list_sportName.get(i));
+                }
+            }
+            for (int m = 0;m<MyBombUtils.list_mainAction.size();m++){
+                if (MyBombUtils.list_sportName.get(i).getObjectId().equals(MyBombUtils.list_mainAction.get(m).getObjectId())){
+                    MyBombUtils.list_mainActionPlan.add(MyBombUtils.list_sportName.get(i));
+                }
+            }
+            for (int n = 0;n<MyBombUtils.list_relaxAction.size();n++){
+                if (MyBombUtils.list_sportName.get(i).getObjectId().equals(MyBombUtils.list_relaxAction.get(n).getObjectId())){
+                    MyBombUtils.list_relaxActionPlan.add(MyBombUtils.list_sportName.get(i));
+                }
+            }
+        }
     }
 
     @Override
@@ -113,12 +295,27 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
 
     private void bind() {
         viewPager.setOnPageChangeListener(listener);
+        scanner.setOnClickListener(this);
         //选择项的监听设置
         for (int i = 0; i < days.length; i++) {
-            days[i].setOnClickListener(this);
+            days[i].setOnClickListener(dayListener);
             iv_day[i].setVisibility(View.GONE);
+
         }
     }
+
+    /**
+     * 获得手机屏幕的宽与ScrollView中子控件的宽
+     */
+    private void getScreenWH() {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        screen_width = metrics.widthPixels;
+        screen_height = metrics.heightPixels;
+        day_width = days[0].getWidth();
+    }
+
     /**
      * 当滑动ViewPager时，需要改变选择栏的背景颜色，改变ScrollView滑动的距离
      */
@@ -135,6 +332,28 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
             //设置选择栏的背景颜色，用来区别哪一个选项被选择了
             resetTextView();
             days[arg0].setBackgroundColor(getResources().getColor(R.color.light_white));
+
+            setListViewHeight(list_day.get(arg0).warmUpListView);
+            setListViewHeight(list_day.get(arg0).stretchingListView);
+            setListViewHeight(list_day.get(arg0).mainActionListView);
+            setListViewHeight(list_day.get(arg0).relaxActionListView);
+            list_day.get(arg0).warmUpAdapter.notifyDataSetChanged();
+            list_day.get(arg0).stretchingAdapter.notifyDataSetChanged();
+            list_day.get(arg0).mainActionAdapter.notifyDataSetChanged();
+            list_day.get(arg0).relaxActionAdapter.notifyDataSetChanged();
+
+
+            list_day.get(arg0).warmUpAdd.setVisibility(View.GONE);
+            list_day.get(arg0).stretchingAdd.setVisibility(View.GONE);
+            list_day.get(arg0).mainActionAdd.setVisibility(View.GONE);
+            list_day.get(arg0).relaxActionAdd.setVisibility(View.GONE);
+            list_day.get(arg0).tips.setVisibility(View.GONE);
+            list_day.get(arg0).warmUpView.setVisibility(View.VISIBLE);
+            list_day.get(arg0).stretchingView.setVisibility(View.VISIBLE);
+            list_day.get(arg0).mainActionView.setVisibility(View.VISIBLE);
+            list_day.get(arg0).relaxActionView.setVisibility(View.VISIBLE);
+
+
         }
 
         @Override
@@ -149,6 +368,10 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
 
         }
     };
+
+    /**
+     * 判断扫描之后返回的数据
+     */
     public void scannerCode(){
         Bundle bundle = getArguments();
         //Log.e("bundle",bundle+"");
@@ -167,6 +390,9 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 扫描二维码后获取服务器数据
+     */
     private void getPlanDetail() {
 //        IntentFilter filter = new IntentFilter("scannerFinish");
 //        receiver = MyBroadcastReceiver.newInstancce();
@@ -178,9 +404,12 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         bombUtils.getStretching(scanner_str);
         bombUtils.getMainAction(scanner_str);
         bombUtils.getRelaxAction(scanner_str);
+        bombUtils.getPlanAllName();
+        bombUtils.getPlanAllDetail();
     }
 
     private void findView(View view) {
+        plan_rl = (RelativeLayout) view.findViewById(R.id.plan_icd);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         hs = (HorizontalScrollView) view.findViewById(R.id.makePlanActivity_scrollView);
         tips = (TextView) view.findViewById(R.id.makePlanFragment_tips);
@@ -217,7 +446,7 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         back.setVisibility(View.GONE);
         whorlView.setVisibility(View.GONE);//进度条
         scanner.setVisibility(View.VISIBLE);
-        scanner.setOnClickListener(this);
+
 
         MakePlanUtils.context = getActivity();
         //collectPlan = new CollectPlan(this);
@@ -226,16 +455,19 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
             BaseDay day = new BaseDay();
             list_day.add(day);//将第一到第七天的Fragment添加到list中
         }
+        hs.setVisibility(View.VISIBLE);
+        viewPager.setVisibility(View.VISIBLE);
 
         resetTextView();
         //初始化Fragment适配器
         adapter = new MyDayFragmentAdapter(getChildFragmentManager(), list_day);
         //ViewPager设置适配器
         viewPager.setAdapter(adapter);
+        //viewPager.setOffscreenPageLimit(7);
         viewPager.setCurrentItem(0);//默认显示第一个页面
         //默认选择项为第一个，改变背景颜色
         days[0].setBackgroundColor(getResources().getColor(R.color.light_white));
-        makePlanUtils = new MakePlanUtils(getActivity(), list_day);
+        //makePlanUtils = new MakePlanUtils(getActivity(), list_day);
 
     }
 
@@ -259,7 +491,7 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
      *
      * @param listView
      */
-    public void setListViewHeight(ListView listView) {
+    public static void setListViewHeight(ListView listView) {
         // 获取ListView对应的Adapter
         MakePlanAdapter adapter = (MakePlanAdapter) listView.getAdapter();
         if (adapter == null) {

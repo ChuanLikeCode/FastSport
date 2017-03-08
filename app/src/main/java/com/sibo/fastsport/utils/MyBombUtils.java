@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
@@ -65,18 +66,23 @@ public class MyBombUtils {
      * 获取热身动作
      */
     public static List<WarmUp> list_warmUp = new ArrayList<>();
+    public static List<SportName> list_warmPlan = new ArrayList<>();
     /**
      * 获取拉伸动作
      */
     public static List<Stretching> list_stretching = new ArrayList<>();
+    public static List<SportName> list_stretchPlan = new ArrayList<>();
     /**
      * 获取具体动作
      */
     public static List<MainAction> list_mainAction = new ArrayList<>();
+    public static List<SportName> list_mainActionPlan = new ArrayList<>();
     /**
      * 获取放松动作
      */
     public static List<RelaxAction> list_relaxAction = new ArrayList<>();
+    public static List<SportName> list_relaxActionPlan = new ArrayList<>();
+
     public Context context;
     private boolean registerSuccess = true;
     private MyBroadcastReceiver receiver;
@@ -168,9 +174,7 @@ public class MyBombUtils {
         }
     }
 
-    /***************************************
-     * 获取健身计划
-     ***********************************************************/
+    /**************************************************************************************************/
 
     public void addWarmUp() {
         Log.e("Bmobsp_warmUp", CollectPlan.warmUps.size()+"");
@@ -299,7 +303,7 @@ public class MyBombUtils {
             }
         });
     }
-
+/**************************************************************************************/
     public void getUserSportPlan(final String id){
         BmobQuery<UserSportPlan> query = new BmobQuery<>();
         query.findObjects(new FindListener<UserSportPlan>() {
@@ -346,7 +350,47 @@ public class MyBombUtils {
             }
         });
     }
+    /**
+     * 获取所有的健身动作名字
+     */
+    public void getPlanAllName(){
+        BmobQuery<SportName> query = new BmobQuery<>();
+        query.findObjects(new FindListener<SportName>() {
+            @Override
+            public void done(List<SportName> list, BmobException e) {
+                    if (e == null){
+                        list_sportName.clear();
+                        list_sportName.addAll(list);
+                        Intent intent = new Intent("scannerFinish");
+                        intent.putExtra("finish",1);
+                        context.sendBroadcast(intent);
+                    }else {
+                        Log.e("getPlanAllName","failed");
+                    }
+            }
+        });
+    }
 
+    /**
+     * 获取所有的健身动作细节
+     */
+    public void getPlanAllDetail(){
+        BmobQuery<SportDetail> query = new BmobQuery<>();
+        query.findObjects(new FindListener<SportDetail>() {
+            @Override
+            public void done(List<SportDetail> list, BmobException e) {
+                if (e == null){
+                    list_sportDetail.clear();
+                    list_sportDetail.addAll(list);
+                    Intent intent = new Intent("scannerFinish");
+                    intent.putExtra("finish",1);
+                    context.sendBroadcast(intent);
+                }else {
+                    Log.e("getPlanAllName","failed");
+                }
+            }
+        });
+    }
     public void getWarmUp(final String id){
         BmobQuery<WarmUp> query = new BmobQuery<>();
         query.findObjects(new FindListener<WarmUp>() {
@@ -532,11 +576,16 @@ public class MyBombUtils {
         query.findObjects(new FindListener<SportDetail>() {
             @Override
             public void done(List<SportDetail> list, BmobException e) {
-                list_sportDetail.clear();
-                list_sportDetail.addAll(list);
-                Message message = new Message();
-                message.arg2 = SPORT_DETAIL_FINISH;
-                ((ChooseActionActivity) context).handler.sendMessage(message);
+                if (e == null){
+                    list_sportDetail.clear();
+                    list_sportDetail.addAll(list);
+                    Message message = new Message();
+                    message.arg2 = SPORT_DETAIL_FINISH;
+                    ((ChooseActionActivity) context).handler.sendMessage(message);
+                }else {
+                    Toast.makeText(context,"获取失败，请返回重新获取",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -551,11 +600,16 @@ public class MyBombUtils {
         query.findObjects(new FindListener<SportName>() {
             @Override
             public void done(List<SportName> list, BmobException e) {
-                list_sportName.clear();
-                list_sportName.addAll(list);
-                Message message = new Message();
-                message.arg1 = SPORT_NAME_FINISH;
-                ((ChooseActionActivity) context).handler.sendMessage(message);
+                if (e == null){
+                    list_sportName.clear();
+                    list_sportName.addAll(list);
+                    Message message = new Message();
+                    message.arg1 = SPORT_NAME_FINISH;
+                    ((ChooseActionActivity) context).handler.sendMessage(message);
+                }else {
+                    Toast.makeText(context,"获取失败，请返回重新获取",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
