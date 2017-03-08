@@ -141,7 +141,7 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
                 initEveryDayStretchPlan();
                 initEveryDayMainActionPlan();
                 initEveryDayRelaxActionPlan();
-                showPlan();
+                //showPlan();
                 completeHandler.sendEmptyMessage(888);
             }
         }).start();
