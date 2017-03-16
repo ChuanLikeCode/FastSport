@@ -15,7 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -144,8 +144,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         steepStatusBar();
         initStart();
 //        ZsOkHttpUtils.myInstant().setContext(this);
-//        loginuser = MyApplication.getInstance().readLoginUser();
-        MyApplication.getInstance().getActivityManager().addActivity(this);
+//        loginuser = MyApp.getInstance().readLoginUser();
+        MyApp.getInstance().getActivityManager().addActivity(this);
         // 设置所有Activity禁止横屏展示
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setStatusBarColor(R.color.title);
@@ -263,7 +263,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyApplication.getInstance().getActivityManager().removeActivity(this);
+        MyApp.getInstance().getActivityManager().removeActivity(this);
     }
 
     /**

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Button btn_login;
     private MyBombUtils myBombUtils;
 
-    private MyApplication myApplication;
+    private MyApp myApp;
 
     private Dialog dialog;
     public Handler handler = new Handler() {
@@ -58,22 +58,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (MyBombUtils.identifySuccess) {
                     //Log.e("identifySuccess",MyBmobUtils.identifySuccess+"");
                     dialog.dismiss();
-                    //Log.e("mAcount",MyApplication.mAccount+"");
-                    MyApplication.mAccount.setAccount(userAccount.getText().toString());
-                    MyApplication.mAccount.setPassword(userPassWord.getText().toString());
+                    //Log.e("mAcount",MyApp.mAccount+"");
+                    MyApp.mAccount.setAccount(userAccount.getText().toString());
+                    MyApp.mAccount.setPassword(userPassWord.getText().toString());
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this, ChooseActivity.class);
                     startActivity(intent);
-                    MyApplication.isLogin = false;
-                    MyApplication.mUser.setAccount(userAccount.getText().toString());
+                    MyApp.isLogin = false;
+                    MyApp.mUser.setAccount(userAccount.getText().toString());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
-                            Constant.USERACCOUNTCOOKIE, MyApplication.mUser.getAccount());
+                            Constant.USERACCOUNTCOOKIE, MyApp.mUser.getAccount());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
-                            Constant.USERACCOUNTCOOKIE, MyApplication.mAccount.getAccount());
+                            Constant.USERACCOUNTCOOKIE, MyApp.mAccount.getAccount());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
-                            Constant.USERPASSWORDCOOKIE, MyApplication.mAccount.getPassword());
+                            Constant.USERPASSWORDCOOKIE, MyApp.mAccount.getPassword());
                     SharepreferencesUtilSystemSettings.putValue(LoginActivity.this,
-                            Constant.ISLOGIN, MyApplication.isLogin);
+                            Constant.ISLOGIN, MyApp.isLogin);
                     finish();
                 } else {
                     dialog.dismiss();
@@ -136,10 +136,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void checkIsFirstLogin() {
-        //myApplication = (MyApplication) getApplication();
+        //myApp = (MyApp) getApplication();
 
-        Log.e("checkLoginisLogin", MyApplication.isLogin + "");
-        if (!MyApplication.isLogin) {
+        Log.e("checkLoginisLogin", MyApp.isLogin + "");
+        if (!MyApp.isLogin) {
             startActivity(new Intent(this, ChooseActivity.class));
             finish();
         }

@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
@@ -102,7 +102,7 @@ public class MyBombUtils {
                 WxCollectedActivity.collectionList.clear();
                 for (MyCollections m:
                         list) {
-                    if (m.getAccount().equals(MyApplication.mAccount.getAccount())){
+                    if (m.getAccount().equals(MyApp.mAccount.getAccount())){
                         WxCollectedActivity.collectionList.add(m);
                     }
                 }
@@ -279,7 +279,7 @@ public class MyBombUtils {
             public void done(String s, BmobException e) {
                 if (e == null) {
                     Log.e("Bmob-addUserSuccess", s);
-                    addUserInfo(MyApplication.mUser);
+                    addUserInfo(MyApp.mUser);
                 } else {
                     Log.e("Bmob-addUserFailed", "Failed");
                 }
@@ -296,6 +296,7 @@ public class MyBombUtils {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
+
                     Log.e("Bmob-addUserInfoSuccess", s);
                 } else {
                     Log.e("Bmob-addUserInfoFailed", "Failed");
@@ -503,11 +504,11 @@ public class MyBombUtils {
      * @param userPhone 账号
      */
     public void registerChecked(final String userPhone) {
-        BmobQuery<Account> query = new BmobQuery<>();
-        query.findObjects(new FindListener<Account>() {
+        BmobQuery<UserInfo> query = new BmobQuery<>();
+        query.findObjects(new FindListener<UserInfo>() {
             @Override
-            public void done(List<Account> list, BmobException e) {
-                for (Account a :
+            public void done(List<UserInfo> list, BmobException e) {
+                for (UserInfo a :
                         list) {
                     if (a.getAccount().equals(userPhone)) {
                         registerSuccess = false;
@@ -539,7 +540,7 @@ public class MyBombUtils {
                             list) {
                         if (a.getAccount().equals(userPhone) && a.getPassword().equals(password)) {
                             identifySuccess = true;
-                            MyApplication.mUser.setAccount(userPhone);
+                            MyApp.mUser.setAccount(userPhone);
                             break;
                         }
                     }
@@ -550,10 +551,10 @@ public class MyBombUtils {
                             ((LoginActivity) context).handler.sendEmptyMessage(0);
                             for (UserInfo a :
                                     list) {
-                                //Log.e("account",a.getAccount()+"---"+MyApplication.mUser.getAccount());
-                                if (MyApplication.mUser.getAccount().equals(a.getAccount())) {
-                                    MyApplication.mUser.setType(a.getType());
-                                    MyApplication.mUser.setPlanObjectId(a.getPlanObjectId());
+                                //Log.e("account",a.getAccount()+"---"+MyApp.mUser.getAccount());
+                                if (MyApp.mUser.getAccount().equals(a.getAccount())) {
+                                    MyApp.mUser.setType(a.getType());
+                                    MyApp.mUser.setPlanObjectId(a.getPlanObjectId());
                                     break;
                                 }
                             }

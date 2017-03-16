@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.UserInfo;
@@ -68,10 +68,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.activity_setting_btn_exit:
                 SharepreferencesUtilSystemSettings.clear(this);
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.ISFIRSTSTART, false);
-                MyApplication.mAccount = new Account();
-                MyApplication.mUser = new UserInfo();
-                MyApplication.isLogin = true;
-                MyApplication.planObjectId = "";
+                MyApp.mAccount = new Account();
+                MyApp.mUser = new UserInfo();
+                MyApp.isLogin = true;
+                MyApp.planObjectId = "";
                 startActivity(new Intent(SettingActivity.this,LoginActivity.class));
                 finish();
                 break;

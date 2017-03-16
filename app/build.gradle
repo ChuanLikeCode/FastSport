@@ -32,6 +32,8 @@ dependencies {
     compile name: 'SMSSDK-2.1.2', ext: 'aar'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.alibaba:fastjson:1.2.14'
     //以下SDK开发者请根据需要自行选择
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     //为了降低开发者的使用成本，自v3.4.7开始，同步提供aar格式的文件，

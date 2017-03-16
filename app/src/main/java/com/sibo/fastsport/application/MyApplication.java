@@ -1,114 +1,250 @@
 package com.sibo.fastsport.application;
 
-import android.app.ActivityManager;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.sibo.fastsport.model.Account;
+import com.sibo.fastsport.base.BaseApplication;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.AppManager;
-import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
+import com.sibo.fastsport.utils.SharedDataTool;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.concurrent.TimeUnit;
 
 import cn.bmob.v3.Bmob;
 import cn.smssdk.SMSSDK;
+import okhttp3.OkHttpClient;
 
 /**
- * Created by Administrator on 2016/11/19.
+ * Created by Huangjinfu on 2016/7/26.
  */
-public class MyApplication extends Application {
-
-    public static Account mAccount = null;
-    public static UserInfo mUser = null;
-    public static boolean isLogin = true;
-    public static String planObjectId = "";
+public class MyApplication extends BaseApplication {
     private static MyApplication mInstance = null;
-    public boolean isFirstStart = true;
+    public static Context applicationContext;
+    public int count = 0;
     private AppManager mAppManager = null;
+    /**
+     * 当前用户nickname,为了苹果推送不是userid而是昵称
+     */
+    public static String currentUserNick = "";
 
     public static MyApplication getInstance() {
         return mInstance;
     }
-    /**
-     * 获得当前进程号
-     *
-     * @param context
-     * @return
-     */
-    public static String getCurProcessName(Context context) {
-        int pid = android.os.Process.myPid();
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
-                .getRunningAppProcesses()) {
-            if (appProcess.pid == pid) {
-                return appProcess.processName;
-            }
-        }
-        return null;
-    }
 
+    public Vibrator mVibrator;
     @Override
     public void onCreate() {
         super.onCreate();
-        mInstance = this;
-        /*DeadObjectException 异常出现，一般原因
-        app进程不存在，在底层回调时找不到callback
-        ipc进程崩溃也会出现改异常
-        遇到该异常时，首先要检查app中的进程
-        如果你的 app 有多进程，比如除了com.app进程外，你还有com.app.remote，
-        那么在 RongIM.init 时，除了主进程其他进程不要做初始化，即在if(getPid() != “com.app.remote”)后再作init().
-        sdk底层有ipc进程和push进程，每个进程在启动创建时，都会走一次Application的onCreate()，
-        所以在RongIM.init()初始化后，消息注册等注册相关的逻辑前，要加上进程判断，只允许主进程做这些注册。*/
-//        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
-//                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-//            RongIM.init(this);
 
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-            ZXingLibrary.initDisplayOpinion(this);
-            SMSSDK.initSDK(this, "193141f4621c1", "b393e87172c18c5069feaf2a4286bc15");
-            Bmob.initialize(this, "f79d34f38040f7e7512a4228ea4d0c7a");
-            initLoginParams();
-            updateLoginParams(mAccount, mUser);
-//                implementUserInfoProvider();
-//
-//                InputProvider.ExtendProvider[] provider = {
-//                        new ImageInputProvider(RongContext.getInstance()),//图片
-//                        new CameraInputProvider(RongContext.getInstance()),//相机
-//                };
-//
-//                RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
+        applicationContext = this;
+        mInstance = this;
+        ZXingLibrary.initDisplayOpinion(this);
+        SMSSDK.initSDK(this, "193141f4621c1", "b393e87172c18c5069feaf2a4286bc15");
+        Bmob.initialize(this, "f79d34f38040f7e7512a4228ea4d0c7a");
+        frontOrBack();
+        //initOkhttp();
+
+    }
+
+
+
+
+
+    public static Context getContext() {
+        return applicationContext;
+    }
+
+    /**
+     * 网络请求相关初始化操作
+     */
+//    private void initOkhttp() {
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+//                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+//                .writeTimeout(10000L, TimeUnit.MILLISECONDS)
+//                .build();
+//        OkHttpUtils.initClient(okHttpClient);
+//    }
+
+    /**
+     * 判断在前台还是后台
+     */
+    private void frontOrBack() {
+        //前后台切换判断
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                if (count == 0) {
+                    Log.v("vergo", "*   *********切到前台**********");
+                    SharedDataTool.setBoolean(activity, "isBackGround", false);
+                }
+                count++;
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                count--;
+                if (count == 0) {
+                    Log.v("vergo", "**********切到后台**********");
+                    SharedDataTool.setBoolean(activity, "isBackGround", true);
+                }
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+    }
+
+    /**
+     * 获取系统版本号
+     *
+     * @return
+     */
+    public String getVersionCode() {
+        String version = "";
+        try {
+            version = this.getPackageManager().getPackageInfo(
+                    this.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
+    /**
+     * 读取保存的登陆用户
+     *
+     * @return
+     */
+    public UserInfo readLoginUser() {
+        SharedPreferences preferences = getSharedPreferences("base64",
+                MODE_PRIVATE);
+        String productBase64 = preferences.getString("user", "");
+        if (productBase64 == "") {
+            return null;
+        }
+
+        // 读取字节
+        byte[] base64 = Base64.decodeBase64(productBase64.getBytes());
+
+        // 封装到字节流
+        ByteArrayInputStream bais = new ByteArrayInputStream(base64);
+        try {
+            // 再次封装
+            ObjectInputStream bis = new ObjectInputStream(bais);
+            // 读取对象
+            return (UserInfo) bis.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    private void updateLoginParams(Account account, UserInfo user) {
-        mAccount = account;
-        mUser = user;
-        SharepreferencesUtilSystemSettings.putValue(this, Constant.USERACCOUNTCOOKIE, account.getAccount());
-        SharepreferencesUtilSystemSettings.putValue(this, Constant.USERPASSWORDCOOKIE, account.getPassword());
-        SharepreferencesUtilSystemSettings.putValue(this, Constant.ISLOGIN, isLogin);
+
+    public void saveUserInfo(UserInfo storeInfo) {
+        SharedPreferences preferences = getSharedPreferences("base64",
+                MODE_PRIVATE);
+        // 创建字节输出流
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            // 创建对象输出流，并封装字节流
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            // 将对象写入字节流
+            oos.writeObject(storeInfo);
+            // 将字节流编码成base64的字符窜
+            String oAuth_Base64 = new String(Base64.encodeBase64(baos
+                    .toByteArray()));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("user", oAuth_Base64);
+
+            editor.commit();
+        } catch (IOException e) {
+            // TODO Auto-generated
+        }
+        Log.i("ok", "存储成功");
     }
 
-    private void initLoginParams() {
-        String userAccount = SharepreferencesUtilSystemSettings.getValue(this, Constant.USERACCOUNTCOOKIE, "");
-        String userPassword = SharepreferencesUtilSystemSettings.getValue(this, Constant.USERPASSWORDCOOKIE, "");
-        isFirstStart = SharepreferencesUtilSystemSettings.getValue(this, Constant.ISFIRSTSTART, true);
-        isLogin = SharepreferencesUtilSystemSettings.getValue(this, Constant.ISLOGIN, true);
-        planObjectId = SharepreferencesUtilSystemSettings.getValue(this,Constant.PLANOBJECTID,"");
-        String type = SharepreferencesUtilSystemSettings.getValue(this,Constant.USER_TYPE,null);
-        mUser = new UserInfo();
-        mAccount = new Account();
-        mAccount.setAccount(userAccount);
-        mAccount.setPassword(userPassword);
-        mUser.setPlanObjectId(planObjectId);
-        mUser.setType(type);
-        mUser.setAccount(userAccount);
+    /**
+     * 判断是不是第一次登陆
+     */
+    public boolean isFirstLogin() {//
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this); // 获得Preferences
+        boolean isfirst = sp.getBoolean("isfirst", true);
+        return isfirst;
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        System.exit(0);
+    /**
+     * 更新第一次登陆
+     */
+    public void updateIsFirstLogin(Boolean isfirst) {//
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(this); // 获得Preferences
+        SharedPreferences.Editor editor = sp.edit(); // 获得Editor
+        editor.putBoolean("isfirst", isfirst); // 将密码存入Preferences
+        editor.commit();
+    }
+
+    /**
+     * 判断是不是第一次启动
+     */
+    public boolean isFirstLaucher() {//
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this); // 获得Preferences
+        boolean isfirst = sp.getBoolean("isfirstlaucher", true);
+        return isfirst;
+    }
+
+    /**
+     * 更新第一次启动
+     */
+    public void updateIsFirstLaucher(Boolean isfirst) {//
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this); // 获得Preferences
+        SharedPreferences.Editor editor = sp.edit(); // 获得Editor
+        editor.putBoolean("isfirstlaucher", isfirst); // 将密码存入Preferences
+        editor.commit();
     }
 
     /**
@@ -123,5 +259,55 @@ public class MyApplication extends Application {
         }
         return mAppManager;
     }
+
+
+    /**
+     * 图片处理
+     */
+    //图片上传相关 选择图片后的操作
+    public File createimagefile(Uri imageUri, int vmWidth, int vmHeight) {
+        File imageFile;
+        BitmapFactory.Options factory = new BitmapFactory.Options();
+        Bitmap bmp;
+        Cursor cursor = getContentResolver().query(imageUri, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex("_data");
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            cursor = null;
+            if (picturePath == null || picturePath.equals("null")) {
+                Toast.makeText(this, "无法获取该图片的路径1", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            imageFile = new File(picturePath);
+        } else {
+            File file = new File(imageUri.getPath());
+            if (!file.exists()) {
+                Toast.makeText(this, "无法获取该图片的路径2", Toast.LENGTH_SHORT).show();
+                return null;
+
+            }
+            imageFile = new File(file.getAbsolutePath());
+        }
+        return imageFile;
+    }
+
+    /**
+     * 获取系统版本号
+     *
+     * @return
+     */
+    public String getVesion() {
+        String version = "";
+        try {
+            version = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
+
 
 }

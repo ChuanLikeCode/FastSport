@@ -22,7 +22,7 @@
     <string name="input_password">请输入密码</string>
     <string name="input_verification_code">请输入验证码</string>
     <string name="recive_message_time">接受短信大概需要</string>
-    <string name="registe_hint">注册即表示你已同意《私教帮服务协议》</string>
+    <string name="registe_hint">已有账号？直接登录</string>
     <string name="name">姓名</string>
     <string name="plan_name">"    "姓名"    "</string>
     <string name="sex">性别</string>

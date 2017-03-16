@@ -3,6 +3,7 @@ package com.sibo.fastsport.ui;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
+import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.WhorlView;
 
@@ -26,6 +28,8 @@ import java.util.regex.Pattern;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+
+import static com.sibo.fastsport.application.Constant.SUCCESS;
 
 /**
  *
@@ -61,6 +65,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private String userPassword;//用户密码
     private String userIdentify;//用户的验证码
     private Dialog dialog;
+    public UserInfo userInfo = new UserInfo();
+
+    private CountDownTimer timer = new CountDownTimer(1000 * 60, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            takeIndentify.setText("重新发送 " + (millisUntilFinished / 1000) + "s");
+        }
+
+        @Override
+        public void onFinish() {
+            takeIndentify.setEnabled(true);
+            takeIndentify.setText("获取验证码");
+        }
+    };
+
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -74,47 +95,44 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 case CODE_ING://已发送，倒计时
                     remainSecond.setText(TIME + "S");
                     break;
-                case CODE_REPEAT://重新发送
-                    takeIdentify.setBackgroundResource(R.drawable.login_btn_background);
-                    takeIdentify.setClickable(true);
+                case SUCCESS://上传用户信息完成
+
                     break;
                 case SMSDDK_HANDLER:
-                    int event = msg.arg1;
-                    int result = msg.arg2;
-                    Object data = msg.obj;
-                    //回调完成
-                    if (result == SMSSDK.RESULT_COMPLETE) {
-                        //验证码验证成功
-                        if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                            Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
-                            takeIdentify.setText(R.string.identifySuccess);
-                            takeIdentify.setBackgroundResource(R.drawable.register_btn_selected);
-                            takeIdentify.setClickable(false);
-                            userPassword = password.getText().toString();
-                            //myBmobUtils.addUser(userPhone, userPassword);
-                            MyApplication.mAccount.setAccount(userPhone);
-                            MyApplication.mAccount.setPassword(userPassword);
-                            MyApplication.mUser.setAccount(userPhone);
-                            //MyApplication.mUser.setType(null);
-                            myBmobUtils.addUser(MyApplication.mAccount);
-                            dialog.dismiss();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                            finish();
-                        }
-                        //已发送验证码
-                        else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                            Toast.makeText(RegisterActivity.this, "验证码已经发送",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "验证码错误请重新输入！",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    getSMS(msg);
+
                     break;
             }
         }
     };
+
+    private void getSMS(Message msg) {
+        int event = msg.arg1;
+        int result = msg.arg2;
+        Object data = msg.obj;
+        //回调完成
+        if (result == SMSSDK.RESULT_COMPLETE) {
+            //验证码验证成功
+            if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+                userPassword = password.getText().toString();
+                userPhone = account.getText().toString();
+                userInfo.setAccount(userPhone);
+                userInfo.setPassword(userPassword);
+                myBmobUtils.addUserInfo(userInfo);
+            }
+            //已发送验证码
+            else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                Toast.makeText(RegisterActivity.this, "验证码已经发送",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            dialog.dismiss();
+            Toast.makeText(RegisterActivity.this, "验证码错误请重新输入！",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private int screen_height;
     private int screen_width;
 

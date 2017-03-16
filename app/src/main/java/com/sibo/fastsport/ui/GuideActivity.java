@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyViewPagerAdapter;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 
@@ -29,7 +29,7 @@ public class GuideActivity extends BaseActivity implements View.OnClickListener 
     private int screen_width;
     private int screen_height;
     private TextView start;
-    private MyApplication myApplication;
+    private MyApp myApp;
 
     @Override
     protected void findViewByIDS() {
@@ -57,8 +57,8 @@ public class GuideActivity extends BaseActivity implements View.OnClickListener 
      * 检查是不是第一次登录
      */
     private void checkIsFirst() {
-        myApplication = (MyApplication) getApplication();
-        if (!myApplication.isFirstStart) {
+        myApp = (MyApp) getApplication();
+        if (!myApp.isFirstStart) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
@@ -107,8 +107,8 @@ public class GuideActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(GuideActivity.this, LoginActivity.class));
-                myApplication.isFirstStart = false;
-                SharepreferencesUtilSystemSettings.putValue(GuideActivity.this, Constant.ISFIRSTSTART, myApplication.isFirstStart);
+                myApp.isFirstStart = false;
+                SharepreferencesUtilSystemSettings.putValue(GuideActivity.this, Constant.ISFIRSTSTART, myApp.isFirstStart);
                 finish();
             }
         });

@@ -158,45 +158,14 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_sendIdentify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/activity_register_rlAccountAndPassword"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
-        android:text="验证码已发送到13023996062"
-        android:textColor="@color/gray_hint"
-        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_receiverSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_sendIdentify"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/recive_message_time"
-        android:textColor="@color/gray_hint"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tv_remainSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_sendIdentify"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@id/tv_receiverSecond"
-        android:text="59S"
-        android:textColor="@color/red"
-        android:textSize="14sp" />
 
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/tv_receiverSecond"
+        android:layout_below="@id/activity_register_rlAccountAndPassword"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="40dp"
@@ -214,5 +183,5 @@
         android:layout_marginTop="10dp"
         android:text="@string/registe_hint"
         android:textColor="@color/gray_hint"
-        android:textSize="10sp" />
+        android:textSize="14sp" />
 </RelativeLayout>

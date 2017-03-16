@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
@@ -44,18 +44,18 @@ public class ChooseActivity extends BaseActivity implements View.OnClickListener
             case R.id.choose_FitnessTrainer:
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.USER_TYPE,"1");
                 intent.putExtra(Constant.USER_TYPE,"1");
-                MyApplication.mUser.setType("1");
-                bombUtils.updateUserInfo(MyApplication.mUser);
+                MyApp.mUser.setType("1");
+                bombUtils.updateUserInfo(MyApp.mUser);
                 break;
             case R.id.choose_student:
                 SharepreferencesUtilSystemSettings.putValue(this, Constant.USER_TYPE,"2");
                 intent.putExtra(Constant.USER_TYPE,"2");
-                MyApplication.mUser.setType("2");
-                bombUtils.updateUserInfo(MyApplication.mUser);
+                MyApp.mUser.setType("2");
+                bombUtils.updateUserInfo(MyApp.mUser);
 
                 break;
         }
-        //Log.e("mUser",MyApplication.mUser.getType());
+        //Log.e("mUser",MyApp.mUser.getType());
         startActivity(intent);
 
     }
@@ -63,7 +63,7 @@ public class ChooseActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        String type = MyApplication.mUser.getType();
+        String type = MyApp.mUser.getType();
         Log.e("type", type + "");
         if (type != null){
             startActivity(new Intent(ChooseActivity.this,MainActivity.class));

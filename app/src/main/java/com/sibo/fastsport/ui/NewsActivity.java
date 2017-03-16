@@ -17,7 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.WXitemAdapter;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.WXItem;
@@ -167,7 +167,7 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener, 
                 for (WXItem w :
                         collectionList) {
                     MyCollections collections = new MyCollections();
-                    collections.setAccount(MyApplication.mAccount.getAccount());
+                    collections.setAccount(MyApp.mAccount.getAccount());
                     collections.setTitle(w.getTitle());
                     collections.setUpdateTime(w.getUpdateTime());
                     collections.setImgUrl1(w.getImg().get(0));

@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyFragmentAdapter;
-import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.fragment.MakePlanFragment;
 import com.sibo.fastsport.fragment.MyHomeMenuFragment;
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         student = new StudentFragment();
         myHomeMenu = new MyHomeMenuFragment();
         myPlanFragment = new MyPlanFragment();
-        String str = MyApplication.mUser.getType();
+        String str = MyApp.mUser.getType();
         if (str.equals("1")){
             list.add(makePlan);
         }else {

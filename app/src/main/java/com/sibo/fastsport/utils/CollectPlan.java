@@ -1,11 +1,8 @@
 package com.sibo.fastsport.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseArray;
 
-import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.model.DayPlan;
 import com.sibo.fastsport.model.MainAction;
@@ -13,13 +10,9 @@ import com.sibo.fastsport.model.RelaxAction;
 import com.sibo.fastsport.model.Stretching;
 import com.sibo.fastsport.model.UserSportPlan;
 import com.sibo.fastsport.model.WarmUp;
-import com.sibo.fastsport.ui.MakePlanActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 收集健身计划
