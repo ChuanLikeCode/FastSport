@@ -10,7 +10,7 @@ public class UserInfo extends BmobObject{
     private String type;//1---教练  2----学员
     private String account;
     private String password;
-    private String id;
+    private String id;//用户唯一标识
 
     public String getId() {
         return id;

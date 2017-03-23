@@ -3,16 +3,16 @@ package com.sibo.fastsport.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApp;
+import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.fragment.MyPlanFragment;
-import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.DayPlan;
 import com.sibo.fastsport.model.MainAction;
 import com.sibo.fastsport.model.RelaxAction;
@@ -52,8 +52,7 @@ public class MyBombUtils {
     public static List<SportName> list_sportName = new ArrayList<SportName>();
     public static List<SportDetail> list_sportDetail = new ArrayList<SportDetail>();
     public static boolean isFirst = true;
-
-    public static boolean identifySuccess = false;
+    public static boolean loginSuccess = false;
     /**
      * 获取用户的健身名字和id
      */
@@ -93,8 +92,9 @@ public class MyBombUtils {
 
     /**
      * 从bmob获取收藏的文章,以后的修改方案，加入本地数据库中，速度更快
+     * @param loginuser
      */
-    public void queryCollection(){
+    public void queryCollection(final UserInfo loginuser){
         BmobQuery<MyCollections> query = new BmobQuery<>();
         query.findObjects(new FindListener<MyCollections>() {
             @Override
@@ -102,7 +102,7 @@ public class MyBombUtils {
                 WxCollectedActivity.collectionList.clear();
                 for (MyCollections m:
                         list) {
-                    if (m.getAccount().equals(MyApp.mAccount.getAccount())){
+                    if (m.getAccount().equals(loginuser.getAccount())){
                         WxCollectedActivity.collectionList.add(m);
                     }
                 }
@@ -111,6 +111,49 @@ public class MyBombUtils {
         });
     }
 
+    public void getBackYourAccount(final String phone, final String userPassword){
+        final BmobQuery<UserInfo> query = new BmobQuery<>();
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if (e == null){
+                    Log.e("getBackYourAccount", "ok");
+                    for (UserInfo a :
+                            list) {
+                        if (a.getAccount().equals(phone)){
+                            UserInfo account = new UserInfo();
+                            account.setId(a.getId());
+                            account.setAccount(a.getAccount());
+                            account.setPassword(userPassword);
+                            findPassword(account);
+                            break;
+                        }
+                    }
+                }else {
+                    Log.e("getBackYourAccount", e.getMessage());
+                }
+            }
+        });
+    }
+    /**
+     * 更新用户密码
+     *
+     * @param account
+     */
+    public void findPassword(UserInfo account) {
+        account.update(account.getId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Log.e("updateAccountInfo", "ok");
+                    ((RegisterActivity) context).handler.sendEmptyMessage(Constant.SUCCESS);
+                } else {
+                    e.printStackTrace();
+                    Log.e("updateAccountInfo", e.getMessage());
+                }
+            }
+        });
+    }
     /**
      * 增加收藏文章
      * @param list
@@ -270,40 +313,40 @@ public class MyBombUtils {
     }
 
     /**
-     * 增加新用户
-     *
+     * 增加用户
+     * @param account
      */
-    public void addUser(Account account) {
+    public void addUserInfo(final UserInfo account) {
         account.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-                if (e == null) {
-                    Log.e("Bmob-addUserSuccess", s);
-                    addUserInfo(MyApp.mUser);
-                } else {
-                    Log.e("Bmob-addUserFailed", "Failed");
+                if (e == null){
+                    ((RegisterActivity) context).userInfo.setId(s);
+                    ((RegisterActivity) context).handler.sendEmptyMessage(Constant.SUCCESS);
+                }else {
+                    Log.e("Bmob-updateInfoFailed", e.getMessage());
                 }
             }
         });
     }
 
-    /**
-     * 增加用户信息
-     * @param userInfo
-     */
-    public void addUserInfo(UserInfo userInfo){
-        userInfo.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e == null) {
-
-                    Log.e("Bmob-addUserInfoSuccess", s);
-                } else {
-                    Log.e("Bmob-addUserInfoFailed", "Failed");
-                }
-            }
-        });
-    }
+//    /**
+//     * 增加用户信息
+//     * @param userInfo
+//     */
+//    public void addUserInfo(UserInfo userInfo){
+//        userInfo.save(new SaveListener<String>() {
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e == null) {
+//
+//                    Log.e("Bmob-addUserInfoSuccess", s);
+//                } else {
+//                    Log.e("Bmob-addUserInfoFailed", "Failed");
+//                }
+//            }
+//        });
+//    }
 /**************************************************************************************/
     public void getUserSportPlan(final String id){
         BmobQuery<UserSportPlan> query = new BmobQuery<>();
@@ -526,45 +569,47 @@ public class MyBombUtils {
 
     /**
      * 登录查询是否账号密码输入错误
-     * @param userPhone 账号
-     * @param password  密码
      */
-    public void queryAccount(final String userPhone, final String password) {
-        BmobQuery<Account> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(new FindListener<Account>() {
+    public void queryAccount(final UserInfo account) {
+        BmobQuery<UserInfo> bmobQuery = new BmobQuery<>();
+        bmobQuery.findObjects(new FindListener<UserInfo>() {
             @Override
-            public void done(List<Account> list, BmobException e) {
+            public void done(List<UserInfo> list, BmobException e) {
                 if (e == null) {
-                    Log.e("Bmob-querySuccess", "ok");
-                    for (Account a :
+                    Log.e("queryAccount", "ok");
+                    for (UserInfo a :
                             list) {
-                        if (a.getAccount().equals(userPhone) && a.getPassword().equals(password)) {
-                            identifySuccess = true;
-                            MyApp.mUser.setAccount(userPhone);
+                        if (a.getAccount().equals(account.getAccount()) && a.getPassword().equals(account.getPassword())) {
+                            loginSuccess = true;
+                            UserInfo userInfo = a;
+                            MyApplication.getInstance().saveUserInfo(userInfo);
+//                            ((LoginActivity) context).account.setId(a.getObjectId());
                             break;
                         }
                     }
-                    BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
-                    query.findObjects(new FindListener<UserInfo>() {
-                        @Override
-                        public void done(List<UserInfo> list, BmobException e) {
-                            ((LoginActivity) context).handler.sendEmptyMessage(0);
-                            for (UserInfo a :
-                                    list) {
-                                //Log.e("account",a.getAccount()+"---"+MyApp.mUser.getAccount());
-                                if (MyApp.mUser.getAccount().equals(a.getAccount())) {
-                                    MyApp.mUser.setType(a.getType());
-                                    MyApp.mUser.setPlanObjectId(a.getPlanObjectId());
-                                    break;
-                                }
-                            }
-                        }
-                    });
                 } else {
                     e.printStackTrace();
-                    Log.e("Bmob-updateInfoFailed", "Failed");
+                    Log.e("queryAccount", "Failed");
                 }
-
+                ((LoginActivity) context).handler.sendEmptyMessage(Constant.RESULT_SUCCESS);
+            }
+        });
+    }
+    /**
+     * 更新用户信息
+     *
+     * @param account
+     */
+    public void updateAccountInfo(UserInfo account) {
+        account.update(account.getId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Log.e("updateAccountInfo", "ok");
+                } else {
+                    e.printStackTrace();
+                    Log.e("updateAccountInfo", e.getMessage());
+                }
             }
         });
     }

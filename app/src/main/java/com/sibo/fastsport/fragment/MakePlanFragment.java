@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.application.MyApp;
 import com.sibo.fastsport.domain.Pickers;
 import com.sibo.fastsport.ui.BodyjudgmentActivity;
 import com.sibo.fastsport.utils.CollectPlan;
@@ -190,7 +189,7 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 }else {
                     CollectPlan.userSportPlan.setPlanName(str+"的健身计划");
                     //Log.e("name",CollectPlan.userSportPlan.getPlanName());
-                    CollectPlan.userSportPlan.setAccount(MyApp.mAccount.getAccount());
+                    CollectPlan.userSportPlan.setAccount(loginuser.getAccount());
                     startActivity(new Intent(getActivity(), BodyjudgmentActivity.class));
                 }
 

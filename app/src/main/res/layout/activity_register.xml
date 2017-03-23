@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/register_title"
-        layout="@layout/activity_title_bar" />
+        layout="@layout/actionbar_top" />
 
     <RelativeLayout
         android:id="@+id/activity_register_rlAccountAndPassword"
@@ -48,15 +48,15 @@
             android:textColorHint="@color/gray_hint_dark"
             android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/cancel_number"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/register_et_account"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="3dp"
-            android:src="@mipmap/icon_close" />
+        <!--<ImageView-->
+            <!--android:id="@+id/cancel_number"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignTop="@id/register_et_account"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="3dp"-->
+            <!--android:src="@mipmap/icon_close" />-->
         <View
             android:id="@+id/view1_horizontal"
             android:layout_width="match_parent"
@@ -152,36 +152,39 @@
             android:layout_below="@id/view2_horizontal"
             android:layout_marginRight="10dp"
             android:layout_marginTop="12dp"
+            android:onClick="getTestCode"
             android:background="@drawable/login_btn_background"
             android:text="获取验证码"
             android:textColor="@color/white" />
 
     </RelativeLayout>
 
-
-
-
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/activity_register_rlAccountAndPassword"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="41dp"
         android:background="@drawable/login_btn_background"
         android:text="注册"
+        android:onClick="goRegister"
         android:textColor="@color/white"
-        android:textSize="20sp" />
-
+        android:textSize="20sp"
+        android:layout_below="@+id/activity_register_rlAccountAndPassword"
+        android:layout_centerHorizontal="true" />
     <TextView
+        android:id="@+id/tv_gotoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/btn_register"
         android:layout_below="@+id/btn_register"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:onClick="goLogin"
         android:text="@string/registe_hint"
         android:textColor="@color/gray_hint"
         android:textSize="14sp" />
+
+
 </RelativeLayout>

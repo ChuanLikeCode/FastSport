@@ -1,6 +1,7 @@
 package com.sibo.fastsport.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -15,7 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.application.MyApp;
+import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.model.UserInfo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -24,7 +26,8 @@ import java.lang.reflect.Method;
 public abstract class BaseActivity extends AppCompatActivity {
     protected FragmentManager fragmentManager;
     protected Context mContext;
-
+    protected ProgressDialog dialog;
+    protected UserInfo loginuser;
     /**
      * 是否沉浸状态栏
      **/
@@ -141,16 +144,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        steepStatusBar();
+        //steepStatusBar();
         initStart();
 //        ZsOkHttpUtils.myInstant().setContext(this);
-//        loginuser = MyApp.getInstance().readLoginUser();
-        MyApp.getInstance().getActivityManager().addActivity(this);
+        loginuser = MyApplication.getInstance().readLoginUser();
+        MyApplication.getInstance().getActivityManager().addActivity(this);
         // 设置所有Activity禁止横屏展示
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setStatusBarColor(R.color.title);
 
-        StatusBarLightMode(this, StatusBarLightMode(this));
+        //StatusBarLightMode(this, StatusBarLightMode(this));
 
     }
 
@@ -263,7 +266,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyApp.getInstance().getActivityManager().removeActivity(this);
+        MyApplication.getInstance().getActivityManager().removeActivity(this);
     }
 
     /**

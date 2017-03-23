@@ -23,4 +23,11 @@ public class Constant {
     public static String ACCESSTOKEN = "access_token";
     public static String PLANOBJECTID ="plan";
     public static String USER_TYPE ="plan";
+    public static final int RESULT_SUCCESS = 666;
+    public static final int RESULT_ERROR = 999;
+    public static final int CODE_REPEAT = 333;  //重新发送
+    public static final int SMSDDK_HANDLER = 23;  //短信回调
+    public static final int REGISTER_SUCCESS = 200;  //用户名不存在
+    public static final int REGISTER_FAILED = 404;  //用户名已存在
+    public static final int UPLOAD_SUCCESS = 520;  //用户名已存在
 }

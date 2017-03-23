@@ -94,7 +94,7 @@ public class WxCollectedActivity extends BaseActivity implements AdapterView.OnI
             @Override
             public void run() {
                 MyBombUtils myBombUtils = new MyBombUtils(WxCollectedActivity.this);
-                myBombUtils.queryCollection();
+                myBombUtils.queryCollection(loginuser);
             }
         }).start();
         title.setText(R.string.myCollection);

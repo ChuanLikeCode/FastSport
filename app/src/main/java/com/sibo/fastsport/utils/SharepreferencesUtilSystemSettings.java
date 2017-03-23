@@ -61,4 +61,13 @@ public class SharepreferencesUtilSystemSettings {
         String value = sp.getString(key, defValue);
         return value;
     }
+    public static void saveFirstTime(Context context,boolean isFirstTime){
+        SharedPreferences sp = context.getSharedPreferences("SharePreferences", Context.MODE_PRIVATE);
+        sp.edit().putBoolean("share_isFirstTime",isFirstTime).commit();
+    }
+
+    public static boolean readFirstTime(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("SharePreferences", Context.MODE_PRIVATE);
+        return sp.getBoolean("share_isFirstTime", true);
+    }
 }

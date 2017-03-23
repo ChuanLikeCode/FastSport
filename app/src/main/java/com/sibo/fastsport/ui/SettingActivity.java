@@ -10,11 +10,12 @@ import android.widget.TextView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.application.MyApp;
+import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.base.BaseActivity;
-import com.sibo.fastsport.model.Account;
 import com.sibo.fastsport.model.UserInfo;
+import com.sibo.fastsport.utils.AppManager;
 import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
+import com.sibo.fastsport.view.MyAlertDialog;
 
 /**
  * Created by Administrator on 2016/7/25 0025.
@@ -66,18 +67,36 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.activity_setting_btn_exit:
-                SharepreferencesUtilSystemSettings.clear(this);
-                SharepreferencesUtilSystemSettings.putValue(this, Constant.ISFIRSTSTART, false);
-                MyApp.mAccount = new Account();
-                MyApp.mUser = new UserInfo();
-                MyApp.isLogin = true;
-                MyApp.planObjectId = "";
-                startActivity(new Intent(SettingActivity.this,LoginActivity.class));
-                finish();
+                logoutDialog();
                 break;
             case R.id.iv_back_titlebar:
                 finish();
                 break;
         }
+    }
+    /**
+     * 退出登录提示框
+     */
+    private void logoutDialog() {
+        MyAlertDialog logDialog = new MyAlertDialog(this);
+        logDialog.builder()
+                .setTitle("退出提示")
+                .setMsg("是否要退出登录？")
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyApplication.getInstance().saveUserInfo(null);
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        AppManager.getInstance().finishActivity();
+                    }
+                })
+                .show();
     }
 }

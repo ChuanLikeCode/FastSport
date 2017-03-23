@@ -46,7 +46,7 @@ dependencies {
     //compile 'cn.bmob.android:bmob-im:2.0.5@aar'
     //compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
-    compile 'cn.bmob.android:http-legacy:1.0'
+//    compile 'cn.bmob.android:http-legacy:1.0'
     compile project(':loopview')
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.android.support:support-v4:24.2.1'
@@ -54,5 +54,6 @@ dependencies {
     compile 'cn.yipianfengye.android:zxing-library:2.1'
     compile 'pub.devrel:easypermissions:0.2.0'
     compile project(':pulltorefresh')
+    compile files('libs/commons-codec-1.6.jar')
     //compile project(':lib-zxing')
 }
