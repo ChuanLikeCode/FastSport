@@ -1,23 +1,18 @@
 package com.sibo.fastsport.fragment;
 
 
-import android.app.Dialog;
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Display;
-import android.view.Gravity;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,36 +21,67 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.adapter.MakePlanLabelAdapter;
+import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.domain.Pickers;
-import com.sibo.fastsport.ui.BodyjudgmentActivity;
+import com.sibo.fastsport.listener.OnItemClickListener;
+import com.sibo.fastsport.model.UserInfo;
+import com.sibo.fastsport.ui.MakePlanActivity;
+import com.sibo.fastsport.ui.ScannerActivity;
 import com.sibo.fastsport.utils.CollectPlan;
+import com.sibo.fastsport.utils.ImageLoaderUtils;
+import com.sibo.fastsport.utils.MakePlanUtils;
+import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.PickerScrollView;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class MakePlanFragment extends BaseFragment implements View.OnClickListener, TextWatcher, PickerScrollView.onSelectListener {
-    private static final int IMAGE = 1;
-    public static List<Pickers> exercise, pickerHeight, pickerWeight, pickerMuscleMass, pickerBodyFat,pickerSex;
-    private static int image = 1;
+
+public class MakePlanFragment extends BaseFragment implements View.OnClickListener, PickerScrollView.onSelectListener {
+    public static List<Pickers> exercise, pickerMuscleMass, pickerBodyFat;
+    public UserInfo student;
+    public String scanner_id;
     private View makePlanFragment;
-    private TextView nextStep, userHeight, userWeight, usermuscleMass, userBodyFat, exerciseMass, ok, no;
+    private TextView nextStep, userHeight, userWeight, usermuscleMass, userBodyFat, exerciseMass;
     private EditText name, sex;
-    private LinearLayout llUserHeight, llUserWeight, llUsermuscleMass, llUserBodyFat;
+    private LinearLayout llUsermuscleMass, llUserBodyFat;
     private CircleImageView touxiang;
-    private PickerScrollView pickers;
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == Constant.SUCCESS) {
+                ImageLoaderUtils.initImage(getActivity(), student.getHead().getFileUrl(), touxiang, R.mipmap.loading);
+                name.setText(student.getNikeName());
+                sex.setText(student.getSex());
+                userHeight.setText(student.getHeight());
+                userWeight.setText(student.getWeight());
+                dialog.dismiss();
+            }
+        }
+    };
     private RelativeLayout chooseExercise;
-    private ImageView contrastPhoto;
     private int llSelected;
-    private View scrollViewLayout;
-    private Dialog dialog;
+    private RecyclerView recyclerView;
+    private MakePlanLabelAdapter adapter;
+    private List<String> list_label;
+    private ImageView scanner;//扫描学员二维码获得学员资料
+    private int select = 0;
+    private MyBombUtils bombUtils;
 
     @Override
     public void onResume() {
 
         super.onResume();
+        MakePlanUtils.isFirst = true;//修改选择动作界面为第一次执行
+        MakePlanUtils.sp_relaxAction.clear();
+        MakePlanUtils.sp_warmUp.clear();
+        MakePlanUtils.sp_mainAction.clear();
+        MakePlanUtils.sp_stretching.clear();
         Bundle bundle = getArguments();
 
         if (bundle != null){
@@ -65,7 +91,6 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 name.setText("");
                 sex.setText("");
                 touxiang.setImageResource(R.mipmap.icon_camera02);
-                contrastPhoto.setImageResource(R.mipmap.icon_camera);
                 userHeight.setText("0CM");
                 userBodyFat.setText("0%");
                 usermuscleMass.setText("0KG");
@@ -77,7 +102,6 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         makePlanFragment = inflater.inflate(R.layout.fragment_makeplan, container, false);
-
         initView();
         initData();
         initListener();
@@ -86,26 +110,10 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
+        bombUtils = new MyBombUtils(getActivity());
         exercise = new ArrayList<>();
-        pickerWeight = new ArrayList<>();
-        pickerHeight = new ArrayList<>();
         pickerMuscleMass = new ArrayList<>();
         pickerBodyFat = new ArrayList<>();
-        pickerSex = new ArrayList<>();
-        for (int i = 0; i < 121; i++) {
-            String j = i + 30 + "KG";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            pickerWeight.add(pickers);
-        }
-        for (int i = 0; i < 71; i++) {
-            String j = i + 150 + "CM";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            pickerHeight.add(pickers);
-        }
         for (int i = 0; i < 101; i++) {
             String j = i + "%";
             Pickers pickers = new Pickers();
@@ -127,33 +135,47 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
             pickers.setShowConetnt(str[i]);
             exercise.add(pickers);
         }
-        String[] str1 = {"男", "女"};
-        for (int i = 0; i < 2; i++) {
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(str1[i]);
-            pickerSex.add(pickers);
-        }
+        list_label = new ArrayList<>();
+        list_label.add("隐形肥胖");
+        list_label.add("脂肪过多");
+        list_label.add("肥胖型");
+        list_label.add("肌肉不足");
+        list_label.add("健康匀称");
+        list_label.add("超重肌肉");
+        list_label.add("消瘦型");
+        list_label.add("低脂肪");
     }
 
 
     private void initListener() {
         nextStep.setOnClickListener(this);
-        //sex.addTextChangedListener(this);
-        sex.setOnClickListener(this);
-
-        name.addTextChangedListener(this);
+        scanner.setOnClickListener(this);
         llUserBodyFat.setOnClickListener(this);
-        llUserWeight.setOnClickListener(this);
         llUsermuscleMass.setOnClickListener(this);
-        llUserHeight.setOnClickListener(this);
         pickers.setOnSelectListener(this);
-        touxiang.setOnClickListener(this);
         chooseExercise.setOnClickListener(this);
-        contrastPhoto.setOnClickListener(this);
+        adapter = new MakePlanLabelAdapter(getActivity(), list_label);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //Log.e("onItemClick",position+"");
+                select = position;
+                int pre = adapter.pos;
+                adapter.pos = position;
+                if (pre != -1) {
+                    adapter.notifyItemChanged(pre);
+                }
+                adapter.notifyItemChanged(position);
+            }
+        });
     }
 
     private void initView() {
+        scanner = (ImageView) makePlanFragment.findViewById(R.id.scanner);
+        recyclerView = (RecyclerView) makePlanFragment.findViewById(R.id.recycler);
         nextStep = (TextView) makePlanFragment.findViewById(R.id.plan_tv_nextStep);
         name = (EditText) makePlanFragment.findViewById(R.id.plan_et_name);
         sex = (EditText) makePlanFragment.findViewById(R.id.plan_et_sex);
@@ -162,16 +184,10 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
         usermuscleMass = (TextView) makePlanFragment.findViewById(R.id.plan_tv_muscleMass);
         userWeight = (TextView) makePlanFragment.findViewById(R.id.plan_tv_weight);
         llUserBodyFat = (LinearLayout) makePlanFragment.findViewById(R.id.plan_ll_userBodyFat);
-        llUserHeight = (LinearLayout) makePlanFragment.findViewById(R.id.plan_ll_userHeight);
         llUsermuscleMass = (LinearLayout) makePlanFragment.findViewById(R.id.plan_ll_userMuscleMass);
-        llUserWeight = (LinearLayout) makePlanFragment.findViewById(R.id.plan_ll_userWeight);
-        scrollViewLayout = getActivity().getLayoutInflater().inflate(R.layout.scrollview_select, null);
-
-        pickers = (PickerScrollView) scrollViewLayout.findViewById(R.id.pickers);
         touxiang = (CircleImageView) makePlanFragment.findViewById(R.id.plan_iv_camera);
         chooseExercise = (RelativeLayout) makePlanFragment.findViewById(R.id.plan_rl_exercise);
         exerciseMass = (TextView) makePlanFragment.findViewById(R.id.plan_tv_exerciseMass);
-        contrastPhoto = (ImageView) makePlanFragment.findViewById(R.id.plan_iv_contrastPhoto);
     }
 
     @Override
@@ -188,9 +204,16 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                     Toast.makeText(getActivity(),"请输入名字和性别",Toast.LENGTH_SHORT).show();
                 }else {
                     CollectPlan.userSportPlan.setPlanName(str+"的健身计划");
-                    //Log.e("name",CollectPlan.userSportPlan.getPlanName());
                     CollectPlan.userSportPlan.setAccount(loginuser.getAccount());
-                    startActivity(new Intent(getActivity(), BodyjudgmentActivity.class));
+                    CollectPlan.userSportPlan.setBody(list_label.get(select));
+                    CollectPlan.userSportPlan.setYundong(exerciseMass.getText().toString());
+                    CollectPlan.userSportPlan.setImg(student.getHead());
+                    CollectPlan.userSportPlan.setName(student.getNikeName());
+                    CollectPlan.userSportPlan.setJirou(usermuscleMass.getText().toString());
+                    CollectPlan.userSportPlan.setZhifang(userBodyFat.getText().toString());
+                    CollectPlan.userSportPlan.setTeacherImg(loginuser.getHead());
+                    CollectPlan.userSportPlan.setTeacherName(loginuser.getNikeName());
+                    startActivity(new Intent(getActivity(), MakePlanActivity.class));
                 }
 
                 break;
@@ -198,129 +221,46 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 llSelected = 4;
                 showDialog(pickerBodyFat);
                 break;
-            case R.id.plan_ll_userWeight:
-                llSelected = 2;
-                showDialog(pickerWeight);
-                break;
-            case R.id.plan_ll_userHeight:
-                llSelected = 1;
-                showDialog(pickerHeight);
-                break;
             case R.id.plan_ll_userMuscleMass:
                 llSelected = 3;
                 showDialog(pickerMuscleMass);
                 break;
-            case R.id.plan_et_sex:
-                llSelected = 6;
-                showDialog(pickerSex);
-                break;
-            case R.id.plan_iv_camera:
-                image = 1;
-                jumpSelectImage();
-                break;
-            case R.id.plan_iv_contrastPhoto:
-                image = 2;
-                jumpSelectImage();
+            case R.id.scanner:
+                if (EasyPermissions.hasPermissions(getActivity(), Manifest.permission.CAMERA)) {
+                    Intent intent = new Intent(getActivity(), ScannerActivity.class);
+                    MyBombUtils.COUNT = 0;
+                    startActivityForResult(intent, 456);
+                }
                 break;
         }
     }
-
-    private void jumpSelectImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, IMAGE);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == IMAGE) && (resultCode == getActivity().RESULT_OK) && (data != null)) {
-            Uri selectedImage = data.getData();
-            Cursor c = getActivity().getContentResolver().query(selectedImage, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(MediaStore.Images.Media.DATA);
-            String imagePath = c.getString(columnIndex);
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            if (image == 1) {
-                touxiang.setImageBitmap(bitmap);
-            } else {
-                contrastPhoto.setImageBitmap(bitmap);
-            }
+        switch (requestCode) {
+            case 456:
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    dialog = ProgressDialog.show(getActivity(), null, "正在加载数据...");
+                    scanner_id = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
+                    CollectPlan.userSportPlan.setStudentId(scanner_id);
+                    bombUtils.queryStudent(scanner_id);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
 
-            c.close();
+                }
+
+                break;
         }
 
-    }
-
-    private void showDialog(List<Pickers> pickerItems) {
-        pickers.setData(pickerItems);
-        pickers.setSelected(0);
-        if (dialog == null) {
-            dialog = new Dialog(getActivity());
-            Window window = dialog.getWindow();
-
-            window.setGravity(Gravity.BOTTOM);
-            window.setWindowAnimations(R.style.main_menu_animstyle);
-            window.requestFeature(Window.FEATURE_NO_TITLE);
-            window.setBackgroundDrawableResource(android.R.color.transparent);
-            window.getDecorView().setPadding(0, 0, 0, 0);
-            Display d = getActivity().getWindow().getWindowManager().getDefaultDisplay();
-            //Display d = window.getWindowManager().getDefaultDisplay();
-            WindowManager.LayoutParams p = window.getAttributes();
-            p.width = d.getWidth(); //设置dialog的宽度为当前手机屏幕的宽度
-            window.setAttributes(p);
-            // 设置点击外围解散
-            dialog.setCanceledOnTouchOutside(true);
-            dialog.setContentView(scrollViewLayout);
-        }
-        // 设置显示动画
-        dialog.show();
-
-    }
-
-    /**
-     * EditText内容的变化监听,要实现三个方法，添加TextWatcher
-     */
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //s--未改变之前的内容
-        //start--内容被改变的开始位置
-        //count--原始文字被删除的个数
-        //after--新添加的内容的个数
-        //---------start和count结合从s中获取被删除的内容-------
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //s--改变之后的新内容
-        //start--内容被改变的开始位置
-        //before--原始文字被删除的个数
-        //count--新添加的内容的个数
-        //---------start和count结合从s中获取新添加的内容-------
-//        name.setBackgroundResource(R.drawable.plan_bg_change);
-//        sex.setBackgroundResource(R.drawable.plan_bg_change);
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-//        //s--最终内容
-//        if (name.getText().toString().equals("")||name.getText() == null){
-//            name.setBackgroundResource(R.drawable.plan_btn_background);
-//        }
-//        if (sex.getText().toString().equals("")||sex.getText() == null){
-//            sex.setBackgroundResource(R.drawable.plan_btn_background);
-//        }
     }
 
     @Override
     public void onSelect(Pickers pickers) {
         switch (llSelected) {
-            case 1:
-                userHeight.setText(pickers.getShowConetnt());
-                break;
-            case 2:
-                userWeight.setText(pickers.getShowConetnt());
-                break;
             case 3:
                 usermuscleMass.setText(pickers.getShowConetnt());
                 break;
@@ -329,9 +269,6 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 break;
             case 5:
                 exerciseMass.setText(pickers.getShowConetnt());
-                break;
-            case 6:
-                sex.setText(pickers.getShowConetnt());
                 break;
         }
     }

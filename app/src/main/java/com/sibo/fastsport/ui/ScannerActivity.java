@@ -20,11 +20,8 @@ public class ScannerActivity extends AppCompatActivity {
             bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
             bundle.putString(CodeUtils.RESULT_STRING,result);
             resultIntent.putExtras(bundle);
-            resultIntent.putExtra("scanner",888);
-            resultIntent.setClass(ScannerActivity.this,MainActivity.class);
-            startActivity(resultIntent);
-//            ScannerActivity.this.setResult(1,resultIntent);
-//            ScannerActivity.this.finish();
+            setResult(123, resultIntent);
+            finish();
         }
 
         @Override
@@ -34,11 +31,8 @@ public class ScannerActivity extends AppCompatActivity {
             bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
             bundle.putString(CodeUtils.RESULT_STRING, "");
             resultIntent.putExtras(bundle);
-            resultIntent.putExtra("scanner",777);
-            resultIntent.setClass(ScannerActivity.this,MainActivity.class);
-            startActivity(resultIntent);
-//            ScannerActivity.this.setResult(RESULT_OK, resultIntent);
-//            ScannerActivity.this.finish();
+            setResult(123, resultIntent);
+            finish();
         }
     };
 

@@ -9,7 +9,7 @@
         android:id="@+id/top_rl_back"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:onClick="back">
+        android:onClick="backClick">
 
         <ImageView
             android:id="@+id/top_iv_back"
@@ -22,7 +22,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/top_rl_right"
-        android:layout_width="130dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp">

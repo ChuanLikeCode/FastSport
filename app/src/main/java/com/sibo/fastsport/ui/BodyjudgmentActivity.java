@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MakePlanUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 public class BodyjudgmentActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private RelativeLayout bodyLable, bodyLabelByYourself;
@@ -48,6 +49,7 @@ public class BodyjudgmentActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_bodyjudgment);
         initData();
         initListener();

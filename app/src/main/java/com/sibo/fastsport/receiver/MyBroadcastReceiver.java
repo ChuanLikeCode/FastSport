@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.sibo.fastsport.application.Constant;
-import com.sibo.fastsport.fragment.MyPlanFragment;
+import com.sibo.fastsport.ui.MainActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 
 /**
- *
+ * 扫码获得健身计划
  * Created by zhouchuan on 2017/3/2.
  */
 
@@ -32,7 +32,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 //  Log.e("finish","ok");
                 MyBombUtils.COUNT++;
                 if (MyBombUtils.COUNT == 8){
-                    MyPlanFragment.handler.sendEmptyMessage(Constant.SUCCESS);
+                    ((MainActivity) context).myPlanFragment.handler.sendEmptyMessage(Constant.SUCCESS);
                 }
             }
 

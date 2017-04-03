@@ -11,11 +11,11 @@
 
     <ImageView
         android:id="@+id/login_logo"
-        android:layout_below="@id/login_title"
         android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/login_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_height="150dp"
         android:src="@mipmap/logo"/>
     <RelativeLayout
         android:id="@+id/activity_login_rlAccountAndPassword"
@@ -52,6 +52,7 @@
             android:layout_toEndOf="@+id/view1_vertical"
             android:background="@null"
             android:hint="请输入账号"
+            android:inputType="phone"
             android:singleLine="true"
             android:textColorHint="@color/gray_hint_dark"
             android:textSize="15sp" />

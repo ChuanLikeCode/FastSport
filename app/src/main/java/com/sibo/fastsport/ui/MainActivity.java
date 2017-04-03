@@ -1,11 +1,13 @@
 package com.sibo.fastsport.ui;
 
-import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyFragmentAdapter;
@@ -16,26 +18,28 @@ import com.sibo.fastsport.fragment.MyPlanFragment;
 import com.sibo.fastsport.fragment.StudentFragment;
 import com.sibo.fastsport.receiver.MyBroadcastReceiver;
 import com.sibo.fastsport.utils.MakePlanUtils;
+import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.widgets.MetaballMenu;
 import com.sibo.fastsport.widgets.MetaballMenuImageView;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements MetaballMenu.MetaballMenuClickListener {
 
+    public MakePlanFragment makePlan;//主界面---计划
+    public StudentFragment student;//主界面---学员
+    public MyHomeMenuFragment myHomeMenu;//主界面--我的
+    public MyPlanFragment myPlanFragment;//健身计划列表
     private List<Fragment> list = new ArrayList<Fragment>();//三个主界面的Fragment的list
     private MyFragmentAdapter myFragmentAdapter;//Fragment的适配器
     private MetaballMenu menu;//底部菜单栏
     //底部菜单栏的三个控件 计划、学员、我的
     private MetaballMenuImageView menuMakePlan, menuStudent, menuMyHome;
-    private MakePlanFragment makePlan;//主界面---计划
-    private StudentFragment student;//主界面---学员
-    private MyHomeMenuFragment myHomeMenu;//主界面--我的
-    private MyPlanFragment myPlanFragment;//健身计划列表
     private ViewPager viewPager;
     private MyBroadcastReceiver receiver;
+    private MyBombUtils bombUtils;
     //viewPager切换时需要做的事情，viewPager监听事件
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -71,36 +75,6 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = getIntent();
-        if (intent != null){
-            if (intent.getIntExtra("finish",0)==111){
-
-                if (makePlan !=null){
-
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("finish",true);
-                    makePlan.setArguments(bundle);
-                }//发送扫描到的数据给健身计划界面Fragment
-            }else if (intent.getIntExtra("scanner",0)==888){
-                Bundle bundle = intent.getExtras();
-                if (bundle == null){
-                    return;
-                }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS){
-                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    //Toast.makeText(this,"扫描成功",Toast.LENGTH_SHORT).show();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("scanner",result);
-                    myPlanFragment.setArguments(bundle1);
-
-                }else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED){
-                    //Toast.makeText(this,"扫描失败",Toast.LENGTH_SHORT).show();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("scanner","failed");
-                    myPlanFragment.setArguments(bundle1);
-                }
-            }
-        }
     }
 
     @Override
@@ -112,13 +86,24 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         menuMyHome = (MetaballMenuImageView) menu.findViewById(R.id.menuMyhome);
     }
 
+    private void setTransparentBar() {
+        //透明状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initData();
         initListener();
-        setStatusBarColor(R.color.title);
+        setTransparentBar();
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         MakePlanUtils.isFirst = true;
     }
 
@@ -126,6 +111,8 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
      * 初始化数据源
      */
     private void initData() {
+        bombUtils = new MyBombUtils(this);
+        bombUtils.queryCollect(loginuser);
         makePlan = new MakePlanFragment();
         student = new StudentFragment();
         myHomeMenu = new MyHomeMenuFragment();
@@ -133,8 +120,12 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         String str = loginuser.getType();
         if (str.equals("1")){
             list.add(makePlan);
+            menuStudent.setDefaultImage(R.mipmap.student);
+            menuStudent.setSelectedImage(R.mipmap.student_focus);
         }else {
             list.add(myPlanFragment);
+            menuStudent.setDefaultImage(R.mipmap.teacher);
+            menuStudent.setSelectedImage(R.mipmap.teacher_focus);
         }
 
         list.add(student);
@@ -144,6 +135,7 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         viewPager.setAdapter(myFragmentAdapter);
         //使ViewPager默认显示第一个界面
         viewPager.setCurrentItem(0);
+        viewPager.setOffscreenPageLimit(3);
         IntentFilter filter = new IntentFilter("scannerFinish");
         receiver = MyBroadcastReceiver.newInstancce();
         registerReceiver(receiver, filter);
@@ -174,12 +166,15 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         switch (v.getId()) {
             case R.id.menuPlan:
                 viewPager.setCurrentItem(0);
+                StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
                 break;
             case R.id.menuStudent:
                 viewPager.setCurrentItem(1);
+                StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
                 break;
             case R.id.menuMyhome:
                 viewPager.setCurrentItem(2);
+                StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
                 break;
         }
     }

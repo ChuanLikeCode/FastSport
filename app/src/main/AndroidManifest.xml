@@ -27,7 +27,6 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
@@ -36,21 +35,18 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThe">
         <activity
             android:name=".ui.LoginActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.GuideActivity"
-
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,21 +56,16 @@
         </activity>
         <activity
             android:name=".ui.SettingActivity"
-
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.EditHomePageActivity" />
+        <activity android:name=".ui.EditHomePageActivity" />
         <activity
             android:name=".ui.PersonalInfoActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RegisterActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BodyjudgmentActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
@@ -82,7 +73,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.EditMyInfoActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MakePlanActivity"
@@ -93,23 +83,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MyHomeActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.NewsActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ActionDetailsActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChooseActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.RegisterUserInfoActivity" />
         <activity android:name=".ui.ShowWXActivity" />
-        <activity android:name=".ui.WxCollectedActivity"></activity>
-        <activity android:name=".ui.ScannerActivity"/>
+        <activity android:name=".ui.WxCollectedActivity" />
+        <activity android:name=".ui.ScannerActivity" />
+        <activity android:name=".ui.MyCodeActivity"></activity>
     </application>
 
 </manifest>

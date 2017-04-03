@@ -1,6 +1,7 @@
 package com.sibo.fastsport.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,10 +20,13 @@ import android.view.WindowManager;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.application.MyApplication;
+import com.sibo.fastsport.domain.Pickers;
 import com.sibo.fastsport.model.UserInfo;
+import com.sibo.fastsport.view.PickerScrollView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -28,6 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected ProgressDialog dialog;
     protected UserInfo loginuser;
+    protected PickerScrollView pickers;
+    protected Dialog dialog_info;
+    private View scrollViewLayout;
     /**
      * 是否沉浸状态栏
      **/
@@ -44,7 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 当前Activity渲染的视图View
      **/
     private View mContextView = null;
-//    protected UserInfo loginuser;
 
     public static void StatusBarLightMode(Activity activity, int type) {
         if (type == 1) {
@@ -138,22 +146,48 @@ public abstract class BaseActivity extends AppCompatActivity {
         return result;
     }
 
+    protected void showDialog(List<Pickers> pickerItems) {
+        pickers.setData(pickerItems);
+        pickers.setSelected(0);
+        if (dialog_info == null) {
+            dialog_info = new Dialog(this);
+            Window window = dialog_info.getWindow();
+            window.setGravity(Gravity.BOTTOM);
+            window.setWindowAnimations(R.style.main_menu_animstyle);
+            window.requestFeature(Window.FEATURE_NO_TITLE);
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.getDecorView().setPadding(0, 0, 0, 0);
+            Display d = getWindow().getWindowManager().getDefaultDisplay();
+            //Display d = window.getWindowManager().getDefaultDisplay();
+            WindowManager.LayoutParams p = window.getAttributes();
+            p.width = d.getWidth(); //设置dialog的宽度为当前手机屏幕的宽度
+            window.setAttributes(p);
+            // 设置点击外围解散
+            dialog_info.setCanceledOnTouchOutside(true);
+            dialog_info.setContentView(scrollViewLayout);
+        }
+        // 设置显示动画
+        dialog_info.show();
+
+    }
+
     abstract protected void findViewByIDS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        //steepStatusBar();
+//        steepStatusBar();
         initStart();
 //        ZsOkHttpUtils.myInstant().setContext(this);
         loginuser = MyApplication.getInstance().readLoginUser();
         MyApplication.getInstance().getActivityManager().addActivity(this);
         // 设置所有Activity禁止横屏展示
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setStatusBarColor(R.color.title);
-
-        //StatusBarLightMode(this, StatusBarLightMode(this));
+        scrollViewLayout = getLayoutInflater().inflate(R.layout.scrollview_select, null);
+        pickers = (PickerScrollView) scrollViewLayout.findViewById(R.id.pickers);
+//        setStatusBarColor(R.color.title);
+        StatusBarLightMode(this, StatusBarLightMode(this));
 
     }
 
@@ -164,7 +198,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * [沉浸状态栏]
      */
-    private void steepStatusBar() {
+    protected void steepStatusBar() {
         ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
         View parentView = contentFrameLayout.getChildAt(0);
         if (parentView != null && Build.VERSION.SDK_INT >= 14) {

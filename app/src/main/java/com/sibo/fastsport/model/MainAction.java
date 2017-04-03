@@ -7,9 +7,9 @@ import cn.bmob.v3.BmobObject;
  */
 
 public class MainAction extends BmobObject {
-    private String id;
-    private int dayId;
-    private String mainAction;
+    private String id;//健身计划Id
+    private int dayId;//这个动作是第几天的
+    private String mainAction;//健身动作ID
 
     public String getId() {
         return id;

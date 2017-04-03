@@ -13,7 +13,10 @@ import android.app.Service;
 import android.content.Context;
 import android.os.Handler;
 
+import com.sibo.fastsport.ui.MainActivity;
+
 import java.util.Stack;
+
 
 /**
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
@@ -56,7 +59,7 @@ public class AppManager {
         if (m_activityStack == null) {
             m_activityStack = new Stack<Activity>();
         }
-        //LogUtils.i("addActivity-----activity------->" + activity.getClass());
+        LogUtils.i("addActivity-----activity------->" + activity.getClass());
         for (Activity activity2 : m_activityStack) {
             if (activity2.getClass() == activity.getClass()) {
                 activity2.finish();
@@ -105,6 +108,8 @@ public class AppManager {
 
     /**
      * 结束指定的Activity
+     *
+     * @return
      */
     public synchronized void finishActivity(final Activity activity) {
         if (activity != null) {
@@ -143,6 +148,7 @@ public class AppManager {
     /**
      * 结束指定类名的Activity
      *
+     * @param  <?> 指定结束的cls
      * @return
      */
     public synchronized void finishSameActivity(final Activity finishActivity) {
@@ -204,7 +210,8 @@ public class AppManager {
         if (m_activityStack != null && m_activityStack.size() > 0) {
             for (int i = 0, size = m_activityStack.size(); i < size; i++) {
                 if (null != m_activityStack.get(i)) {
-                    m_activityStack.get(i).finish();
+                    if (!(m_activityStack.get(i) instanceof MainActivity))
+                        m_activityStack.get(i).finish();
                 }
             }
             m_activityStack.clear();
@@ -222,7 +229,7 @@ public class AppManager {
             for (int i = 0; i < size; i++) {
                 Activity tempActivity = m_activityStack.get(i);
                 if (tempActivity == null) {
-                    //LogUtils.e("tempActivity is null!");
+                    LogUtils.e("tempActivity is null!");
                     continue;
                 }
 

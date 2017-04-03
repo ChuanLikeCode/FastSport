@@ -12,6 +12,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MakePlanAdapter;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.utils.MakePlanUtils;
+import com.sibo.fastsport.utils.MyPlanClickUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by Administrator on 2016/10/28.
  */
 public class BaseDay extends BaseFragment {
+    public static boolean select = false;
     public RelativeLayout warmUpView, stretchingView, mainActionView, relaxActionView;
     public TextView tv_warmUp, tv_stretching, tv_mainAction, tv_relaxAction, tips;
     public ImageView warmUpAdd, stretchingAdd, mainActionAdd, relaxActionAdd;
@@ -61,7 +63,7 @@ public class BaseDay extends BaseFragment {
         view = inflater.inflate(R.layout.base_day, container, false);
         findById();
         initListener();
-
+        //Log.e("initView","initView");
         return view;
     }
 
@@ -73,6 +75,13 @@ public class BaseDay extends BaseFragment {
         stretchingAdd.setOnClickListener(MakePlanUtils.stretchingAddListener);
         mainActionAdd.setOnClickListener(MakePlanUtils.mainActionAddListener);
         relaxActionAdd.setOnClickListener(MakePlanUtils.relaxActionAddListener);
+        if (select) {
+            warmUpListView.setOnItemClickListener(MyPlanClickUtils.warmUp);
+            stretchingListView.setOnItemClickListener(MyPlanClickUtils.Strething);
+            mainActionListView.setOnItemClickListener(MyPlanClickUtils.mainAction);
+            relaxActionListView.setOnItemClickListener(MyPlanClickUtils.relaxAction);
+        }
+
     }
 
     private void findById() {

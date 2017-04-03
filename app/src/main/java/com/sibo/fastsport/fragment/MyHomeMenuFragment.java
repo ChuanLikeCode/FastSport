@@ -6,12 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.ui.MyCodeActivity;
 import com.sibo.fastsport.ui.MyHomeActivity;
 import com.sibo.fastsport.ui.NewsActivity;
 import com.sibo.fastsport.ui.SettingActivity;
 import com.sibo.fastsport.ui.WxCollectedActivity;
+import com.sibo.fastsport.utils.ImageLoaderUtils;
+import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.view.CircleImageView;
 
 /**
  * Created by Administrator on 2016/10/31.
@@ -21,11 +26,31 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
     private RelativeLayout myHome;//我的主页
     private RelativeLayout news;//新闻资讯
     private RelativeLayout collection;//我的收藏
-    private ImageView setting;
+    private RelativeLayout code;//我的二维码
+    private ImageView setting, sex;
+    private MyBombUtils myBombUtils;
+    private CircleImageView head;
+    private TextView name, phone, age, height, weight, jiaoling;
+    private ImageView[] level = new ImageView[5];
+    private int[] level_ids = {R.id.level1, R.id.level2, R.id.level3, R.id.level4, R.id.level5};
     @Override
     protected void initData() {
-        //提前获取微信的Token
-       // WXArticleUtils.getAccessToken();
+        myBombUtils = new MyBombUtils(getActivity());
+        name.setText(loginuser.getNikeName());
+        phone.setText(loginuser.getAccount());
+        age.setText(loginuser.getAge());
+        height.setText(loginuser.getHeight());
+        weight.setText(loginuser.getWeight());
+        jiaoling.setText(loginuser.getJiaoling());
+        ImageLoaderUtils.initImage(getActivity(), loginuser.getHead().getFileUrl(), head, R.mipmap.loading);
+        if (loginuser.getSex().equals("男")) {
+            sex.setImageResource(R.mipmap.man);
+        } else {
+            sex.setImageResource(R.mipmap.girl);
+        }
+        for (int i = 0; i < loginuser.getLevel(); i++) {
+            level[i].setImageResource(R.mipmap.quanxing);
+        }
     }
 
     @Override
@@ -41,13 +66,27 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
         news.setOnClickListener(this);
         collection.setOnClickListener(this);
         setting.setOnClickListener(this);
+        code.setOnClickListener(this);
     }
 
     private void findById() {
+        for (int i = 0; i < level_ids.length; i++) {
+            level[i] = (ImageView) myhomemenu.findViewById(level_ids[i]);
+        }
+        name = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_name);
+        phone = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_phonenumber);
+        age = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_age);
+        height = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_tall);
+        weight = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_weight);
+        jiaoling = (TextView) myhomemenu.findViewById(R.id.myhomemenu_tv_teachyear);
+        head = (CircleImageView) myhomemenu.findViewById(R.id.myhomemenu_iv_touxiang);
+
         setting = (ImageView) myhomemenu.findViewById(R.id.myhomemenu_iv_setting);
         myHome = (RelativeLayout) myhomemenu.findViewById(R.id.myhomemenu_rl_myhome);
         news = (RelativeLayout) myhomemenu.findViewById(R.id.myhomemenu_rl_news);
         collection = (RelativeLayout) myhomemenu.findViewById(R.id.myhomemenu_rl_shoucang);
+        sex = (ImageView) myhomemenu.findViewById(R.id.myhomemenu_iv_man);
+        code = (RelativeLayout) myhomemenu.findViewById(R.id.myhomemenu_rl_code);
     }
 
     @Override
@@ -64,6 +103,9 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.myhomemenu_iv_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.myhomemenu_rl_code:
+                startActivity(new Intent(getActivity(), MyCodeActivity.class));
                 break;
         }
 

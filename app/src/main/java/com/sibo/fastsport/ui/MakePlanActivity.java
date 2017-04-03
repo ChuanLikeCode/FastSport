@@ -31,6 +31,7 @@ import com.sibo.fastsport.receiver.MakePlanBroadcastReceiver;
 import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.view.WhorlView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -82,6 +83,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
             if (Constant.SHOW == msg.what) {
                 MyBombUtils.addDayPlan++;
                 if (MyBombUtils.addDayPlan == 7) {
+
                     myBombUtils.addWarmUp();
                     myBombUtils.addStretching();
                     myBombUtils.addMainAction();
@@ -133,9 +135,6 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
                             || (MakePlanUtils.sp_mainAction.size() != 0)
                             || (MakePlanUtils.sp_relaxAction.size() != 0)){
                         dialog.show();
-                        receiver = new MakePlanBroadcastReceiver();
-                        IntentFilter filter = new IntentFilter("makePlan");
-                        registerReceiver(receiver, filter);
                         myBombUtils.addPlan(CollectPlan.userSportPlan);
                     }else {
 
@@ -350,6 +349,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_make_plan);
         findViewByIDS();
         init();
@@ -396,6 +396,9 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
      * 初始化数据
      */
     private void init() {
+        receiver = new MakePlanBroadcastReceiver();
+        IntentFilter filter = new IntentFilter("makePlan");
+        registerReceiver(receiver, filter);
         MakePlanUtils.context = this;
         //collectPlan = new CollectPlan(this);
         myBombUtils = new MyBombUtils(this);

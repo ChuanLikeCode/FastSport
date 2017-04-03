@@ -13,6 +13,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 public class ActionDetailsActivity extends BaseActivity {
 
@@ -48,6 +49,7 @@ public class ActionDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_action_details);
         initData();
         initListener();

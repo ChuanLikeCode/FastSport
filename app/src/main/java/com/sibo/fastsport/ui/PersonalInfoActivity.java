@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.PersonalInfoRecyclerView;
 import com.sibo.fastsport.base.BaseActivity;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 /**
  * Created by Administrator on 2016/7/25 0025.
@@ -57,6 +58,7 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_myinfo);
     }
 

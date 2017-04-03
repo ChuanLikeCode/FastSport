@@ -29,30 +29,32 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.concurrent.TimeUnit;
 
 import cn.bmob.v3.Bmob;
 import cn.smssdk.SMSSDK;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by Huangjinfu on 2016/7/26.
  */
 public class MyApplication extends BaseApplication {
-    private static MyApplication mInstance = null;
     public static Context applicationContext;
-    public int count = 0;
-    private AppManager mAppManager = null;
     /**
      * 当前用户nickname,为了苹果推送不是userid而是昵称
      */
     public static String currentUserNick = "";
+    private static MyApplication mInstance = null;
+    public int count = 0;
+    public Vibrator mVibrator;
+    private AppManager mAppManager = null;
 
     public static MyApplication getInstance() {
         return mInstance;
     }
 
-    public Vibrator mVibrator;
+    public static Context getContext() {
+        return applicationContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,14 +67,6 @@ public class MyApplication extends BaseApplication {
         frontOrBack();
         //initOkhttp();
 
-    }
-
-
-
-
-
-    public static Context getContext() {
-        return applicationContext;
     }
 
     /**

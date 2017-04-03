@@ -11,6 +11,7 @@ import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.MyBombUtils;
 
 /**
+ *  制定计划上传完成之后显示二维码
  * Created by chuan on 2017/3/4.
  */
 

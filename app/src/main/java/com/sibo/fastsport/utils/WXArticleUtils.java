@@ -1,7 +1,5 @@
 package com.sibo.fastsport.utils;
 
-import android.util.Log;
-
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.domain.WXItem;
 
@@ -34,11 +32,11 @@ public class WXArticleUtils {
 
         try {
             String getAccessToken = NetUtils.doGet(Constant.getAccessToken);
-            Log.e("NewsActivity", "token-------------" + getAccessToken);
+//            Log.e("NewsActivity", "token-------------" + getAccessToken);
             JSONObject object = new JSONObject(getAccessToken);
             String token = object.getString(Constant.ACCESSTOKEN);
             //String token = "SRt5sVtYijqKvB";
-            Log.e("NewsActivity", "token-------------" + token);
+//            Log.e("NewsActivity", "token-------------" + token);
             MediaType MEDIA_TYPE_MARKDOWN
                     = MediaType.parse("text/x-markdown; charset=utf-8");
             String postBody = "{\n" +
@@ -60,10 +58,10 @@ public class WXArticleUtils {
             mOkHttpClient.connectTimeoutMillis();
             Response response = mOkHttpClient.newCall(request).execute();
             String responseResult = response.body().string();
-            Log.e("gaolei", "responseresult--------------MessageActivity------" + responseResult);
+//            Log.e("gaolei", "responseresult--------------MessageActivity------" + responseResult);
             JSONObject object1 = new JSONObject(responseResult);
             total_count = object1.getString("total_count");
-            Log.e("total_count", total_count);
+//            Log.e("total_count", total_count);
             JSONArray jsonArray = object1.getJSONArray("item");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONArray news_item = jsonArray.getJSONObject(i).getJSONObject("content").getJSONArray("news_item");
@@ -71,7 +69,7 @@ public class WXArticleUtils {
                 String title = news_item.getJSONObject(0).getString("title");
                 String author = news_item.getJSONObject(0).getString("author");
                 String updateTime = jsonArray.getJSONObject(i).getString("update_time");
-                Log.e("url_img", updateTime);
+//                Log.e("url_img", updateTime);
                 XmlParseUtils parseUtils = XmlParseUtils.getInstance();
                 WXItem wxItem = new WXItem();
                 wxItem.setAuthor(author);

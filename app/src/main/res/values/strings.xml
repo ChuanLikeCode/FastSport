@@ -15,6 +15,7 @@
     <string name="my_home">我的主页</string>
     <string name="my_news">健康资讯</string>
     <string name="my_shoucang">我的收藏</string>
+    <string name="my_code">我的二维码</string>
     <string name="plan">计划</string>
     <string name="student">学员</string>
     <string name="mine">我的</string>
@@ -35,15 +36,15 @@
     <string name="adress">所在地</string>
     <string name="club">健身房名称</string>
     <string name="complete">完成</string>
-    <string name="plan_title">填写资料</string>
+    <string name="plan_title">扫描学员二维码\n填写资料</string>
     <string name="next_step">下一步</string>
     <string name="muscle_mass">肌肉量</string>
     <string name="body_fat">体脂率</string>
     <string name="normal_exercise">平时运动量</string>
     <string name="often_exercise">经常运动</string>
     <string name="contrast_photo">对比照片</string>
-    <string name="last_class">剩余课程</string>
-    <string name="complete_class">完成锻炼</string>
+    <string name="last_class">肌肉量</string>
+    <string name="complete_class">脂肪率</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="zhiding">制定</string>

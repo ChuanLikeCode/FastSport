@@ -16,6 +16,7 @@ import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.view.WhorlView;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class WxCollectedActivity extends BaseActivity implements AdapterView.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_wx_collected);
         initData();
         initListener();

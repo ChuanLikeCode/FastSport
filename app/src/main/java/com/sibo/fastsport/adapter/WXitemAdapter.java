@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.domain.WXItem;
 import com.sibo.fastsport.ui.NewsActivity;
+import com.sibo.fastsport.ui.WxCollectedActivity;
 import com.sibo.fastsport.utils.DateTransformUtils;
 import com.squareup.picasso.Picasso;
 
@@ -23,9 +24,9 @@ import java.util.List;
  */
 
 public class WXitemAdapter extends BaseAdapter {
+    public static SparseBooleanArray collected = new SparseBooleanArray();
     private List<WXItem> list = new ArrayList<>();
     private Context context;
-    public static SparseBooleanArray collected = new SparseBooleanArray();
     public WXitemAdapter(Context context,List<WXItem> list){
         this.context = context;
         this.list = list;
@@ -126,6 +127,14 @@ public class WXitemAdapter extends BaseAdapter {
             holder.collected.setImageResource(R.mipmap.quanxing);
             holder.author.setText(R.string.wx_collect_success);
         }else {
+            holder.collected.setImageResource(R.mipmap.banxing);
+            holder.author.setText(R.string.wx_collect_failed);
+        }
+        //检测是否收藏过
+        if (WxCollectedActivity.collectionList.contains(list.get(position))) {
+            holder.collected.setImageResource(R.mipmap.quanxing);
+            holder.author.setText(R.string.wx_collect_success);
+        } else {
             holder.collected.setImageResource(R.mipmap.banxing);
             holder.author.setText(R.string.wx_collect_failed);
         }

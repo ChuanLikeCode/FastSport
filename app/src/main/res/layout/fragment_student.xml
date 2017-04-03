@@ -5,9 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".fragment.StudentFragment">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:background="@color/title" />
     <include
         android:id="@+id/student_title_bar"
-        layout="@layout/activity_title_bar" />
+        layout="@layout/actionbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/view" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/student_recycler_view"
@@ -18,14 +26,12 @@
         android:background="@color/white_bg"
         android:scrollbars="vertical" />
 
-    <!--<RelativeLayout
-        android:id="@+id/student_rl_meun"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <include
-            android:id="@+id/student_meun"
-            layout="@layout/menu_layout" />
-    </RelativeLayout>-->
+        android:layout_centerInParent="true"
+        android:text="暂无学员"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="@dimen/title" />
 </RelativeLayout>

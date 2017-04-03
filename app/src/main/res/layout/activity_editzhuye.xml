@@ -15,18 +15,10 @@
             android:layout_height="25dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:onClick="back"
             android:src="@mipmap/fanhui" />
-        <ImageView
-            android:id="@+id/activity_editzhuye_iv_share"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/fenxiang" />
 
-        <ImageView
+        <com.sibo.fastsport.view.CircleImageView
             android:id="@+id/activity_editzhuye_iv_touxiang"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -44,37 +36,34 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/activity_editzhuye_tv_quanxing1"
+                android:id="@+id/x1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/activity_editzhuye_iv_touxiang"
-                android:layout_marginBottom="25dp"
                 android:layout_marginStart="20dp"
-                android:src="@mipmap/quanxing" />
+                android:src="@mipmap/banxing" />
 
             <ImageView
-                android:id="@+id/activity_editzhuye_iv_quanxing2"
+                android:id="@+id/x2"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="25dp"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/activity_editzhuye_tv_quanxing1"
-                android:src="@mipmap/quanxing" />
+                android:src="@mipmap/banxing" />
 
             <ImageView
-                android:id="@+id/activity_editzhuye_iv_banxing3"
+                android:id="@+id/x3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="25dp"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/activity_editzhuye_iv_quanxing2"
                 android:src="@mipmap/banxing" />
 
             <ImageView
-                android:id="@+id/activity_editzhuye_iv_banxing4"
+                android:id="@+id/x4"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignTop="@+id/activity_editzhuye_iv_banxing3"
@@ -83,7 +72,7 @@
                 android:src="@mipmap/banxing" />
 
             <ImageView
-                android:id="@+id/activity_editzhuye_iv_banxing5"
+                android:id="@+id/x5"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignTop="@+id/activity_editzhuye_iv_banxing4"
@@ -131,8 +120,143 @@
             android:textColor="#fff"
             android:textSize="13sp" />
 
+        <LinearLayout
+            android:id="@+id/ll_info"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent_bg"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/age_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="年龄"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:text="30岁"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/height_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="身高"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:text="180cm"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/weight_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="体重"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:text="75kg"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/jiaoling_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="教龄"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/jiaoling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:text="8年"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -145,154 +269,49 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="15dp">
                 <TextView
                     android:id="@+id/domain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:text="擅长领域"
                     android:textColor="@color/gray_hint"
                     android:textSize="15dp" />
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/label_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/domain"
-                    android:layout_marginTop="18dp">
-                    <TextView
-                        android:id="@+id/activity_editzhuye_iv_jianshen"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="25dp"
-                        android:background="@mipmap/biaoqian"
-                        android:gravity="center"
-                        android:text="添加"
-                        android:textColor="@color/gray_light"
-                        android:textSize="18dp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/activity_personalhome_iv_enterdomain"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_above="@+id/linearLayout2"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
-                    android:src="@mipmap/you" />
-
+                    android:layout_alignLeft="@id/domain"
+                    android:layout_below="@id/domain"
+                    android:layout_marginTop="15dp" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="138dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/activity_personalhome_tv_jiaoyujingli"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:text="教育经历"
-                    android:textColor="@color/gray_hint"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/activity_personalhome_tv_jiaoyu"
-                    android:layout_width="match_parent"
-                    android:layout_height="88dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/activity_personalhome_tv_jiaoyujingli"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/lime_white"
-                    android:lineSpacingExtra="10dp"
-                    android:singleLine="false"
-                    android:text=" 请输入"
-                    android:textColor="@color/gray_light"
-                    android:textSize="18dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/white">
+                android:background="@color/colorWhite"
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/activity_editzhuye_tv_xiangqing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
                     android:text="详情"
                     android:textColor="@color/gray_hint"
                     android:textSize="15dp" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_editzhuye_recycler_view"
+                    android:id="@+id/img_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/activity_editzhuye_tv_xiangqing"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/light"
-                    android:scrollbars="vertical" />
-                <ImageView
-                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/activity_editzhuye_tv_xiangqing"
                     android:layout_below="@+id/activity_editzhuye_tv_xiangqing"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@mipmap/tianjia" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/activity_editzhuye_tv_adress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="15dp"
-                    android:text="地址"
-                    android:textColor="@color/gray_hint"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/activity_editzhuye_tv_adressdetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/activity_editzhuye_tv_adress"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/lime_white"
-                    android:gravity="center"
-                    android:text="当前位置:深圳东海国际"
-                    android:textColor="@color/gray_light" />
-
-                <ImageView
-                    android:id="@+id/activity_editzhuye_iv_ditu"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/activity_editzhuye_tv_adressdetail"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/ditu" />
+                    android:layout_marginTop="15dp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

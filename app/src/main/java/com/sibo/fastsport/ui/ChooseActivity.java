@@ -12,7 +12,6 @@ import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
-import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
 
 public class ChooseActivity extends BaseActivity implements View.OnClickListener {
 
@@ -29,6 +28,13 @@ public class ChooseActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //隐藏通知栏
+
+
+        Log.e("type", loginuser.getType() + "----");
+        if (loginuser.getType() != null) {
+            startActivity(MainActivity.class);
+            finish();
+        }
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose);
@@ -59,14 +65,5 @@ public class ChooseActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String type = loginuser.getType();
-        Log.e("type", type + "");
-        if (type != null){
-            startActivity(new Intent(ChooseActivity.this,MainActivity.class));
-            finish();
-        }
-    }
+
 }

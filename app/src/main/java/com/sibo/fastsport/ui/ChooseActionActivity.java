@@ -21,6 +21,7 @@ import com.sibo.fastsport.domain.SportDetail;
 import com.sibo.fastsport.domain.SportName;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.view.WhorlView;
 
 import java.util.ArrayList;
@@ -148,6 +149,7 @@ public class ChooseActionActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_choose_action);
         initData();
         initListener();

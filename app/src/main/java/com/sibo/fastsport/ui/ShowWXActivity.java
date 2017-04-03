@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.base.BaseActivity;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 public class ShowWXActivity extends BaseActivity {
 
@@ -24,6 +25,7 @@ public class ShowWXActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_show_wx);
         initView();
         initData();

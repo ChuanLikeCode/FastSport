@@ -1,19 +1,13 @@
 package com.sibo.fastsport.ui;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.SyncStateContract;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +17,7 @@ import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.MyBombUtils;
-import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 
 /**
@@ -31,29 +25,21 @@ import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView title;
     public UserInfo account = new UserInfo();
+    private TextView title;
     //注册按钮
     private TextView tvToRegister;
     //账号
     private EditText userAccount;
     //密码
     private EditText userPassWord;
-    //登录按钮
-    private Button btn_login;
-    private MyBombUtils myBombUtils;
-    private TextView forgetPassword;
-    private String userPhone,userPassword;
-
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == Constant.RESULT_SUCCESS){
-                if (myBombUtils.loginSuccess){
+                if (MyBombUtils.loginSuccess) {
                     dialog.dismiss();
-                    myBombUtils.updateAccountInfo(account);
-                    MyApplication.getInstance().saveUserInfo(account);
-                    startActivity(MainActivity.class);
+                    startActivity(EditMyInfoActivity.class);
                     finish();
                 }else{
                     dialog.dismiss();
@@ -64,6 +50,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         }
     };
+    //登录按钮
+    private Button btn_login;
+    private MyBombUtils myBombUtils;
+    private TextView forgetPassword;
+    private String userPhone, userPassword;
 
     @Override
     protected void findViewByIDS() {
@@ -80,10 +71,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         loginuser = MyApplication.getInstance().readLoginUser();
         if (loginuser != null) {
-            startActivity(MainActivity.class);
+            startActivity(EditMyInfoActivity.class);
             finish();
             return;
         }
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_login);
         initData();
         initListener();

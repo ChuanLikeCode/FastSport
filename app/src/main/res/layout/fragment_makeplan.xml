@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text="@string/plan_title"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -34,13 +35,23 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
 
+        <ImageView
+            android:id="@+id/scanner"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/plan_tv_nextStep"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ck_sys_icon_11" />
+
         <com.sibo.fastsport.view.CircleImageView
             android:id="@+id/plan_iv_camera"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_below="@id/plan_tv_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/icon_camera02" />
         <LinearLayout
             android:id="@+id/plan_ll1"
@@ -48,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/plan_iv_camera"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/plan_et_name"
@@ -56,6 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/plan_btn_background"
+                android:clickable="false"
+                android:enabled="false"
                 android:gravity="center"
                 android:hint="@string/plan_name"
                 android:textColor="@color/white"
@@ -67,7 +80,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/plan_btn_background"
+                android:clickable="false"
                 android:editable="false"
+                android:enabled="false"
                 android:gravity="center"
                 android:hint="@string/plan_sex"
                 android:textColor="@color/white"
@@ -247,29 +262,31 @@
             android:src="@mipmap/you" />
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <LinearLayout
+        android:id="@+id/rl_selectBody"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/plan_rl_exercise"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/plan_rl_exercise"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/white">
-
+        android:background="@color/white"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/plan_tv_contrastPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="@string/contrast_photo" />
+            android:layout_margin="15dp"
+            android:text="@string/selectBody"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="@dimen/title" />
 
-        <ImageView
-            android:id="@+id/plan_iv_contrastPhoto"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="8dp"
-            android:src="@mipmap/icon_camera" />
-    </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
 </RelativeLayout>

@@ -1,282 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/edit_myinfo_title"
-        layout="@layout/activity_title_bar" />
+    <include layout="@layout/actionbar_top" />
 
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="头像"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <com.sibo.fastsport.view.CircleImageView
+            android:id="@+id/edit_myinfo_civ_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/imagesecond" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_nikeName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="昵称"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_myinfo_et_name"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:hint="请输入昵称"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_sex"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
     <TextView
-        android:id="@+id/edit_myinfo_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_myinfo_title"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/name"
-        android:textColor="@color/gray_dark"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/edit_myinfo_et_name"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_name"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_name"
-        android:background="@null"
-        android:textAlignment="center" />
-
-    <View
-        android:id="@+id/linear1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_name"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
-
-    <TextView
-        android:id="@+id/edit_myinfo_tv_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
         android:text="@string/sex"
         android:textColor="@color/gray_dark"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/edit_myinfo_et_sex"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_sex"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_sex"
+        <TextView
+            android:id="@+id/edit_myinfo_tv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
         android:background="@null"
-        android:textAlignment="center" />
+            android:text="男"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
 
+    </RelativeLayout>
 
-    <View
-        android:id="@+id/linear2"
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_phone"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_sex"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
+        android:layout_height="40dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:text="@string/telephone"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/edit_myinfo_tv_telephone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear2"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/telephone"
-        android:textColor="@color/gray_dark"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="13023996062"
+        android:textColor="@color/colorBlack"
         android:textSize="15sp" />
+    </RelativeLayout>
 
-    <EditText
-        android:id="@+id/edit_myinfo_et_telephone"
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_age"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_telephone"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_telephone"
-        android:background="@null"
-        android:inputType="phone"
-        android:textAlignment="center" />
+        android:layout_height="40dp">
 
-    <View
-        android:id="@+id/linear3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_telephone"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
-
-    <TextView
-        android:id="@+id/edit_myinfo_tv_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear3"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
         android:text="@string/age"
         android:textColor="@color/gray_dark"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/edit_myinfo_et_age"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_age"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_age"
-        android:background="@null"
-        android:inputType="number"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/edit_myinfo_tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="30岁"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
-    <View
-        android:id="@+id/linear4"
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_height"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_age"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
+        android:layout_height="40dp">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:text="@string/height"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/edit_myinfo_tv_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear4"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/height"
-        android:textColor="@color/gray_dark"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:text="175CM"
+        android:textColor="@color/colorBlack"
         android:textSize="15sp" />
+    </RelativeLayout>
 
-    <EditText
-        android:id="@+id/edit_myinfo_et_height"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_height"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_height"
-        android:background="@null"
-        android:textAlignment="center" />
 
-    <View
-        android:id="@+id/linear5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_height"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
-
-    <TextView
-        android:id="@+id/edit_myinfo_tv_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear5"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/weight"
-        android:textColor="@color/gray_dark"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/edit_myinfo_et_weight"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_weight"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_weight"
-        android:background="@null"
-        android:textAlignment="center" />
-
-    <View
-        android:id="@+id/linear6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_weight"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
+    <include layout="@layout/divide_line" />
 
     <RelativeLayout
-        android:id="@+id/edit_myinfo_rl_jiaoling"
+        android:id="@+id/rl_weight"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear6">
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/weight"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="75KG"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_jiaoling"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/jiaoling"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/edit_myinfo_tv_jiaoling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-
-            android:layout_marginTop="15dp"
-            android:text="@string/jiaoling"
-            android:textColor="@color/gray_dark"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="3年"
+            android:textColor="@color/colorBlack"
             android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/edit_myinfo_et_jiaoling"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignBottom="@+id/edit_myinfo_tv_jiaoling"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/edit_myinfo_tv_jiaoling"
-            android:background="@null"
-            android:textAlignment="center" />
     </RelativeLayout>
 
-    <View
-        android:id="@+id/linear7"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@id/edit_myinfo_rl_jiaoling"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
+    <include layout="@layout/divide_line" />
 
-    <TextView
-        android:id="@+id/edit_myinfo_tv_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear7"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/adress"
-        android:textColor="@color/gray_dark"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/edit_myinfo_et_address"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_address"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_address"
-        android:background="@null"
-        android:textAlignment="center" />
-
-    <View
-        android:id="@+id/linear8"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/edit_myinfo_tv_address"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
-
-    <TextView
-        android:id="@+id/edit_myinfo_tv_club"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear8"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/club"
-        android:textColor="@color/gray_dark"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/edit_myinfo_et_club"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/edit_myinfo_tv_club"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/edit_myinfo_tv_club"
-        android:background="@null"
-        android:textAlignment="center" />
-
-    <View
-        android:id="@+id/linear9"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/edit_myinfo_tv_club"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_gray" />
-</RelativeLayout>
+</LinearLayout>

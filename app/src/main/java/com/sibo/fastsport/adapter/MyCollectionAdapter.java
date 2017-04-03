@@ -67,19 +67,19 @@ public class MyCollectionAdapter extends BaseAdapter {
         holder.updataTime.setText(DateTransformUtils.transfromDate(list.get(position).getUpdateTime()));
         Log.e("screenwidth",NewsActivity.screen_width+"");
         Picasso.with(context).load(list.get(position).getImgUrl1())
-                .resize(NewsActivity.screen_width, 100)
+                .resize(100, 100)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.failed)
                 .into(holder.img1);
         Picasso.with(context).load(list.get(position).getImgUrl2())
-                .resize(NewsActivity.screen_width, 100)
+                .resize(100, 100)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.failed)
                 .into(holder.img2);
         Picasso.with(context).load(list.get(position).getImgUrl3())
-                .resize(NewsActivity.screen_width, 100)
+                .resize(100, 100)
                 .centerCrop()
                 .placeholder(R.mipmap.loading)
                 .error(R.drawable.failed)

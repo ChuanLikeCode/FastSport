@@ -21,6 +21,7 @@ import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.WXItem;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.utils.WXArticleUtils;
 import com.sibo.fastsport.view.WhorlView;
 
@@ -81,7 +82,7 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         getScreenWH();
         setContentView(R.layout.activity_news);
-
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         initListener();
         initData();
         if (WXArticleUtils.isFirst){

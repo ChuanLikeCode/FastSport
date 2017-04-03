@@ -7,13 +7,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
-
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +17,7 @@ import com.sibo.fastsport.R;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.StatusBarUtil;
 
 import java.util.regex.Pattern;
 
@@ -37,8 +34,8 @@ import static com.sibo.fastsport.application.Constant.SUCCESS;
  * Created by Administrator on 2016/9/21 0021.
  */
 public class RegisterActivity extends BaseActivity {
+    public UserInfo userInfo = new UserInfo();
     private TextView title;
-    private TextView complete;
     private Button btn_register;//注册按钮
     private Button takeIdentify;//获取验证码按钮
     private TextView goLogin;//有账号直接登录
@@ -48,14 +45,11 @@ public class RegisterActivity extends BaseActivity {
     private EditText password;
     //输入验证码
     private EditText identify;
-
     private EventHandler eventHandler;
-
     private MyBombUtils bmobUtils;
     private String userPhone;//用户注册的手机号
     private String userPassword;//用户密码
     private String code;//用户的验证码
-    public UserInfo userInfo = new UserInfo();
     private int type;
     /**
      * 获取验证码倒计时用处
@@ -159,6 +153,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_register);
         initData();
         initSMS();
@@ -207,7 +202,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void initData() {
         title.setText(R.string.Register);
-        complete.setVisibility(View.GONE);
+        //complete.setVisibility(View.GONE);
         bmobUtils = new MyBombUtils(this);
 
         Intent intent = getIntent();
@@ -315,7 +310,7 @@ public class RegisterActivity extends BaseActivity {
      */
     private void sendSMS() {
         SMSSDK.getVerificationCode("86", userPhone);
-        identify.setEnabled(false);
+        takeIdentify.setEnabled(false);
         timer.start();
         dialog = ProgressDialog.show(this, null, "正在发送...");
     }

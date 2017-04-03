@@ -9,12 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
-import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.base.BaseActivity;
-import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.AppManager;
-import com.sibo.fastsport.utils.SharepreferencesUtilSystemSettings;
+import com.sibo.fastsport.utils.StatusBarUtil;
 import com.sibo.fastsport.view.MyAlertDialog;
 
 /**
@@ -49,6 +47,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         setContentView(R.layout.activity_setting);
 
         initListener();

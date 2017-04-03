@@ -46,7 +46,7 @@
     <color name="colorDivide">#E6E6E6</color>
     <color name="themeColor">#ff5501</color>
     <color name="pink">#F5D4C5</color>
-    <color name="transparent">#00000000</color>
+    <color name="trans">#00000000</color>
     <color name="dark_gray">#00000000</color>
     <color name="deep_gray">#dd3471b4</color>
 
