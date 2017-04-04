@@ -106,7 +106,6 @@ public class MainActivity extends BaseActivity implements MetaballMenu.MetaballM
         StatusBarUtil.StatusBarDarkMode(this, StatusBarUtil.StatusBarLightMode(this));
         MakePlanUtils.isFirst = true;
     }
-
     /**
      * 初始化数据源
      */

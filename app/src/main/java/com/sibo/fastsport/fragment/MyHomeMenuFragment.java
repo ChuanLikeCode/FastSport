@@ -1,6 +1,8 @@
 package com.sibo.fastsport.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.ui.MyCodeActivity;
 import com.sibo.fastsport.ui.MyHomeActivity;
 import com.sibo.fastsport.ui.NewsActivity;
@@ -36,19 +39,24 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initData() {
         myBombUtils = new MyBombUtils(getActivity());
-        name.setText(loginuser.getNikeName());
-        phone.setText(loginuser.getAccount());
-        age.setText(loginuser.getAge());
-        height.setText(loginuser.getHeight());
-        weight.setText(loginuser.getWeight());
-        jiaoling.setText(loginuser.getJiaoling());
-        ImageLoaderUtils.initImage(getActivity(), loginuser.getHead().getFileUrl(), head, R.mipmap.loading);
-        if (loginuser.getSex().equals("男")) {
+        setInfo(loginuser);
+    }
+
+    public void setInfo(UserInfo info) {
+        Log.e("setInfo", info.getNikeName());
+        name.setText(info.getNikeName());
+        phone.setText(info.getAccount());
+        age.setText(info.getAge());
+        height.setText(info.getHeight());
+        weight.setText(info.getWeight());
+        jiaoling.setText(info.getJiaoling());
+        ImageLoaderUtils.initImage(getActivity(), info.getHead().getFileUrl(), head, R.mipmap.loading);
+        if (info.getSex().equals("男")) {
             sex.setImageResource(R.mipmap.man);
         } else {
             sex.setImageResource(R.mipmap.girl);
         }
-        for (int i = 0; i < loginuser.getLevel(); i++) {
+        for (int i = 0; i < info.getLevel(); i++) {
             level[i].setImageResource(R.mipmap.quanxing);
         }
     }
@@ -102,12 +110,23 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
                 startActivity(new Intent(getActivity(), WxCollectedActivity.class));
                 break;
             case R.id.myhomemenu_iv_setting:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivityForResult(intent, 456);
                 break;
             case R.id.myhomemenu_rl_code:
                 startActivity(new Intent(getActivity(), MyCodeActivity.class));
                 break;
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 456) {
+            Bundle bundle = data.getExtras();
+            UserInfo info = (UserInfo) bundle.getSerializable("save");
+
+            setInfo(info);
+        }
     }
 }

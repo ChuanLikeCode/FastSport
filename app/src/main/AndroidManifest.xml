@@ -98,6 +98,7 @@
         <activity android:name=".ui.WxCollectedActivity" />
         <activity android:name=".ui.ScannerActivity" />
         <activity android:name=".ui.MyCodeActivity"></activity>
+        <activity android:name=".ui.TeaAndStdDetailActivity" />
     </application>
 
 </manifest>

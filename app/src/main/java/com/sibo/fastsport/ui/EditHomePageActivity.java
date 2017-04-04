@@ -10,13 +10,12 @@ import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
@@ -25,7 +24,6 @@ import com.sibo.fastsport.adapter.LabelAdapter;
 import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.application.MyApplication;
 import com.sibo.fastsport.base.BaseActivity;
-import com.sibo.fastsport.domain.Pickers;
 import com.sibo.fastsport.listener.OnItemClickListener;
 import com.sibo.fastsport.utils.ImageLoaderUtils;
 import com.sibo.fastsport.utils.ImageUploadUtil;
@@ -35,7 +33,6 @@ import com.sibo.fastsport.utils.ToastUtils;
 import com.sibo.fastsport.view.ActionSheet;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.MyAlertDialog;
-import com.sibo.fastsport.view.PickerScrollView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ import cn.bmob.v3.datatype.BmobFile;
 /**
  * Created by Administrator on 2016/7/27 0027.
  */
-public class EditHomePageActivity extends BaseActivity implements View.OnClickListener, ActionSheet.OnSheetItemClickListener, PickerScrollView.onSelectListener {
+public class EditHomePageActivity extends BaseActivity implements View.OnClickListener, ActionSheet.OnSheetItemClickListener {
     //拍照、从相册选择、照片保存成功
     private final int TAKE_PHOTO = 1, CHOOSE_PHOTO = 2, SAVE_IMAGE_SUCCESS = 3;
     public List<String> labelList = new ArrayList<>();
@@ -86,8 +83,8 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
             }
         }
     };
-    private LinearLayout ll_age, ll_height, ll_weight, ll_jiaoling;
-    private List<Pickers> agePickers, heightPickers, weightPickers, jiaolingPickers;
+    //    private LinearLayout ll_age, ll_height, ll_weight, ll_jiaoling;
+//    private List<Pickers> agePickers, heightPickers, weightPickers, jiaolingPickers;
     private TextView name, age, height, weight, jiaoling, phone;
     private ImageView sex, Back;
     private MyBombUtils bombUtils;
@@ -104,10 +101,10 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         labelRecyclerView = (RecyclerView) findViewById(R.id.label_recycler);
         imgRecyclerView = findViewsById(R.id.img_recycler);
         head = findViewsById(R.id.activity_editzhuye_iv_touxiang);
-        ll_age = findViewsById(R.id.age_ll);
-        ll_height = findViewsById(R.id.height_ll);
-        ll_weight = findViewsById(R.id.weight_ll);
-        ll_jiaoling = findViewsById(R.id.jiaoling_ll);
+//        ll_age = findViewsById(R.id.age_ll);
+//        ll_height = findViewsById(R.id.height_ll);
+//        ll_weight = findViewsById(R.id.weight_ll);
+//        ll_jiaoling = findViewsById(R.id.jiaoling_ll);
         age = findViewsById(R.id.age);
         name = findViewsById(R.id.activity_editzhuye_tv_name);
         height = findViewsById(R.id.height);
@@ -139,7 +136,7 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_editzhuye);
         initData();
         bind();
-        Log.e("onCreate", "onCreate");
+//        Log.e("onCreate", "onCreate");
     }
 
     @Override
@@ -160,8 +157,8 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         } else {
             sex.setImageResource(R.mipmap.man);
         }
-        Log.e("onResume", loginuser.getGoodAt() + "");
-        Log.e("onResume", loginuser.getImg() + "");
+//        Log.e("onResume", loginuser.getGoodAt() + "");
+//        Log.e("onResume", loginuser.getImg() + "");
         if (loginuser.getGoodAt() != null && loginuser.getGoodAt().size() != 0) {
             labelList.clear();
             labelList.addAll(loginuser.getGoodAt());
@@ -191,56 +188,56 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bind() {
-        head.setOnClickListener(this);
-        name.setOnClickListener(this);
-        ll_age.setOnClickListener(this);
-        ll_height.setOnClickListener(this);
-        ll_weight.setOnClickListener(this);
-        ll_jiaoling.setOnClickListener(this);
-        pickers.setOnSelectListener(this);
+//        head.setOnClickListener(this);
+//        name.setOnClickListener(this);
+//        ll_age.setOnClickListener(this);
+//        ll_height.setOnClickListener(this);
+//        ll_weight.setOnClickListener(this);
+//        ll_jiaoling.setOnClickListener(this);
+//        pickers.setOnSelectListener(this);
         Back.setOnClickListener(this);
     }
 
     /**
      * 初始化Pickers
      */
-    public void initPickers() {
-        agePickers = new ArrayList<>();
-        heightPickers = new ArrayList<>();
-        weightPickers = new ArrayList<>();
-        jiaolingPickers = new ArrayList<>();
-        for (int i = 0; i < 121; i++) {
-            String j = i + 30 + "KG";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            weightPickers.add(pickers);
-        }
-        for (int i = 0; i < 71; i++) {
-            String j = i + 150 + "CM";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            heightPickers.add(pickers);
-        }
-        for (int i = 0; i < 101; i++) {
-            String j = i + "岁";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            agePickers.add(pickers);
-        }
-        for (int i = 0; i < 101; i++) {
-            String j = i + "年";
-            Pickers pickers = new Pickers();
-            pickers.setShowId(i + "");
-            pickers.setShowConetnt(j);
-            jiaolingPickers.add(pickers);
-        }
-    }
+//    public void initPickers() {
+//        agePickers = new ArrayList<>();
+//        heightPickers = new ArrayList<>();
+//        weightPickers = new ArrayList<>();
+//        jiaolingPickers = new ArrayList<>();
+//        for (int i = 0; i < 121; i++) {
+//            String j = i + 30 + "KG";
+//            Pickers pickers = new Pickers();
+//            pickers.setShowId(i + "");
+//            pickers.setShowConetnt(j);
+//            weightPickers.add(pickers);
+//        }
+//        for (int i = 0; i < 71; i++) {
+//            String j = i + 150 + "CM";
+//            Pickers pickers = new Pickers();
+//            pickers.setShowId(i + "");
+//            pickers.setShowConetnt(j);
+//            heightPickers.add(pickers);
+//        }
+//        for (int i = 0; i < 101; i++) {
+//            String j = i + "岁";
+//            Pickers pickers = new Pickers();
+//            pickers.setShowId(i + "");
+//            pickers.setShowConetnt(j);
+//            agePickers.add(pickers);
+//        }
+//        for (int i = 0; i < 101; i++) {
+//            String j = i + "年";
+//            Pickers pickers = new Pickers();
+//            pickers.setShowId(i + "");
+//            pickers.setShowConetnt(j);
+//            jiaolingPickers.add(pickers);
+//        }
+//    }
 
     private void initData() {
-        initPickers();
+        //initPickers();
         bombUtils = new MyBombUtils(this);
         labelAdapter = new LabelAdapter(this, labelList);
         labelRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -351,7 +348,7 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
                         if (!editText.getText().toString().equals("")) {
                             labelList.add(0, editText.getText().toString());
                             labelAdapter.setList(labelList);
-                            Log.e("labelList", labelList + "");
+//                            Log.e("labelList", labelList + "");
                         } else {
                             ToastUtils.shortToast(EditHomePageActivity.this, "内容不能为空");
                         }
@@ -431,29 +428,29 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activity_editzhuye_iv_touxiang://头像
-                headOrImg = true;
-                showActionSheetDialog(items);
-                break;
-            case R.id.activity_editzhuye_tv_name://昵称
-                showDialogName();
-                break;
-            case R.id.age_ll:
-                select = 2;
-                showDialog(agePickers);
-                break;
-            case R.id.weight_ll:
-                select = 4;
-                showDialog(weightPickers);
-                break;
-            case R.id.height_ll:
-                select = 3;
-                showDialog(heightPickers);
-                break;
-            case R.id.jiaoling_ll:
-                select = 5;
-                showDialog(jiaolingPickers);
-                break;
+//            case R.id.activity_editzhuye_iv_touxiang://头像
+//                headOrImg = true;
+//                showActionSheetDialog(items);
+//                break;
+//            case R.id.activity_editzhuye_tv_name://昵称
+//                showDialogName();
+//                break;
+//            case R.id.age_ll:
+//                select = 2;
+//                showDialog(agePickers);
+//                break;
+//            case R.id.weight_ll:
+//                select = 4;
+//                showDialog(weightPickers);
+//                break;
+//            case R.id.height_ll:
+//                select = 3;
+//                showDialog(heightPickers);
+//                break;
+//            case R.id.jiaoling_ll:
+//                select = 5;
+//                showDialog(jiaolingPickers);
+//                break;
             case R.id.activity_editzhuye_iv_back:
                 back();
                 break;
@@ -463,49 +460,59 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     /**
      * //昵称
      */
-    private void showDialogName() {
-        final EditText editText = new EditText(EditHomePageActivity.this);
-        MyAlertDialog dialog = new MyAlertDialog(EditHomePageActivity.this);
-        dialog.builder().setTitle("请输入昵称")
-                .setView(editText)
-                .setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                })
-                .setPositiveButton("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!editText.getText().toString().equals("")) {
-                            name.setText(editText.getText().toString());
-                            loginuser.setNikeName(editText.getText().toString());
-                            MyApplication.getInstance().saveUserInfo(loginuser);
-                        } else {
-                            ToastUtils.shortToast(EditHomePageActivity.this, "内容不能为空");
-                        }
-                    }
-                }).show();
-    }
-
+//    private void showDialogName() {
+//        final EditText editText = new EditText(EditHomePageActivity.this);
+//        MyAlertDialog dialog = new MyAlertDialog(EditHomePageActivity.this);
+//        dialog.builder().setTitle("请输入昵称")
+//                .setView(editText)
+//                .setNegativeButton("取消", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                })
+//                .setPositiveButton("确定", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (!editText.getText().toString().equals("")) {
+//                            name.setText(editText.getText().toString());
+//                            loginuser.setNikeName(editText.getText().toString());
+//                            MyApplication.getInstance().saveUserInfo(loginuser);
+//                        } else {
+//                            ToastUtils.shortToast(EditHomePageActivity.this, "内容不能为空");
+//                        }
+//                    }
+//                }).show();
+//    }
+//
+//    @Override
+//    public void onSelect(Pickers pickers) {
+//        switch (select) {
+//            case 2:
+//                age.setText(pickers.getShowConetnt());
+//                break;
+//            case 3:
+//                height.setText(pickers.getShowConetnt());
+//                break;
+//            case 4:
+//                weight.setText(pickers.getShowConetnt());
+//                break;
+//            case 5:
+//                jiaoling.setText(pickers.getShowConetnt());
+//                break;
+//        }
+//    }
+// 捕获返回键的方法1
     @Override
-    public void onSelect(Pickers pickers) {
-        switch (select) {
-            case 2:
-                age.setText(pickers.getShowConetnt());
-                break;
-            case 3:
-                height.setText(pickers.getShowConetnt());
-                break;
-            case 4:
-                weight.setText(pickers.getShowConetnt());
-                break;
-            case 5:
-                jiaoling.setText(pickers.getShowConetnt());
-                break;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        && event.getRepeatCount() == 0
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 按下BACK，同时没有重复
+            back();
         }
-    }
 
+        return super.onKeyDown(keyCode, event);
+    }
     private void back() {
         MyAlertDialog dialog = new MyAlertDialog(EditHomePageActivity.this);
         dialog.builder().setTitle("退出")
@@ -533,8 +540,8 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         loginuser.setHeight(height.getText().toString());
         loginuser.setWeight(weight.getText().toString());
         loginuser.setJiaoling(jiaoling.getText().toString());
-        Log.e("saveChange", loginuser.getGoodAt() + "");
-        Log.e("saveChange", loginuser.getImg() + "");
+//        Log.e("saveChange", loginuser.getGoodAt() + "");
+//        Log.e("saveChange", loginuser.getImg() + "");
         if (labelList.size() != 1) {
             labelList.remove(labelList.size() - 1);
             loginuser.setGoodAt(labelList);

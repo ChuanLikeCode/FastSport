@@ -1,6 +1,8 @@
 package com.sibo.fastsport.fragment;
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +21,7 @@ import com.sibo.fastsport.application.Constant;
 import com.sibo.fastsport.listener.OnItemClickListener;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.model.UserSportPlan;
+import com.sibo.fastsport.ui.TeaAndStdDetailActivity;
 import com.sibo.fastsport.utils.MyBombUtils;
 
 import java.util.List;
@@ -59,14 +62,11 @@ public class StudentFragment extends BaseFragment {
         studentFragment = inflater.inflate(R.layout.fragment_student, container, false);
 //        getData();
         initView();
-        initData();
+//        initData();
         return studentFragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("onResume", "onResume");
+    public void getInfo() {
         if (loginuser.getType().equals("1")) {
             title.setText("学员");
             bombUtils.getStudentInfo(loginuser.getAccount());//获取学员，使用账号
@@ -75,7 +75,6 @@ public class StudentFragment extends BaseFragment {
             tip.setText("暂无教练");
             bombUtils.getTeacherInfo(loginuser.getId());//获取教练，使用学员的ID
         }
-
     }
 
     @Override
@@ -91,10 +90,14 @@ public class StudentFragment extends BaseFragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("st", userInfoList.get(position));
+                Intent intent = new Intent(getActivity(), TeaAndStdDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
-
+        getInfo();
     }
 
 

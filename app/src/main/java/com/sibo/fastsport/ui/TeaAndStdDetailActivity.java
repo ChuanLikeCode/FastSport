@@ -19,6 +19,7 @@ import com.dalong.library.view.LoopRotarySwitchView;
 import com.sibo.fastsport.R;
 import com.sibo.fastsport.adapter.MyHomeLabelAdapter;
 import com.sibo.fastsport.base.BaseActivity;
+import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.ImageLoaderUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.DragScaleImageView;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class MyHomeActivity extends BaseActivity implements View.OnClickListener {
+public class TeaAndStdDetailActivity extends BaseActivity {
     public int preHeight;//拉伸之前的高度
     public int width;//设置旋转图片的宽度
     private DragScaleImageView mDragScaleImageView;//可拉伸放大的背景图片
@@ -45,6 +46,7 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
     private LoopRotarySwitchView mLoopRotarySwitchView;//旋转图片
     private MyBombUtils bombUtils;
     private TextView goodAtTip, xiangqingTip;
+
     public int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -83,6 +85,7 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,36 +101,37 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        ImageLoaderUtils.initImage(this, loginuser.getHead().getFileUrl(), head, R.mipmap.logo);
-        name.setText(loginuser.getNikeName());
-        if (loginuser.getSex().equals("男")) {
+
+        Bundle bundle = getIntent().getExtras();
+        UserInfo info = (UserInfo) bundle.getSerializable("st");
+        ImageLoaderUtils.initImage(this, info.getHead().getFileUrl(), head, R.mipmap.logo);
+        name.setText(info.getNikeName());
+        if (info.getSex().equals("男")) {
             sex.setImageResource(R.mipmap.man);
         } else {
             sex.setImageResource(R.mipmap.girl);
         }
-        phone.setText(loginuser.getAccount());
-        for (int i = 0; i < loginuser.getLevel(); i++) {
+        phone.setText(info.getAccount());
+        for (int i = 0; i < info.getLevel(); i++) {
             level[i].setImageResource(R.mipmap.quanxing);
         }
-        age.setText(loginuser.getAge());
-        height.setText(loginuser.getHeight());
-        weight.setText(loginuser.getWeight());
-        jiaoling.setText(loginuser.getJiaoling());
-//        Log.e("getGoodAt",loginuser.getGoodAt()+"");
-//        Log.e("getImg",loginuser.getImg()+"");
-        if (loginuser.getGoodAt() != null && loginuser.getGoodAt().size() != 0) {
+        age.setText(info.getAge());
+        height.setText(info.getHeight());
+        weight.setText(info.getWeight());
+        jiaoling.setText(info.getJiaoling());
+        if (info.getGoodAt() != null && info.getGoodAt().size() != 0) {
             list_label.clear();
-            list_label.addAll(loginuser.getGoodAt());
+            list_label.addAll(info.getGoodAt());
             adapter.setList(list_label);
             goodAtTip.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
-        if (loginuser.getImg() != null && loginuser.getImg().size() != 0) {
+        if (info.getImg() != null && info.getImg().size() != 0) {
 
-            for (int i = 0; i < loginuser.getImg().size(); i++) {
+            for (int i = 0; i < info.getImg().size(); i++) {
                 View view = LayoutInflater.from(this).inflate(R.layout.myhome_pictureshow, null);
                 ImageView image = (ImageView) view.findViewById(R.id.image);
-                ImageLoaderUtils.initImage(this, loginuser.getImg().get(i).getFileUrl(), image, R.mipmap.logo);
+                ImageLoaderUtils.initImage(this, info.getImg().get(i).getFileUrl(), image, R.mipmap.logo);
                 mLoopRotarySwitchView.addView(view);
             }
             initLoopRotarySwitchView();
@@ -166,6 +170,7 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
      * 初始化擅长领域
      */
     private void initLabel() {
+        change.setVisibility(View.GONE);
         bombUtils = new MyBombUtils(this);
         adapter = new MyHomeLabelAdapter(this, list_label);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -178,7 +183,7 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
      * 图片旋转的
      */
     private void initLinstener() {
-        change.setOnClickListener(this);
+//        change.setOnClickListener(this);
 //        /**
 //         * 选中回调
 //         */
@@ -207,15 +212,5 @@ public class MyHomeActivity extends BaseActivity implements View.OnClickListener
 //
 //            }
 //        });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.myhome_iv_xiugai:
-                startActivity(EditHomePageActivity.class);
-                finish();
-                break;
-        }
     }
 }

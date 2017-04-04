@@ -5,145 +5,258 @@
     android:background="@color/lime_white"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/activity_title_bar" />
+    <include layout="@layout/actionbar_top" />
 
     <RelativeLayout
-        android:id="@+id/activity_setting_rl1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:id="@+id/rl_head"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:background="@color/colorWhite">
 
         <TextView
-            android:id="@+id/activity_setting_rl1_tv_vnewinfo"
+            android:id="@+id/edit_myinfo_tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="新消息通知"
-            android:textSize="15dp" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="头像"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/activity_setting_rl1_iv_enter1"
+        <com.sibo.fastsport.view.CircleImageView
+            android:id="@+id/edit_myinfo_civ_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/imagesecond" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_nikeName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="昵称"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_myinfo_et_name"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:hint="请输入昵称"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_sex"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/sex"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@mipmap/you" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:text="男"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+
     </RelativeLayout>
 
+    <include layout="@layout/divide_line" />
+
     <RelativeLayout
-        android:id="@+id/activity_setting_rl2"
+        android:id="@+id/rl_phone"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="2dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
 
         <TextView
-            android:id="@+id/activity_setting_rl2_tv_checkupdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="检查更新"
-            android:textSize="15dp" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/telephone"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/activity_setting_rl2_iv_enter2"
+        <TextView
+            android:id="@+id/edit_myinfo_tv_telephone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@mipmap/you" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="13023996062"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
     </RelativeLayout>
 
+    <include layout="@layout/divide_line" />
+
     <RelativeLayout
-        android:id="@+id/activity_setting_rl3"
+        android:id="@+id/rl_age"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="2dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
 
         <TextView
-            android:id="@+id/activity_setting_rl_tv_cleardata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="清楚数据"
-            android:textSize="15dp" />
-
-        <ImageView
-            android:id="@+id/activity_setting_rl3_iv_enter3"
+            android:id="@+id/edit_myinfo_tv_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@mipmap/you" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/activity_setting_rl4"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="30岁"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/activity_setting_l4_tv_suggest"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="意见反馈"
-            android:textSize="15dp" />
+            android:layout_alignBaseline="@+id/edit_myinfo_tv_age"
+            android:layout_alignBottom="@+id/edit_myinfo_tv_age"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="17dp"
+            android:text="@string/age"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/activity_setting_rl4_iv_enter4"
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_height"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/height"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@mipmap/you" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="175CM"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
     </RelativeLayout>
 
+
+    <include layout="@layout/divide_line" />
+
     <RelativeLayout
-        android:id="@+id/activity_setting_rl5"
+        android:id="@+id/rl_weight"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="2dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
 
         <TextView
-            android:id="@+id/activity_setting_rl_tv_regarding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="关于"
-            android:textSize="15dp" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/weight"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/activity_setting_rl5_iv_enter5"
+        <TextView
+            android:id="@+id/edit_myinfo_tv_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@mipmap/you" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="75KG"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
     </RelativeLayout>
+
+
+    <include layout="@layout/divide_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_jiaoling"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/jiaoling"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/edit_myinfo_tv_jiaoling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="3年"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/divide_line" />
 
     <Button
-        android:layout_margin="40dp"
         android:id="@+id/activity_setting_btn_exit"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_margin="40dp"
         android:background="@mipmap/redbtn"
         android:text="@string/exit"
         android:textColor="@color/white"

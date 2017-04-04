@@ -26,6 +26,7 @@ import com.sibo.fastsport.ui.LoginActivity;
 import com.sibo.fastsport.ui.MainActivity;
 import com.sibo.fastsport.ui.MakePlanActivity;
 import com.sibo.fastsport.ui.RegisterActivity;
+import com.sibo.fastsport.ui.SettingActivity;
 import com.sibo.fastsport.ui.WxCollectedActivity;
 
 import java.util.ArrayList;
@@ -202,11 +203,39 @@ public class MyBombUtils {
                     }
 
 
-                    queryStudentUserInfo(studentList);
+                    queryTeacherUserInfo(studentList);
 
                 } else {
                     Log.e("getStudentInfo", e.getMessage());
                 }
+            }
+        });
+    }
+
+    /**
+     * 获取教练的详细信息
+     *
+     * @param studentList
+     */
+    public void queryTeacherUserInfo(final List<UserSportPlan> studentList) {
+        BmobQuery<UserInfo> query = new BmobQuery<>();
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if (e == null) {
+                    Log.e("queryStudentUserInfo", "ok");
+                    for (UserInfo u : list) {
+                        for (UserSportPlan s : studentList) {
+                            if (u.getAccount().equals(s.getAccount())) {
+                                userInfoList.add(u);
+                            }
+                        }
+                    }
+                    ((MainActivity) context).student.handler.sendEmptyMessage(Constant.SUCCESS);
+                } else {
+                    Log.e("queryStudentUserInfo", e.getMessage());
+                }
+
             }
         });
     }
@@ -930,6 +959,51 @@ public class MyBombUtils {
                 } else {
                     e.printStackTrace();
                     Log.e("updateUserInfo", "failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * 更新User信息--设置专用
+     *
+     * @param userInfo
+     */
+    public void updateUser(UserInfo userInfo) {
+        userInfo.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Log.e("updateUserInfo", "ok");
+                    ((SettingActivity) context).handler.sendEmptyMessage(Constant.SUCCESS);
+                } else {
+                    ((SettingActivity) context).handler.sendEmptyMessage(789);
+                    e.printStackTrace();
+                    Log.e("updateUserInfo", "failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * 编辑个人信息时的上传图片---设置专用
+     *
+     * @param bmobFile
+     * @param loginuser
+     */
+    public void upLoadHeadFile(final BmobFile bmobFile, final UserInfo loginuser) {
+        bmobFile.upload(new UploadFileListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    userHead = true;
+                    loginuser.setHead(bmobFile);//设置头像
+                    ((SettingActivity) context).handler.sendEmptyMessage(Constant.UPLOAD_SUCCESS);
+                    //updateUserInfo(loginuser);//更新用户信息
+                    Log.e("upLoadUserHeadFile", "ok");
+                } else {
+                    ((EditMyInfoActivity) context).handler.sendEmptyMessage(Constant.FAILED);
+                    Log.e("upLoadUserHeadFile", e.getMessage());
                 }
             }
         });

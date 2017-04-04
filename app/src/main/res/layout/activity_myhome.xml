@@ -287,6 +287,17 @@
                     android:textColor="@color/gray_hint"
                     android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/goodAt_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/domain"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="主人还没有设置哟~~"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/title" />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
@@ -295,7 +306,8 @@
                     android:layout_below="@id/domain"
                     android:layout_marginBottom="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -315,6 +327,17 @@
                     android:textColor="@color/gray_hint"
                     android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/xiangqing_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_personalhome_tv_xiangqing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="主人还没有设置哟~~"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/title" />
                 <com.dalong.library.view.LoopRotarySwitchView
                     android:id="@+id/activity_myhome_loopView"
                     android:layout_width="match_parent"
@@ -324,7 +347,8 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white_bg"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

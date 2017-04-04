@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sibo.fastsport.R;
+import com.sibo.fastsport.domain.MyCollections;
 import com.sibo.fastsport.domain.WXItem;
 import com.sibo.fastsport.ui.NewsActivity;
 import com.sibo.fastsport.ui.WxCollectedActivity;
@@ -123,6 +124,14 @@ public class WXitemAdapter extends BaseAdapter {
                 }
             }
         });
+        //检测是否收藏过
+//        Log.e("WXitemAdapter",WxCollectedActivity.collectionList.size()+"");
+        for (MyCollections m : WxCollectedActivity.collectionList) {
+            if (m.getTitle().equals(list.get(position).getTitle())) {
+                collected.put(position, true);
+                break;
+            }
+        }
         if (collected.get(position,false)){
             holder.collected.setImageResource(R.mipmap.quanxing);
             holder.author.setText(R.string.wx_collect_success);
@@ -130,14 +139,7 @@ public class WXitemAdapter extends BaseAdapter {
             holder.collected.setImageResource(R.mipmap.banxing);
             holder.author.setText(R.string.wx_collect_failed);
         }
-        //检测是否收藏过
-        if (WxCollectedActivity.collectionList.contains(list.get(position))) {
-            holder.collected.setImageResource(R.mipmap.quanxing);
-            holder.author.setText(R.string.wx_collect_success);
-        } else {
-            holder.collected.setImageResource(R.mipmap.banxing);
-            holder.author.setText(R.string.wx_collect_failed);
-        }
+
         return convertView;
     }
 

@@ -292,7 +292,7 @@ public class MakePlanActivity extends FragmentActivity implements View.OnClickLi
         //获取健身计划的ID-计划名字-教练名字
         String str = CollectPlan.userSportPlan.getObjectId();
         planName.setText(CollectPlan.userSportPlan.getPlanName());
-        Bitmap bitmap = CodeUtils.createImage(str.toString(), 250, 250, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
+        Bitmap bitmap = CodeUtils.createImage(str, 250, 250, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
         showCode.setImageBitmap(bitmap);
         MyBombUtils.COUNT = 0;
         MyBombUtils.MAKE = 0;
