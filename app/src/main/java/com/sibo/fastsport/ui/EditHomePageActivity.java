@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -48,26 +49,17 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     private final int TAKE_PHOTO = 1, CHOOSE_PHOTO = 2, SAVE_IMAGE_SUCCESS = 3;
     public List<String> labelList = new ArrayList<>();
     public List<BmobFile> ImgList = new ArrayList<>();
-    public BmobFile headUri = new BmobFile();
-    public boolean headOrImg = false;//标记上传头像还是照片  true 头像 false 照片
     private RecyclerView labelRecyclerView;
     private LabelAdapter labelAdapter;
     private RecyclerView imgRecyclerView;
     private ImgAdapter imgAdapter;
-    private CircleImageView head;
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Constant.UPLOAD_SUCCESS:
-                    if (headOrImg) {
-                        loginuser.setHead(headUri);
-                        MyApplication.getInstance().saveUserInfo(loginuser);
-                        ImageLoaderUtils.initImage(EditHomePageActivity.this, headUri.getFileUrl(), head, R.mipmap.loading);
-
-                    } else {
-                        imgAdapter.notifyDataSetChanged();
-                    }
+                    imgAdapter.notifyDataSetChanged();
+                    Log.e("ImgList", ImgList.size() + "");
                     dialog.dismiss();
                     break;
                 case Constant.FAILED:
@@ -83,8 +75,7 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
             }
         }
     };
-    //    private LinearLayout ll_age, ll_height, ll_weight, ll_jiaoling;
-//    private List<Pickers> agePickers, heightPickers, weightPickers, jiaolingPickers;
+    private CircleImageView head;
     private TextView name, age, height, weight, jiaoling, phone;
     private ImageView sex, Back;
     private MyBombUtils bombUtils;
@@ -101,10 +92,6 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         labelRecyclerView = (RecyclerView) findViewById(R.id.label_recycler);
         imgRecyclerView = findViewsById(R.id.img_recycler);
         head = findViewsById(R.id.activity_editzhuye_iv_touxiang);
-//        ll_age = findViewsById(R.id.age_ll);
-//        ll_height = findViewsById(R.id.height_ll);
-//        ll_weight = findViewsById(R.id.weight_ll);
-//        ll_jiaoling = findViewsById(R.id.jiaoling_ll);
         age = findViewsById(R.id.age);
         name = findViewsById(R.id.activity_editzhuye_tv_name);
         height = findViewsById(R.id.height);
@@ -158,7 +145,7 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
             sex.setImageResource(R.mipmap.man);
         }
 //        Log.e("onResume", loginuser.getGoodAt() + "");
-//        Log.e("onResume", loginuser.getImg() + "");
+//        Log.e("onResume",  "EditHomePageActivity");
         if (loginuser.getGoodAt() != null && loginuser.getGoodAt().size() != 0) {
             labelList.clear();
             labelList.addAll(loginuser.getGoodAt());
@@ -170,73 +157,17 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
             labelList.add("添加");
             labelAdapter.setList(labelList);
         }
-        if (loginuser.getImg() != null && loginuser.getImg().size() != 0) {
-            ImgList.clear();
-            ImgList.addAll(loginuser.getImg());
-            File file = new File("http://bmob-cdn-6840.b0.upaiyun.com/2017/04/03/e5c07322d731405c9589f1ed80204d26.png");
-            BmobFile bmobFile = new BmobFile(file);
-            ImgList.add(bmobFile);
-            imgAdapter.setList(ImgList);
-//            imgAdapter.notifyDataSetChanged();
-        } else {
-            ImgList.clear();
-            File file = new File("http://bmob-cdn-6840.b0.upaiyun.com/2017/04/03/e5c07322d731405c9589f1ed80204d26.png");
-            BmobFile bmobFile = new BmobFile(file);
-            ImgList.add(bmobFile);
-            imgAdapter.setList(ImgList);
-        }
+
     }
 
     private void bind() {
-//        head.setOnClickListener(this);
-//        name.setOnClickListener(this);
-//        ll_age.setOnClickListener(this);
-//        ll_height.setOnClickListener(this);
-//        ll_weight.setOnClickListener(this);
-//        ll_jiaoling.setOnClickListener(this);
-//        pickers.setOnSelectListener(this);
         Back.setOnClickListener(this);
     }
 
-    /**
-     * 初始化Pickers
-     */
-//    public void initPickers() {
-//        agePickers = new ArrayList<>();
-//        heightPickers = new ArrayList<>();
-//        weightPickers = new ArrayList<>();
-//        jiaolingPickers = new ArrayList<>();
-//        for (int i = 0; i < 121; i++) {
-//            String j = i + 30 + "KG";
-//            Pickers pickers = new Pickers();
-//            pickers.setShowId(i + "");
-//            pickers.setShowConetnt(j);
-//            weightPickers.add(pickers);
-//        }
-//        for (int i = 0; i < 71; i++) {
-//            String j = i + 150 + "CM";
-//            Pickers pickers = new Pickers();
-//            pickers.setShowId(i + "");
-//            pickers.setShowConetnt(j);
-//            heightPickers.add(pickers);
-//        }
-//        for (int i = 0; i < 101; i++) {
-//            String j = i + "岁";
-//            Pickers pickers = new Pickers();
-//            pickers.setShowId(i + "");
-//            pickers.setShowConetnt(j);
-//            agePickers.add(pickers);
-//        }
-//        for (int i = 0; i < 101; i++) {
-//            String j = i + "年";
-//            Pickers pickers = new Pickers();
-//            pickers.setShowId(i + "");
-//            pickers.setShowConetnt(j);
-//            jiaolingPickers.add(pickers);
-//        }
-//    }
+
 
     private void initData() {
+
         //initPickers();
         bombUtils = new MyBombUtils(this);
         labelAdapter = new LabelAdapter(this, labelList);
@@ -270,6 +201,22 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
 
 
         });
+
+        if (loginuser.getImg() != null && loginuser.getImg().size() != 0) {
+            ImgList.clear();
+            ImgList.addAll(loginuser.getImg());
+            File file = new File("http://bmob-cdn-6840.b0.upaiyun.com/2017/04/04/35a7790b3af24bd585c8cdc67ee44d24.png");
+            BmobFile bmobFile = new BmobFile(file);
+            ImgList.add(bmobFile);
+            imgAdapter.setList(ImgList);
+        } else {
+            ImgList.clear();
+//            Log.e("onResume",  "EditHomePageActivity");
+            File file = new File("http://bmob-cdn-6840.b0.upaiyun.com/2017/04/04/35a7790b3af24bd585c8cdc67ee44d24.png");
+            BmobFile bmobFile = new BmobFile(file);
+            ImgList.add(bmobFile);
+            imgAdapter.setList(ImgList);
+        }
     }
 
     /**
@@ -300,7 +247,6 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
      * 添加照片
      */
     private void addImg() {
-        headOrImg = false;
         showActionSheetDialog(items);
     }
 
@@ -428,81 +374,14 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.activity_editzhuye_iv_touxiang://头像
-//                headOrImg = true;
-//                showActionSheetDialog(items);
-//                break;
-//            case R.id.activity_editzhuye_tv_name://昵称
-//                showDialogName();
-//                break;
-//            case R.id.age_ll:
-//                select = 2;
-//                showDialog(agePickers);
-//                break;
-//            case R.id.weight_ll:
-//                select = 4;
-//                showDialog(weightPickers);
-//                break;
-//            case R.id.height_ll:
-//                select = 3;
-//                showDialog(heightPickers);
-//                break;
-//            case R.id.jiaoling_ll:
-//                select = 5;
-//                showDialog(jiaolingPickers);
-//                break;
             case R.id.activity_editzhuye_iv_back:
                 back();
                 break;
         }
     }
 
-    /**
-     * //昵称
-     */
-//    private void showDialogName() {
-//        final EditText editText = new EditText(EditHomePageActivity.this);
-//        MyAlertDialog dialog = new MyAlertDialog(EditHomePageActivity.this);
-//        dialog.builder().setTitle("请输入昵称")
-//                .setView(editText)
-//                .setNegativeButton("取消", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                })
-//                .setPositiveButton("确定", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (!editText.getText().toString().equals("")) {
-//                            name.setText(editText.getText().toString());
-//                            loginuser.setNikeName(editText.getText().toString());
-//                            MyApplication.getInstance().saveUserInfo(loginuser);
-//                        } else {
-//                            ToastUtils.shortToast(EditHomePageActivity.this, "内容不能为空");
-//                        }
-//                    }
-//                }).show();
-//    }
-//
-//    @Override
-//    public void onSelect(Pickers pickers) {
-//        switch (select) {
-//            case 2:
-//                age.setText(pickers.getShowConetnt());
-//                break;
-//            case 3:
-//                height.setText(pickers.getShowConetnt());
-//                break;
-//            case 4:
-//                weight.setText(pickers.getShowConetnt());
-//                break;
-//            case 5:
-//                jiaoling.setText(pickers.getShowConetnt());
-//                break;
-//        }
-//    }
-// 捕获返回键的方法1
+
+    // 捕获返回键的方法1
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        && event.getRepeatCount() == 0
@@ -534,23 +413,15 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
 
     private void saveChange() {
         dialog = ProgressDialog.show(this, null, "正在保存...");
-//        loginuser.setHead(headUri);
         loginuser.setNikeName(name.getText().toString());
         loginuser.setAge(age.getText().toString());
         loginuser.setHeight(height.getText().toString());
         loginuser.setWeight(weight.getText().toString());
         loginuser.setJiaoling(jiaoling.getText().toString());
-//        Log.e("saveChange", loginuser.getGoodAt() + "");
-//        Log.e("saveChange", loginuser.getImg() + "");
-        if (labelList.size() != 1) {
-            labelList.remove(labelList.size() - 1);
-            loginuser.setGoodAt(labelList);
-        }
-        if (ImgList.size() != 1) {
-            ImgList.remove(ImgList.size() - 1);
-            loginuser.setImg(ImgList);
-        }
-
+        labelList.remove(labelList.size() - 1);
+        loginuser.setGoodAt(labelList);
+        ImgList.remove(ImgList.size() - 1);
+        loginuser.setImg(ImgList);
         bombUtils.updateInfo(loginuser);
     }
 }

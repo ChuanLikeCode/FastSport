@@ -50,7 +50,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.MyViewHolder> {
         if (list.size() - 1 == position) {
             holder.delete.setVisibility(View.GONE);
             ImageLoaderUtils.initImage(context,
-                    "http://bmob-cdn-6840.b0.upaiyun.com/2017/04/03/e5c07322d731405c9589f1ed80204d26.png",
+                    "http://bmob-cdn-6840.b0.upaiyun.com/2017/04/04/35a7790b3af24bd585c8cdc67ee44d24.png",
                     holder.img, R.mipmap.loading);
         } else {
             holder.delete.setVisibility(View.VISIBLE);

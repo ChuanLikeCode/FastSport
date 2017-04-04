@@ -123,10 +123,12 @@ public class MyHomeMenuFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 456) {
-            Bundle bundle = data.getExtras();
-            UserInfo info = (UserInfo) bundle.getSerializable("save");
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                UserInfo info = (UserInfo) bundle.getSerializable("save");
+                setInfo(info);
+            }
 
-            setInfo(info);
         }
     }
 }

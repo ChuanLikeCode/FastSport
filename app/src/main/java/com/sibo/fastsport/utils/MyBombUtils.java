@@ -274,17 +274,14 @@ public class MyBombUtils {
      * @param bmobFile
      */
     public void upLoadImg(final BmobFile bmobFile) {
+        final int size = ((EditHomePageActivity) context).ImgList.size();
         bmobFile.upload(new UploadFileListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    if (((EditHomePageActivity) context).headOrImg) {
-                        ((EditHomePageActivity) context).headUri = bmobFile;
-                    } else {
-                        ((EditHomePageActivity) context).ImgList.add(0, bmobFile);
-                    }
+                    ((EditHomePageActivity) context).ImgList.add(size - 1, bmobFile);
+                    Log.e("ImgList", ((EditHomePageActivity) context).ImgList.size() + "");
                     ((EditHomePageActivity) context).handler.sendEmptyMessage(Constant.UPLOAD_SUCCESS);
-
                     Log.e("upLoadImg", "ok");
                 } else {
                     ((EditHomePageActivity) context).handler.sendEmptyMessage(Constant.FAILED);
