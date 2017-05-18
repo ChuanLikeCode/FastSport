@@ -100,6 +100,9 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Constant.SUCCESS:
+
+                    MyApplication.getInstance().saveUserInfo(loginuser);
+                    bombUtils.updateAccountInfo(loginuser);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -377,25 +380,26 @@ public class MyPlanFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 456) {
-            Bundle bundle = data.getExtras();
-            if (bundle == null) {
-                return;
-            }
-            if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                String scanner_id = bundle.getString(CodeUtils.RESULT_STRING);
-                Log.e("id", scanner_id);
-                Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
-                loginuser.setPlanObjectId(scanner_id);
-                MyApplication.getInstance().saveUserInfo(loginuser);
-                bombUtils.updateAccountInfo(loginuser);
-                tips.setVisibility(View.GONE);//隐藏提示框
-                whorlView.setVisibility(View.VISIBLE);//显示进度条
-                whorlView.start();//使进度条动起来
-                getPlanDetail(scanner_id);
-            } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
+            if (data!=null){
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String scanner_id = bundle.getString(CodeUtils.RESULT_STRING);
+                    Log.e("id", scanner_id);
+                    Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
+                    loginuser.setPlanObjectId(scanner_id);
+                    tips.setVisibility(View.GONE);//隐藏提示框
+                    whorlView.setVisibility(View.VISIBLE);//显示进度条
+                    whorlView.start();//使进度条动起来
+                    getPlanDetail(scanner_id);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
 
+                }
             }
+
         }
     }
 

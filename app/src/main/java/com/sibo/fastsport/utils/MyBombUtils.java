@@ -118,6 +118,7 @@ public class MyBombUtils {
                     }
                 } else {
                     Log.e("queryStudent", e.getMessage());
+                    ((MainActivity) context).makePlan.handler.sendEmptyMessage(Constant.FAILED);
                 }
 
             }
@@ -180,21 +181,23 @@ public class MyBombUtils {
             public void done(List<UserSportPlan> list, BmobException e) {
                 if (e == null) {
                     studentList.clear();
-                    Log.e("getStudentInfo", "ok");
+                    Log.e("getTeacherInfo", "ok");
                     for (UserSportPlan u : list) {
                         if (u.getStudentId().equals(id)) {
-//                            if (studentList.size()==0){
-//                                studentList.add(u);
-//                            }else {
+//                            LogUtils.e(u.getStudentId()+"----"+id);
                             boolean same = false;
                             for (UserSportPlan s : studentList) {
                                 if (!s.getAccount().equals(u.getAccount())) {
                                     same = false;
+//                                    LogUtils.e(s.getAccount());
                                 } else {
                                     same = true;
+//                                    LogUtils.e(s.getAccount());
                                 }
                             }
+//                            LogUtils.e(same+"");
                             if (!same) {
+
                                 studentList.add(u);
                             }
 //                            }
@@ -206,7 +209,7 @@ public class MyBombUtils {
                     queryTeacherUserInfo(studentList);
 
                 } else {
-                    Log.e("getStudentInfo", e.getMessage());
+                    Log.e("getTeacherInfo", e.getMessage());
                 }
             }
         });
@@ -497,20 +500,31 @@ public class MyBombUtils {
      * 增加计划列表DayPlan
      */
     public void addDayPlan(){
-        for (DayPlan d : CollectPlan.dayPlan){
-            d.setId(CollectPlan.id);
-            d.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if (e == null){
-                        Log.e("addDayPlan",s);
-                        ((MakePlanActivity) context).handler2.sendEmptyMessage(Constant.SHOW);
-                    }else {
-                        Log.e("addDayPlan","failed");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (DayPlan d : CollectPlan.dayPlan){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    d.setId(CollectPlan.id);
+                    d.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null){
+                                Log.e("addDayPlan",s);
+                                ((MakePlanActivity) context).handler2.sendEmptyMessage(Constant.SHOW);
+                            }else {
+                                Log.e("addDayPlan","failed");
+                            }
+                        }
+                    });
                 }
-            });
-        }
+            }
+        }).start();
+
     }
 
     /**
@@ -540,21 +554,34 @@ public class MyBombUtils {
     public void addWarmUp() {
         Log.e("Bmobsp_warmUp", CollectPlan.warmUps.size()+"");
         if (CollectPlan.warmUps.size()!=0){
-            for (WarmUp w : CollectPlan.warmUps){
-                w.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        if (e == null){
-                            Log.e("addWarmUp", s);
-                            Intent intent = new Intent("makePlan");
-                            intent.putExtra("up", 1);
-                            context.sendBroadcast(intent);
-                        }else {
-                            Log.e("addWarmUp","failed");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    for (WarmUp w : CollectPlan.warmUps){
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+                        w.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null){
+                                    Log.e("addWarmUp", s);
+                                    Intent intent = new Intent("makePlan");
+                                    intent.putExtra("up", 1);
+                                    context.sendBroadcast(intent);
+                                }else {
+                                    addWarmUp();
+                                    Log.e("addWarmUp","failed");
+                                }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).start();
+
         }
 
     }
@@ -565,21 +592,32 @@ public class MyBombUtils {
     public void updateWarmUp() {
         Log.e("Bmobsp_warmUp", CollectPlan.warmUps.size() + "");
         if (CollectPlan.warmUps.size() != 0) {
-            for (WarmUp w : CollectPlan.warmUps) {
-                w.update(w.getId(), new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            Log.e("updateWarmUp", "ok");
-                            Intent intent = new Intent("makePlan");
-                            intent.putExtra("up", 1);
-                            context.sendBroadcast(intent);
-                        } else {
-                            Log.e("updateWarmUp", "failed");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (WarmUp w : CollectPlan.warmUps) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+                        w.update(w.getId(), new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    Log.e("updateWarmUp", "ok");
+                                    Intent intent = new Intent("makePlan");
+                                    intent.putExtra("up", 1);
+                                    context.sendBroadcast(intent);
+                                } else {
+                                    Log.e("updateWarmUp", "failed");
+                                }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).start();
+
         }
 
     }
@@ -589,22 +627,34 @@ public class MyBombUtils {
     public void addStretching(){
         //Log.e("addStretching",CollectPlan.stretchings.size()+"");
         if (CollectPlan.stretchings.size() != 0){
-            for (Stretching s : CollectPlan.stretchings){
-                //stre++;
-                s.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        if (e == null){
-                            Log.e("addStretching", s);
-                            Intent intent = new Intent("makePlan");
-                            intent.putExtra("up", 1);
-                            context.sendBroadcast(intent);
-                        }else {
-                            Log.e("addStretching","failed");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (Stretching s : CollectPlan.stretchings){
+                        //stre++;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+                        s.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null){
+                                    Log.e("addStretching", s);
+                                    Intent intent = new Intent("makePlan");
+                                    intent.putExtra("up", 1);
+                                    context.sendBroadcast(intent);
+                                }else {
+                                    addStretching();
+                                    Log.e("addStretching","failed");
+                                }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).start();
+
         }
 
     }
@@ -641,22 +691,34 @@ public class MyBombUtils {
     public void addMainAction(){
         //Log.e("addMainAction",CollectPlan.mainActions.size()+"");
         if (CollectPlan.mainActions.size() != 0){
-            for (MainAction m : CollectPlan.mainActions){
-                //mainAction++;
-                m.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        if (e == null){
-                            Log.e("addMainAction", s);
-                            Intent intent = new Intent("makePlan");
-                            intent.putExtra("up", 1);
-                            context.sendBroadcast(intent);
-                        }else {
-                            Log.e("addMainAction","failed");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (MainAction m : CollectPlan.mainActions){
+                        //mainAction++;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+                        m.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null){
+                                    Log.e("addMainAction", s);
+                                    Intent intent = new Intent("makePlan");
+                                    intent.putExtra("up", 1);
+                                    context.sendBroadcast(intent);
+                                }else {
+                                    addMainAction();
+                                    Log.e("addMainAction","failed");
+                                }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).start();
+
         }
     }
 
@@ -691,23 +753,35 @@ public class MyBombUtils {
     public void addRelaxAction(){
       //  Log.e("addRelaxAction",CollectPlan.relaxActions.size()+"");
         if (CollectPlan.relaxActions.size() != 0){
-            for (RelaxAction r : CollectPlan.relaxActions){
-                //relaxAction++;
-                r.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        if (e == null){
-
-                            Log.e("addRelaxAction", s);
-                            Intent intent = new Intent("makePlan");
-                            intent.putExtra("up", 1);
-                            context.sendBroadcast(intent);
-                        }else {
-                            Log.e("addRelaxAction","failed");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (RelaxAction r : CollectPlan.relaxActions){
+                        //relaxAction++;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+                        r.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null){
+
+                                    Log.e("addRelaxAction", s);
+                                    Intent intent = new Intent("makePlan");
+                                    intent.putExtra("up", 1);
+                                    context.sendBroadcast(intent);
+                                }else {
+                                    addRelaxAction();
+                                    Log.e("addRelaxAction","failed");
+                                }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).start();
+
         }
 
     }
@@ -749,6 +823,7 @@ public class MyBombUtils {
             public void done(String s, BmobException e) {
                 if (e == null){
                     ((RegisterActivity) context).userInfo.setId(s);
+                    updateUserInfo(((RegisterActivity) context).userInfo);
                     ((RegisterActivity) context).handler.sendEmptyMessage(Constant.SUCCESS);
                 }else {
                     Log.e("Bmob-updateInfoFailed", e.getMessage());
@@ -1064,9 +1139,9 @@ public class MyBombUtils {
                             list) {
                         if (a.getAccount().equals(account.getAccount()) && a.getPassword().equals(account.getPassword())) {
                             loginSuccess = true;
-                            a.setId(a.getObjectId());
+//                            a.setId(a.getObjectId());
                             MyApplication.getInstance().saveUserInfo(a);
-                            updateAccountInfo(a);
+//                            updateAccountInfo(a);
 //                            ((LoginActivity) context).account.setId(a.getObjectId());
                             break;
                         }

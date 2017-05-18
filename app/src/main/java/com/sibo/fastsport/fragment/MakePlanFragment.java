@@ -32,6 +32,7 @@ import com.sibo.fastsport.utils.CollectPlan;
 import com.sibo.fastsport.utils.ImageLoaderUtils;
 import com.sibo.fastsport.utils.MakePlanUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
+import com.sibo.fastsport.utils.ToastUtils;
 import com.sibo.fastsport.view.CircleImageView;
 import com.sibo.fastsport.view.PickerScrollView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -61,6 +62,9 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
                 userHeight.setText(student.getHeight());
                 userWeight.setText(student.getWeight());
                 dialog.dismiss();
+            }else if (msg.what == Constant.FAILED){
+                dialog.dismiss();
+                ToastUtils.shortToast(getActivity(),"无此学员");
             }
         }
     };
@@ -238,21 +242,22 @@ public class MakePlanFragment extends BaseFragment implements View.OnClickListen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 456:
-                Bundle bundle = data.getExtras();
-                if (bundle == null) {
-                    return;
-                }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                    dialog = ProgressDialog.show(getActivity(), null, "正在加载数据...");
-                    scanner_id = bundle.getString(CodeUtils.RESULT_STRING);
-                    Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
-                    CollectPlan.userSportPlan.setStudentId(scanner_id);
-                    bombUtils.queryStudent(scanner_id);
-                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
+                if (data!=null){
+                    Bundle bundle = data.getExtras();
+                    if (bundle == null) {
+                        return;
+                    }
+                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                        dialog = ProgressDialog.show(getActivity(), null, "正在加载数据...");
+                        scanner_id = bundle.getString(CodeUtils.RESULT_STRING);
+                        Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
+                        CollectPlan.userSportPlan.setStudentId(scanner_id);
+                        bombUtils.queryStudent(scanner_id);
+                    } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                        Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
 
+                    }
                 }
-
                 break;
         }
 

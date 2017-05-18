@@ -27,6 +27,11 @@ public class TeacherAndStudentAdapter extends RecyclerView.Adapter<TeacherAndStu
     private OnItemClickListener onItemClickListener;
     private List<UserSportPlan> list_usp;
     private UserInfo loginUser;
+    private List<UserInfo> userInfoList;
+
+    public void setUserInfoList(List<UserInfo> userInfoList) {
+        this.userInfoList = userInfoList;
+    }
 
     public TeacherAndStudentAdapter(Context context, List<UserSportPlan> list_usp) {
         this.context = context;
@@ -60,18 +65,18 @@ public class TeacherAndStudentAdapter extends RecyclerView.Adapter<TeacherAndStu
             holder.type.setVisibility(View.GONE);
             holder.tv_zhifang.setVisibility(View.GONE);
             holder.tv_jirou.setVisibility(View.GONE);
-            holder.name.setText(list_usp.get(position).getTeacherName());
+            holder.name.setText(userInfoList.get(position).getNikeName());
             ImageLoaderUtils.initImage(context,
-                    list_usp.get(position).getTeacherImg().getFileUrl(), holder.head, R.mipmap.loading);
+                    userInfoList.get(position).getHead().getFileUrl(), holder.head, R.mipmap.loading);
         } else {
             Log.e("getType", "1");
-            holder.name.setText(list_usp.get(position).getName());
+            holder.name.setText(userInfoList.get(position).getNikeName());
             holder.jirou.setText(list_usp.get(position).getJirou());
             holder.zhifang.setText(list_usp.get(position).getZhifang());
             holder.yundong.setText(list_usp.get(position).getYundong());
             holder.type.setText(list_usp.get(position).getBody());
             ImageLoaderUtils.initImage(context,
-                    list_usp.get(position).getImg().getFileUrl(), holder.head, R.mipmap.loading);
+                    userInfoList.get(position).getHead().getFileUrl(), holder.head, R.mipmap.loading);
         }
     }
 

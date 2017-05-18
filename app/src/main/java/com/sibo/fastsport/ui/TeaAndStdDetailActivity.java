@@ -21,6 +21,7 @@ import com.sibo.fastsport.adapter.MyHomeLabelAdapter;
 import com.sibo.fastsport.base.BaseActivity;
 import com.sibo.fastsport.model.UserInfo;
 import com.sibo.fastsport.utils.ImageLoaderUtils;
+import com.sibo.fastsport.utils.LogUtils;
 import com.sibo.fastsport.utils.MyBombUtils;
 import com.sibo.fastsport.view.DragScaleImageView;
 
@@ -104,6 +105,7 @@ public class TeaAndStdDetailActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         UserInfo info = (UserInfo) bundle.getSerializable("st");
+        LogUtils.e(info.getNikeName());
         ImageLoaderUtils.initImage(this, info.getHead().getFileUrl(), head, R.mipmap.logo);
         name.setText(info.getNikeName());
         if (info.getSex().equals("男")) {

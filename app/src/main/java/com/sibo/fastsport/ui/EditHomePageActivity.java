@@ -45,8 +45,6 @@ import cn.bmob.v3.datatype.BmobFile;
  * Created by Administrator on 2016/7/27 0027.
  */
 public class EditHomePageActivity extends BaseActivity implements View.OnClickListener, ActionSheet.OnSheetItemClickListener {
-    //拍照、从相册选择、照片保存成功
-    private final int TAKE_PHOTO = 1, CHOOSE_PHOTO = 2, SAVE_IMAGE_SUCCESS = 3;
     public List<String> labelList = new ArrayList<>();
     public List<BmobFile> ImgList = new ArrayList<>();
     private RecyclerView labelRecyclerView;
@@ -82,6 +80,9 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
     private int select = 0;
     private ImageView[] level = new ImageView[5];
     private int[] levelIds = {R.id.x1, R.id.x2, R.id.x3, R.id.x4, R.id.x5};
+
+    //拍照、从相册选择、照片保存成功
+    private final int TAKE_PHOTO = 1, CHOOSE_PHOTO = 2, SAVE_IMAGE_SUCCESS = 3;
     private String[] items = {"拍照", "我的相册"};
     // 头像文件、上传头像的名称、本地图片uri
     private File imageFile;
@@ -115,7 +116,6 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,12 +123,11 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_editzhuye);
         initData();
         bind();
+        setPersonalData();
 //        Log.e("onCreate", "onCreate");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void setPersonalData() {
         ImageLoaderUtils.initImage(this, loginuser.getHead().getFileUrl(), head, R.mipmap.logo);
         name.setText(loginuser.getNikeName());
         phone.setText(loginuser.getAccount());
@@ -157,8 +156,8 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
             labelList.add("添加");
             labelAdapter.setList(labelList);
         }
-
     }
+
 
     private void bind() {
         Back.setOnClickListener(this);
@@ -302,7 +301,7 @@ public class EditHomePageActivity extends BaseActivity implements View.OnClickLi
                 }).show();
     }
 
-    //头像选择对话框
+    //选择对话框
     private void showActionSheetDialog(String[] items) {
         ActionSheet actionSheet = new ActionSheet(this)
                 .builder()
